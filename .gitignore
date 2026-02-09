@@ -19,3 +19,4 @@ Thumbs.db
 
 # Reportes de logs y errores
 *.log
+/target/
