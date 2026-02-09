@@ -8,6 +8,26 @@ package com.modelo;
  *
  * @author sronn
  */
-public class EntradaVip {
-    
+public class EntradaVip extends Entrada {
+
+    @Override
+    public String tipoEntrada() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public String generarTicket() {
+        return super.generarTicket(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    }
+
+    @Override
+    public double calcularPrecio() {
+        return super.calcularPrecio(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    }
+
+    @Override
+    public String getDescripcionVenta() {
+        return super.getDescripcionVenta(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    }
+
 }

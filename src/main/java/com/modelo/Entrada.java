@@ -8,8 +8,27 @@ package com.modelo;
  *
  * @author reich
  */
-public class Entrada {
+public abstract class Entrada implements IVendible {
     
-    private String tipoEntrada;
+    Cliente cliente;
     
+    
+    
+    
+public abstract String tipoEntrada();    
+
+    @Override
+    public String generarTicket() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public double calcularPrecio() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public String getDescripcionVenta() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

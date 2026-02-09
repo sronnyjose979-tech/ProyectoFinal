@@ -10,4 +10,7 @@ package com.modelo;
  */
 public class Cliente {
     
+    
+    
+    
 }
