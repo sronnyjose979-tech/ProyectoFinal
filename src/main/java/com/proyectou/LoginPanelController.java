@@ -30,7 +30,8 @@ public class LoginPanelController implements Initializable {
     @FXML
     private void btnUsuatioInvitado(ActionEvent e) throws IOException {
 
-        App.setRoot("VistaButacas");
+        App.setRoot("VistaVentaAsientos");
+        
     }
 
     @FXML
