@@ -4,9 +4,13 @@
  */
 package com.proyectou;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 
 /**
  * FXML Controller class
@@ -21,6 +25,17 @@ public class LoginPanelController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
+
+    @FXML
+    private void btnUsuatioInvitado(ActionEvent e) throws IOException {
+
+        App.setRoot("VistaButacas");
+    }
+
+    @FXML
+    private void btnngresarAdmin() throws IOException{
+         App.setRoot("adminPanel");
+    }
+
 }
