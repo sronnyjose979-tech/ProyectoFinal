@@ -128,6 +128,17 @@ public class VentasDeAsientosController {
 
     @FXML
     private void reservacion() throws IOException {
+        boolean huboSeleccion = false;
+        for (int i = 0; i < FILAS; i++) {
+            for (int j = 0; j < COLUMNAS; j++) {
+                if (estados[i][j] == SELECCIONADA) {
+                    estados[i][j] = RESERVADA;
+                    actualizarColor(i, j);
+                    huboSeleccion = true;
+                }
+            }
+
+        }
 
         if (filaSeleccionada == -1 || colSeleccionada == -1) {
 
