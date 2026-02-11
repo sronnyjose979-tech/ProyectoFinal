@@ -9,5 +9,5 @@ package com.modelo;
  * @author sronn
  */
 public class Auditorio {
-    
+  
 }
