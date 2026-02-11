@@ -7,16 +7,18 @@ public class ClienteModel {
     private static String nombreUsuario;
     private int contra;
 
-    private ArrayList<String> nombre = new ArrayList<>();
+    private static ArrayList<String> nombre = new ArrayList<>();
 
     public ClienteModel(String nombreUsuario, int contra) {
-        this.nombreUsuario = nombreUsuario;
-        this.contra=contra;
-        this.nombre.add(nombreUsuario);
+        ClienteModel.nombreUsuario = nombreUsuario;
+        this.contra = contra;
+        if (!nombre.contains(nombreUsuario)) {
+            nombre.add(nombreUsuario);
+        }
     }
 
     public void agregarNombreALista(String nuevoNombre) {
-        this.nombre.add(nuevoNombre);
+        ClienteModel.nombre.add(nuevoNombre);
     }
 
     public ArrayList<String> getListaNombres() {
@@ -28,7 +30,7 @@ public class ClienteModel {
     }
 
     public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
+        ClienteModel.nombreUsuario = nombreUsuario;
     }
 
     public int getContra() {

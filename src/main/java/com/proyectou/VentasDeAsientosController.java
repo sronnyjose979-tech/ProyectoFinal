@@ -30,7 +30,7 @@ public class VentasDeAsientosController {
     private static final int FILAS = 10;
     private static final int COLUMNAS = 10;
     private ClienteModel cliente = new ClienteModel("", 0);
-    
+
     private Button[][] botones = new Button[FILAS][COLUMNAS];
     private int[][] estados = new int[FILAS][COLUMNAS];
 
@@ -43,7 +43,7 @@ public class VentasDeAsientosController {
 
     @FXML
     public void initialize() throws IOException {
-
+        mensajeNombreUsuario.setText(cliente.getNombreUsuario());
         gridButacas.setDisable(false);
         crearMesas();
 
@@ -52,8 +52,6 @@ public class VentasDeAsientosController {
                 "VIP",
                 "ESTUDIANTE"
         );
-
-        mensajeNombreUsuario.setText(cliente.getNombreUsuario());
 
         // App.setRoot("VistaButacas");
     }

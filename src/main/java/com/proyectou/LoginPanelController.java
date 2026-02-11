@@ -55,7 +55,7 @@ public class LoginPanelController implements Initializable {
                 return;
             }
             int contra = Integer.parseInt(contraEscrita);
-
+           
             if (!cliente.getListaNombres().contains(nombreAValidar) && cliente.getContra() != contra) {
                 cliente.setNombreUsuario(nombreAValidar);
                 cliente.setContra(contra);
@@ -71,7 +71,7 @@ public class LoginPanelController implements Initializable {
         } catch (NoHayUsuarioException e) {
             mostrarAlerta("Aviso", e.getMessage(), Alert.AlertType.INFORMATION);
         } catch (NumberFormatException e) {
-            mostrarAlerta("Error", "La contraseña debe contener numeros", Alert.AlertType.NONE);
+            mostrarAlerta("Error", "La contraseña debe contener numeros", Alert.AlertType.ERROR);
         } catch (IOException e) {
             e.printStackTrace();
         }
