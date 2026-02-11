@@ -147,6 +147,7 @@ public class AdminPanelController {
 
 package com.proyectou;
 
+import static UtilsAlertas.mostrarAlerta.mostrarAlerta;
 import com.modelo.Evento;
 import com.modelo.Auditorio;
 import javafx.fxml.FXML;
@@ -175,7 +176,17 @@ public class AdminPanelController {
     // =========================
     // Gestión de eventos
     // =========================
+     @FXML
+private void regresarLogin() {
+    try {
+        App.setRoot("loginPanel");
+    } catch (Exception e) {
+        System.out.println("Error al regresar al login: " + e.getMessage());
+    }
+}
 
+    
+    
     @FXML
     private void crearEvento() {
         try {
@@ -241,6 +252,8 @@ public class AdminPanelController {
                 "Funcionalidad pendiente de implementación en el modelo.",
                 Alert.AlertType.INFORMATION);
     }
+    
+    
 
     // =========================
     // Utilidades
@@ -251,12 +264,7 @@ public class AdminPanelController {
         txtFechaEvento.clear();
         txtPrecioBase.clear();
     }
-
-    private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
-        Alert alert = new Alert(tipo);
-        alert.setTitle(titulo);
-        alert.setHeaderText(null);
-        alert.setContentText(mensaje);
-        alert.showAndWait();
-    }
+    
+    
+    
 }
