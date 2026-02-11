@@ -15,7 +15,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.proyectou.VentasDeAsientosController">
    <children>
       <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="635.0" prefWidth="940.0" style="-fx-background-color: #0A0C21;-fx-border-color: transparent transparent #2a2f38 transparent;-fx-border-wid: #0A0C21;">
@@ -107,13 +106,13 @@
                               <Insets right="4.0" />
                            </HBox.margin>
                         </VBox>
-                        <VBox prefHeight="133.0" prefWidth="249.0" spacing="15.0">
+                        <VBox prefHeight="133.0" prefWidth="249.0" spacing="10.0">
                            <children>
                               <ComboBox id="comboTipo" fx:id="comboTipo" maxWidth="-Infinity" prefWidth="150.0" />
-                              <TextField />
+                              <TextField id="mensajeNombreUsuario" fx:id="mensajeNombreUsuario" />
                            </children>
                            <padding>
-                              <Insets right="4.0" top="48.0" />
+                              <Insets right="4.0" top="35.0" />
                            </padding>
                         </VBox>
                      </children>

@@ -10,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 public class VentasDeAsientosController {
@@ -22,9 +23,13 @@ public class VentasDeAsientosController {
 
     @FXML
     private Label mensaje;
+    
+    @FXML
+    private TextField mensajeNombreUsuario;
 
     private static final int FILAS = 10;
     private static final int COLUMNAS = 10;
+    private ClienteModel cliente;
 
     private Button[][] botones = new Button[FILAS][COLUMNAS];
     private int[][] estados = new int[FILAS][COLUMNAS];
@@ -47,6 +52,8 @@ public class VentasDeAsientosController {
                 "VIP",
                 "ESTUDIANTE"
         );
+        
+        mensajeNombreUsuario.setText(cliente.getNombreUsuario());
 
         // App.setRoot("VistaButacas");
     }
