@@ -2,63 +2,79 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="411.0" prefWidth="647.0" style="-fx-background-color: #5f5f5f;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.proyectou.AdminPanelController">
+<BorderPane style="-fx-background-color: #1e1e1e;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.proyectou.AdminPanelController">
 
-    <!-- Panel blanco central -->
-    <Pane prefHeight="435.0" prefWidth="661.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5;">
+    <!-- ================= TOP ================= -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-padding: 12; -fx-background-color: #E6B84A;">
 
-        <!-- Título -->
-        <Label layoutX="220" layoutY="20" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="PANEL ADMINISTRATIVO" />
+            <Label style="-fx-font-size: 16px;                           -fx-font-weight: bold;" text="Administración de Eventos" />
 
-        <!-- Formulario de evento -->
-        <GridPane hgap="15" layoutX="120" layoutY="90" vgap="20">
+            <Region style="-fx-background-color: #E6B84A;" HBox.hgrow="ALWAYS" />
 
-            <Label text="Nombre del Evento:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-            <TextField fx:id="txtNombreEvento" prefWidth="220" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            <Button onAction="#regresarLogin" style="-fx-background-color: black;" text="Regresar" textFill="WHITE" />
+        </HBox>
+    </top>
 
-            <Label text="Fecha:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-            <TextField fx:id="txtFechaEvento" prefWidth="220" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <!-- ================= CENTER ================= -->
+    <center>
+        <StackPane style="-fx-background-color: linear-gradient(to bottom, #1e1e1e, #2a2a2a);">
 
-            <Label text="Precio Base:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-            <TextField fx:id="txtPrecioBase" prefWidth="220" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-         <columnConstraints>
-            <ColumnConstraints />
-            <ColumnConstraints />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-         </rowConstraints>
+            <VBox alignment="TOP_CENTER" maxWidth="900" spacing="30" style="-fx-padding: 40; -fx-background-color: #0A0C21;">
 
-        </GridPane>
+                <!-- ===== TARJETAS SUPERIORES ===== -->
+                <HBox alignment="CENTER" spacing="25">
 
-        <!-- Botones -->
-        <VBox layoutX="260" layoutY="240" spacing="10">
+                    <!-- Datos del Evento -->
+                    <VBox prefWidth="300" spacing="10" style="-fx-background-color: #0A0C21; -fx-padding: 20; -fx-background-radius: 8;">
 
-            <Button onAction="#crearEvento" prefWidth="150" text="Crear Evento" />
+                        <Label style="-fx-font-weight: bold;" text="Datos del Evento" textFill="WHITE" />
 
-            <Button onAction="#editarEvento" prefWidth="150" text="Editar Evento" />
+                        <TextField fx:id="txtNombreEvento" promptText="Nombre del evento" />
 
-            <Button onAction="#eliminarEvento" prefWidth="150" text="Eliminar Evento" />
+                        <TextField fx:id="txtFechaEvento" promptText="Fecha (dd/MM/yyyy)" />
 
-            <Separator />
+                        <TextField fx:id="txtPrecioBase" promptText="Precio base" />
 
-            <Button onAction="#verReporte" prefWidth="150" text="Ver Reporte de Ventas" />
+                        <Button maxWidth="Infinity" onAction="#crearEvento" text="Crear Evento" />
+                    </VBox>
 
-            <Button onAction="#reiniciarSala" prefWidth="150" text="Reiniciar Sala" />
+                    <!-- Estado del Sistema -->
+                    <VBox prefWidth="300" spacing="10" style="-fx-background-color: white;                                  -fx-padding: 20;                                  -fx-background-radius: 8;">
 
-        </VBox>
+                        <Label style="-fx-font-weight: bold; -fx-background-color: white;" text="Estado del Sistema" />
 
-    </Pane>
+                        <Label text="Aquí se puede mostrar información del evento activo," wrapText="true" />
 
-</AnchorPane>
+                        <Label text="estado de la sala o mensajes administrativos." wrapText="true" />
+                    </VBox>
+
+                </HBox>
+
+                <!-- ===== ACCIONES ===== -->
+                <VBox alignment="CENTER" spacing="15" style="-fx-background-color: #0A0C21; -fx-padding: 20; -fx-background-radius: 8;">
+
+                    <Label style="-fx-font-weight: bold;" text="Acciones Administrativas" textFill="WHITE" />
+
+                    <HBox alignment="CENTER" spacing="15">
+                        <Button onAction="#eliminarEvento" text="Eliminar Evento" />
+
+                        <Button onAction="#reiniciarSala" text="Reiniciar Sala" />
+
+                        <Button onAction="#verReporte" text="Ver Reporte" />
+                    </HBox>
+                </VBox>
+
+            </VBox>
+
+        </StackPane>
+    </center>
+
+</BorderPane>
