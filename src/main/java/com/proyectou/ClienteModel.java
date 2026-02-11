@@ -4,13 +4,14 @@ import java.util.ArrayList;
 
 public class ClienteModel {
 
-    private String nombreUsuario;
+    private static String nombreUsuario;
     private int contra;
 
     private ArrayList<String> nombre = new ArrayList<>();
 
-    public ClienteModel(String nombreUsuario) {
+    public ClienteModel(String nombreUsuario, int contra) {
         this.nombreUsuario = nombreUsuario;
+        this.contra=contra;
         this.nombre.add(nombreUsuario);
     }
 

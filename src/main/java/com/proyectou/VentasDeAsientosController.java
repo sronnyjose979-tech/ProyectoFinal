@@ -23,14 +23,14 @@ public class VentasDeAsientosController {
 
     @FXML
     private Label mensaje;
-    
+
     @FXML
     private TextField mensajeNombreUsuario;
 
     private static final int FILAS = 10;
     private static final int COLUMNAS = 10;
-    private ClienteModel cliente;
-
+    private ClienteModel cliente = new ClienteModel("", 0);
+    
     private Button[][] botones = new Button[FILAS][COLUMNAS];
     private int[][] estados = new int[FILAS][COLUMNAS];
 
@@ -52,7 +52,7 @@ public class VentasDeAsientosController {
                 "VIP",
                 "ESTUDIANTE"
         );
-        
+
         mensajeNombreUsuario.setText(cliente.getNombreUsuario());
 
         // App.setRoot("VistaButacas");

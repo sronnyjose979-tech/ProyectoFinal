@@ -15,10 +15,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import UtilsAlertas.mostrarAlerta;
+import static UtilsAlertas.mostrarAlerta.mostrarAlerta;
 
 public class LoginPanelController implements Initializable {
 
-    private ClienteModel cliente;
+    private ClienteModel cliente = new ClienteModel("", 0);
     @FXML
     private TextField txtNombre;
     @FXML
@@ -42,36 +44,38 @@ public class LoginPanelController implements Initializable {
     }
 
     @FXML
-    public void registrarUsuarioEnElLogin() {
-        String nombreEscrito = txtNombre.getText();
-        
-        if(!nombreEscrito.trim().isEmpty()){
-            
-        }
-
-    }
-
-    @FXML
-    public void comprobacionSiElUsuarioEstaRegistrado() throws NoHayUsuarioException, IOException {
-        String nombreAValidar = txtNombre.getText();
-        String passwordEscrita = txtContra.getText();
-        int contra = Integer.parseInt(passwordEscrita);
-
+    public void registrarYValidarUsuarioEnElLogin() throws NoHayUsuarioException, IOException {
         try {
-            //!cliente.getListaNombres().contains(nombreAValidar)
+
+            String nombreAValidar = txtNombre.getText();
+            String contraEscrita = txtContra.getText();
+
+            if (nombreAValidar.trim().isEmpty() || contraEscrita.isEmpty()) {
+                mostrarAlerta("Error", "Por favor rellene todos los campos", Alert.AlertType.WARNING);
+                return;
+            }
+            int contra = Integer.parseInt(contraEscrita);
+
             if (!cliente.getListaNombres().contains(nombreAValidar) && cliente.getContra() != contra) {
+                cliente.setNombreUsuario(nombreAValidar);
+                cliente.setContra(contra);
                 throw new NoHayUsuarioException("Debe registrar su usuario!");
             }
+            if (cliente.getContra() != contra) {
+                mostrarAlerta("Error", "Contra incorrecta", Alert.AlertType.ERROR);
+            }
+
             //SI LO ENCUENTRA DEJA ENTRAR
             App.setRoot("VistaVentaAsientos");
 
         } catch (NoHayUsuarioException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Mensaje de error");
-            alert.setHeaderText(null);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
-            return;
+            mostrarAlerta("Aviso", e.getMessage(), Alert.AlertType.INFORMATION);
+        } catch (NumberFormatException e) {
+            mostrarAlerta("Error", "La contraseña debe contener numeros", Alert.AlertType.NONE);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
     }
+
 }
