@@ -1,11 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.proyectou.AdminPanelController">
-    
+<AnchorPane prefHeight="411.0" prefWidth="647.0" style="-fx-background-color: #5f5f5f;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.proyectou.AdminPanelController">
+
+    <!-- Panel blanco central -->
+    <Pane prefHeight="435.0" prefWidth="661.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5;">
+
+        <!-- Título -->
+        <Label layoutX="220" layoutY="20" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="PANEL ADMINISTRATIVO" />
+
+        <!-- Formulario de evento -->
+        <GridPane hgap="15" layoutX="120" layoutY="90" vgap="20">
+
+            <Label text="Nombre del Evento:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextField fx:id="txtNombreEvento" prefWidth="220" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+            <Label text="Fecha:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <TextField fx:id="txtFechaEvento" prefWidth="220" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+            <Label text="Precio Base:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <TextField fx:id="txtPrecioBase" prefWidth="220" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+         <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
+
+        </GridPane>
+
+        <!-- Botones -->
+        <VBox layoutX="260" layoutY="240" spacing="10">
+
+            <Button onAction="#crearEvento" prefWidth="150" text="Crear Evento" />
+
+            <Button onAction="#editarEvento" prefWidth="150" text="Editar Evento" />
+
+            <Button onAction="#eliminarEvento" prefWidth="150" text="Eliminar Evento" />
+
+            <Separator />
+
+            <Button onAction="#verReporte" prefWidth="150" text="Ver Reporte de Ventas" />
+
+            <Button onAction="#reiniciarSala" prefWidth="150" text="Reiniciar Sala" />
+
+        </VBox>
+
+    </Pane>
+
 </AnchorPane>

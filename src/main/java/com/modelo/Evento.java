@@ -11,6 +11,9 @@ package com.modelo;
  * @author sronn
  */
 public class Evento {
+
+    public Evento(String nombre, String fecha, double precio) {
+    }
     
     private int id;
     
