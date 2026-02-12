@@ -1,4 +1,4 @@
-/*package com.proyectou;
+package com.proyectou;
 
 import com.modelo.Evento;
 import com.modelo.Auditorio;
@@ -100,19 +100,21 @@ public class AdminPanelController {
     /// Funciones administrativas
     ///
  @FXML
-    private void verReporte() {
-        if (eventoActual == null) {
-            mostrarAlerta("Reporte",
-                    "No hay ventas registradas.",
-                    Alert.AlertType.INFORMATION);
-            return;
-        }
-
-        // Aquí luego se puede sumar lo vendido
-        mostrarAlerta("Reporte de Ventas",
-                "Funcionalidad de reporte en construcción.",
+private void verReporte() {
+    if (eventoActual == null) {
+        mostrarAlerta("Reporte",
+                "No hay evento activo.",
                 Alert.AlertType.INFORMATION);
+        return;
     }
+
+    double total = eventoActual.calcularRecaudacion();
+
+    mostrarAlerta("Reporte de Ventas",
+            "Total recaudado para el evento \"" + eventoActual.getNombre() +
+            "\": ₡" + total,
+            Alert.AlertType.INFORMATION);
+}
 
     @FXML
     private void reiniciarSala() {
@@ -122,6 +124,14 @@ public class AdminPanelController {
                 "Todos los asientos fueron liberados.",
                 Alert.AlertType.INFORMATION);
     }
+    @FXML
+private void regresarLogin() {
+    try {
+        App.setRoot("loginPanel");
+    } catch (Exception e) {
+        System.out.println("Error al regresar al login: " + e.getMessage());
+    }
+}
 
     // =========================
     // Métodos auxiliares
@@ -141,130 +151,6 @@ public class AdminPanelController {
         alert.showAndWait();
     }
 }
-*/
 
 
 
-package com.proyectou;
-
-import static UtilsAlertas.mostrarAlerta.mostrarAlerta;
-import com.modelo.Evento;
-import com.modelo.Auditorio;
-import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TextField;
-
-public class AdminPanelController {
-
-    @FXML
-    private TextField txtNombreEvento;
-
-    @FXML
-    private TextField txtFechaEvento;
-
-    @FXML
-    private TextField txtPrecioBase;
-
-    private Evento eventoActual;
-    private Auditorio auditorio;
-
-    @FXML
-    public void initialize() {
-        auditorio = new Auditorio(); // aunque esté vacío, no falla
-    }
-
-    // =========================
-    // Gestión de eventos
-    // =========================
-     @FXML
-private void regresarLogin() {
-    try {
-        App.setRoot("loginPanel");
-    } catch (Exception e) {
-        System.out.println("Error al regresar al login: " + e.getMessage());
-    }
-}
-
-    
-    
-    @FXML
-    private void crearEvento() {
-        try {
-            String nombre = txtNombreEvento.getText();
-            String fecha = txtFechaEvento.getText();
-            double precio = Double.parseDouble(txtPrecioBase.getText());
-
-            eventoActual = new Evento(nombre, fecha, precio);
-
-            mostrarAlerta("Evento creado",
-                    "Evento creado correctamente.",
-                    Alert.AlertType.INFORMATION);
-
-        } catch (NumberFormatException e) {
-            mostrarAlerta("Error",
-                    "El precio debe ser numérico.",
-                    Alert.AlertType.ERROR);
-        } catch (Exception e) {
-            mostrarAlerta("Error",
-                    "Complete todos los campos.",
-                    Alert.AlertType.ERROR);
-        }
-    }
-
-    @FXML
-    private void editarEvento() {
-        mostrarAlerta("No disponible",
-                "La edición de eventos no está implementada en el modelo.",
-                Alert.AlertType.WARNING);
-    }
-
-    @FXML
-    private void eliminarEvento() {
-        if (eventoActual == null) {
-            mostrarAlerta("Aviso",
-                    "No hay evento para eliminar.",
-                    Alert.AlertType.WARNING);
-            return;
-        }
-
-        eventoActual = null;
-        limpiarCampos();
-
-        mostrarAlerta("Evento eliminado",
-                "Evento eliminado correctamente.",
-                Alert.AlertType.INFORMATION);
-    }
-
-    // =========================
-    // Acciones administrativas
-    // =========================
-
-    @FXML
-    private void verReporte() {
-        mostrarAlerta("Reporte",
-                "Reporte de recaudación pendiente de implementación.",
-                Alert.AlertType.INFORMATION);
-    }
-
-    @FXML
-    private void reiniciarSala() {
-        mostrarAlerta("Reiniciar sala",
-                "Funcionalidad pendiente de implementación en el modelo.",
-                Alert.AlertType.INFORMATION);
-    }
-    
-    
-
-    // =========================
-    // Utilidades
-    // =========================
-
-    private void limpiarCampos() {
-        txtNombreEvento.clear();
-        txtFechaEvento.clear();
-        txtPrecioBase.clear();
-    }
-    
-    
-    
-}
