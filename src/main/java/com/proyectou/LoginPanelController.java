@@ -77,4 +77,10 @@ public class LoginPanelController implements Initializable {
 
     }
 
+    @FXML
+    public void panelAdministrador() throws IOException {
+        App.setRoot("adminPanel");
+
+    }
+
 }
