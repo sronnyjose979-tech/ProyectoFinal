@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
@@ -7,70 +8,73 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #0A0C21;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.proyectou.LoginPanelController">
+
+<StackPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.proyectou.LoginPanelController">
    <children>
-      <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="182.0" style="-fx-background-color: #0A0C21;">
+      <VBox alignment="CENTER" prefHeight="400.0" prefWidth="487.0" style="-fx-background-color: #0A0C21;">
          <children>
-            <Label alignment="CENTER" text="Auditorio" textFill="#f4f2f2">
-               <font>
-                  <Font name="System Bold" size="27.0" />
-               </font>
-            </Label>
-            <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0">
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <Label contentDisplay="TOP" prefHeight="70.0" prefWidth="181.0" text="Iniciar sesion" textAlignment="CENTER" textFill="#fffbfb" />
-                        <PasswordField />
-                     </children>
-                  </VBox>
-                  <Button fx:id="btnIniciarSesion" mnemonicParsing="false" onAction="#registrarYValidarUsuarioEnElLogin" text="Iniciar Sesion" />
+                  <Label alignment="CENTER" layoutX="165.0" layoutY="50.0" text="Auditorio" textFill="#f4f2f2">
+                     <font>
+                        <Font name="System Bold" size="27.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="435.0" mnemonicParsing="false" onAction="#btnngresarAdmin" text="Administrador" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
-            </VBox>
+            </AnchorPane>
+            <TabPane prefHeight="400.0" prefWidth="419.0" style="-tab-header-background: #0A0C21;" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Iniciar sesion">
+                     <content>
+                        <VBox spacing="15.0">
+                           <children>
+                              <Label text="Iniciar Sesion" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial Black" size="17.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="labelNombre" text="Usuario" textFill="#fff6f6" />
+                              <TextField fx:id="txtNombre" />
+                              <Label fx:id="labelContra" text="Contraseña" textFill="#fff2f2" />
+                              <PasswordField fx:id="txtContra" />
+                              <Label prefHeight="17.0" prefWidth="89.0" />
+                              <Button fx:id="btnUsuatioInvitado" mnemonicParsing="false" onAction="#registrarYValidarUsuarioEnElLogin" prefHeight="25.0" prefWidth="90.0" text="Iniciar Sesion" />
+                           </children>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </padding>
+                        </VBox>
+                     </content>
+                </Tab>
+                <Tab text="Registrarse">
+                  <content>
+                        <VBox spacing="15.0">
+                           <children>
+                              <Label text="Resgistrarse" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial Black" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label text=" Nombre Usuario" textFill="WHITE" />
+                              <TextField promptText="Ej.Juan,Russell" />
+                              <Label text="Contraseña Nueva" textFill="WHITE" />
+                              <PasswordField />
+                              <Button fx:id="btnngresarAdmin" mnemonicParsing="false" onAction="#registrarYValidarUsuarioEnElLogin" text="Registrarme" />
+                           </children>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </padding>
+                        </VBox>
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
          </children>
       </VBox>
-      <TabPane prefHeight="400.0" prefWidth="419.0" style="-tab-header-background: #0A0C21;" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-          <Tab text="Usuario">
-               <content>
-                  <Pane prefHeight="371.0" prefWidth="350.0">
-                     <children>
-                        <Button fx:id="btnUsuatioInvitado" layoutX="149.0" layoutY="253.0" mnemonicParsing="false" onAction="#registrarYValidarUsuarioEnElLogin" prefHeight="25.0" prefWidth="80.0" text="Registrarme" />
-                        <Label fx:id="labelNombre" layoutX="46.0" layoutY="78.0" text="Nombre" textFill="#fff6f6" />
-                        <Label fx:id="labelContra" layoutX="46.0" layoutY="158.0" text="Contraseña" textFill="#fff2f2" />
-                        <PasswordField fx:id="txtContra" layoutX="135.0" layoutY="154.0" />
-                        <TextField fx:id="txtNombre" layoutX="135.0" layoutY="74.0" />
-                        <Label layoutX="54.0" layoutY="226.0" prefHeight="17.0" prefWidth="89.0" />
-                        <Label layoutX="135.0" layoutY="14.0" text="Registrarse" textFill="WHITE">
-                           <font>
-                              <Font name="Arial Black" size="17.0" />
-                           </font>
-                        </Label>
-                     </children></Pane>
-               </content>
-          </Tab>
-          <Tab text="Administrador">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #0A0C21;">
-                     <children>
-                        <PasswordField layoutX="134.0" layoutY="204.0" />
-                        <TextField layoutX="130.0" layoutY="124.0" promptText="Ej.Juan,Russell" />
-                        <Label layoutX="34.0" layoutY="128.0" text="Nombre" textFill="WHITE" />
-                        <Label layoutX="34.0" layoutY="208.0" text="Contraseña" textFill="WHITE" />
-                        <Button fx:id="btnngresarAdmin" layoutX="162.0" layoutY="291.0" mnemonicParsing="false" onAction="#btnngresarAdmin" text="Ingresar" />
-                        <Label layoutX="101.0" layoutY="23.0" text="Modulo Administrativo" textFill="WHITE">
-                           <font>
-                              <Font name="Arial Black" size="12.0" />
-                           </font></Label>
-                     </children></AnchorPane>
-            </content>
-          </Tab>
-        </tabs>
-      </TabPane>
    </children>
-</HBox>
+</StackPane>

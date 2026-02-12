@@ -55,7 +55,7 @@ public class LoginPanelController implements Initializable {
                 return;
             }
             int contra = Integer.parseInt(contraEscrita);
-           
+
             if (!cliente.getListaNombres().contains(nombreAValidar) && cliente.getContra() != contra) {
                 cliente.setNombreUsuario(nombreAValidar);
                 cliente.setContra(contra);
@@ -75,6 +75,12 @@ public class LoginPanelController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+    }
+
+    @FXML
+    public void panelAdministrador() throws IOException {
+        App.setRoot("adminPanel");
 
     }
 
