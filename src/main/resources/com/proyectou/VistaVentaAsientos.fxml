@@ -85,7 +85,7 @@
       </VBox>
    </right>
    <center>
-      <VBox prefHeight="635.0" prefWidth="765.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" BorderPane.alignment="CENTER">
          <children>
             <Pane prefHeight="279.0" prefWidth="766.0" style="-fx-background-color: #0A0C21;">
                <children>
@@ -98,9 +98,10 @@
                         </Label>
                      </children>
                   </Pane>
+                  <Separator layoutX="763.0" layoutY="-1.0" orientation="VERTICAL" prefHeight="164.0" prefWidth="0.0" />
                </children>
             </Pane>
-            <Pane prefHeight="527.0" prefWidth="766.0" style="-fx-background-color: #0A0C21;">
+            <Pane style="-fx-background-color: #0A0C21;">
                <children>
                   <Label layoutX="166.0" layoutY="31.0" text="A" textFill="#c4c0c0" />
                   <Label layoutX="166.0" layoutY="69.0" text="B" textFill="#c4c0c0" />
@@ -112,7 +113,7 @@
                   <Label layoutX="165.0" layoutY="287.0" text="H" textFill="#c4c0c0" />
                   <Label layoutX="168.0" layoutY="327.0" text="I" textFill="#c4c0c0" />
                   <Label layoutX="167.0" layoutY="363.0" text="J" textFill="#c4c0c0" />
-                  <GridPane id="gridButacas" fx:id="gridButacas" hgap="5.0" layoutX="177.0" layoutY="23.0" prefHeight="364.0" prefWidth="411.0" style="-fx-background-color: #0A0C21;" vgap="5.0">
+                  <GridPane id="gridButacas" fx:id="gridButacas" alignment="CENTER" hgap="5.0" layoutX="177.0" layoutY="23.0" prefHeight="364.0" prefWidth="411.0" style="-fx-background-color: #0A0C21;" vgap="5.0">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -138,7 +139,6 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                   </GridPane>
-                  <Separator layoutX="761.0" layoutY="-234.0" orientation="VERTICAL" prefHeight="706.0" prefWidth="15.0" />
                   <Label layoutX="595.0" layoutY="25.0" text="A" textFill="#c4c0c0" />
                   <Label layoutX="595.0" layoutY="63.0" text="B" textFill="#c4c0c0" />
                   <Label layoutX="595.0" layoutY="97.0" text="C" textFill="#c4c0c0" />
@@ -159,6 +159,7 @@
                   <Label layoutX="486.0" layoutY="9.0" text="8" textFill="#c4c0c0" />
                   <Label layoutX="528.0" layoutY="9.0" text="9" textFill="#c4c0c0" />
                   <Label layoutX="562.0" layoutY="9.0" text="10" textFill="#c4c0c0" />
+                  <Separator layoutX="762.0" layoutY="-2.0" orientation="VERTICAL" prefHeight="420.0" prefWidth="8.0" />
                </children>
             </Pane>
             <Pane prefHeight="177.0" prefWidth="766.0" style="-fx-background-color: #0A0C21;">
@@ -174,6 +175,7 @@
                   <Label layoutX="315.0" layoutY="21.0" text="Seleccionado" textFill="WHITE" />
                   <Label layoutX="441.0" layoutY="20.0" text="Reservado" textFill="WHITE" />
                   <Label layoutX="233.0" layoutY="20.0" text="Libre" textFill="WHITE" />
+                  <Separator layoutX="763.0" layoutY="-3.0" orientation="VERTICAL" prefHeight="63.0" prefWidth="5.0" />
                </children>
             </Pane>
          </children>
