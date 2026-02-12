@@ -25,7 +25,8 @@
                <children>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Label contentDisplay="TOP" prefHeight="70.0" prefWidth="181.0" text="Bienvenido para unirte a nuestra comunidad inicia secion" textAlignment="CENTER" textFill="#fffbfb" />
+                        <Label contentDisplay="TOP" prefHeight="70.0" prefWidth="181.0" text="Iniciar sesion" textAlignment="CENTER" textFill="#fffbfb" />
+                        <PasswordField />
                      </children>
                   </VBox>
                   <Button fx:id="btnIniciarSesion" mnemonicParsing="false" onAction="#registrarYValidarUsuarioEnElLogin" text="Iniciar Sesion" />
@@ -39,7 +40,7 @@
                <content>
                   <Pane prefHeight="371.0" prefWidth="350.0">
                      <children>
-                        <Button fx:id="btnUsuatioInvitado" layoutX="149.0" layoutY="253.0" mnemonicParsing="false" onAction="#registrarYValidarUsuarioEnElLogin" prefHeight="25.0" prefWidth="80.0" text="Ingresar" />
+                        <Button fx:id="btnUsuatioInvitado" layoutX="149.0" layoutY="253.0" mnemonicParsing="false" onAction="#registrarYValidarUsuarioEnElLogin" prefHeight="25.0" prefWidth="80.0" text="Registrarme" />
                         <Label fx:id="labelNombre" layoutX="46.0" layoutY="78.0" text="Nombre" textFill="#fff6f6" />
                         <Label fx:id="labelContra" layoutX="46.0" layoutY="158.0" text="Contraseña" textFill="#fff2f2" />
                         <PasswordField fx:id="txtContra" layoutX="135.0" layoutY="154.0" />
