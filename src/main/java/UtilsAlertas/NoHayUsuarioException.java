@@ -22,5 +22,4 @@ public class NoHayUsuarioException extends Exception{
         super(message, cause, enableSuppression, writableStackTrace);
     }
     
-
 }
