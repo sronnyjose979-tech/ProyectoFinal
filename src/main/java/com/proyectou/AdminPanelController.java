@@ -124,6 +124,14 @@ private void verReporte() {
                 "Todos los asientos fueron liberados.",
                 Alert.AlertType.INFORMATION);
     }
+    @FXML
+private void regresarLogin() {
+    try {
+        App.setRoot("loginPanel");
+    } catch (Exception e) {
+        System.out.println("Error al regresar al login: " + e.getMessage());
+    }
+}
 
     // =========================
     // Métodos auxiliares
