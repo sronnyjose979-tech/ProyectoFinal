@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class ClienteModel {
 
     private static String nombreUsuario;
-    private int contra;
+    private static int contra;
 
     private static ArrayList<String> nombre = new ArrayList<>();
 
@@ -25,7 +25,7 @@ public class ClienteModel {
         return nombre;
     }
 
-    public String getNombreUsuario() {
+    public static String getNombreUsuario() {
         return nombreUsuario;
     }
 

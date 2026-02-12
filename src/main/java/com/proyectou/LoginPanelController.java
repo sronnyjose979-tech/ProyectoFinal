@@ -59,6 +59,7 @@ public class LoginPanelController implements Initializable {
             if (!cliente.getListaNombres().contains(nombreAValidar) && cliente.getContra() != contra) {
                 cliente.setNombreUsuario(nombreAValidar);
                 cliente.setContra(contra);
+                App.setRoot("VistaVentaAsientos");
                 throw new NoHayUsuarioException("Debe registrar su usuario!");
             }
             if (cliente.getContra() != contra) {
@@ -66,8 +67,6 @@ public class LoginPanelController implements Initializable {
             }
 
             //SI LO ENCUENTRA DEJA ENTRAR
-            App.setRoot("VistaVentaAsientos");
-
         } catch (NoHayUsuarioException e) {
             mostrarAlerta("Aviso", e.getMessage(), Alert.AlertType.INFORMATION);
         } catch (NumberFormatException e) {
