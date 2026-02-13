@@ -211,12 +211,12 @@ public class VentasDeAsientosController {
             mostrarAlerta("Aviso", "Seleccione tipo y asiento", Alert.AlertType.WARNING);
             return;
         }
-        guardarSeleccionComboBox();
+        creacionDeEntradasConElComboBox();
         reservacion();
     }
 
     @FXML
-    public void guardarSeleccionComboBox() {
+    public void creacionDeEntradasConElComboBox() {
 
         if (auditorio.getEvento() == null) {
             mostrarAlerta("Aviso", "El auditorio no tenía evento.", Alert.AlertType.WARNING);
