@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <StackPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.proyectou.LoginPanelController">
    <children>
       <VBox alignment="CENTER" prefHeight="400.0" prefWidth="487.0" style="-fx-background-color: #0A0C21;">
@@ -24,7 +23,7 @@
                         <Font name="System Bold" size="27.0" />
                      </font>
                   </Label>
-                  <Button layoutX="435.0" mnemonicParsing="false" onAction="#btnngresarAdmin" text="Administrador" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Button fx:id="btnAdmin" layoutX="435.0" mnemonicParsing="false" onAction="#btnngresarAdmin" text="Administrador" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
             <TabPane prefHeight="400.0" prefWidth="419.0" style="-tab-header-background: #0A0C21;" tabClosingPolicy="UNAVAILABLE">
@@ -39,11 +38,11 @@
                                  </font>
                               </Label>
                               <Label fx:id="labelNombre" text="Usuario" textFill="#fff6f6" />
-                              <TextField fx:id="txtNombre" />
+                              <TextField fx:id="txtIniciarNombre" promptText="Ingrese su usuario" />
                               <Label fx:id="labelContra" text="Contraseña" textFill="#fff2f2" />
-                              <PasswordField fx:id="txtContra" />
+                              <PasswordField fx:id="txtIniciarContra" />
                               <Label prefHeight="17.0" prefWidth="89.0" />
-                              <Button fx:id="btnUsuatioInvitado" mnemonicParsing="false" onAction="#registrarYValidarUsuarioEnElLogin" prefHeight="25.0" prefWidth="90.0" text="Iniciar Sesion" />
+                              <Button fx:id="btnIniciarSesion" mnemonicParsing="false" onAction="#btnIniciarSesion" prefHeight="25.0" prefWidth="90.0" text="Iniciar Sesion" />
                            </children>
                            <padding>
                               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -51,7 +50,7 @@
                         </VBox>
                      </content>
                 </Tab>
-                <Tab text="Registrarse">
+                <Tab fx:id="btnRegistrar" text="Registrarse">
                   <content>
                         <VBox spacing="15.0">
                            <children>
@@ -61,10 +60,10 @@
                                  </font>
                               </Label>
                               <Label text=" Nombre Usuario" textFill="WHITE" />
-                              <TextField promptText="Ej.Juan,Russell" />
+                              <TextField fx:id="txtRegistarUsuario" promptText="Ej.Juan,Russell" />
                               <Label text="Contraseña Nueva" textFill="WHITE" />
-                              <PasswordField />
-                              <Button fx:id="btnngresarAdmin" mnemonicParsing="false" onAction="#registrarYValidarUsuarioEnElLogin" text="Registrarme" />
+                              <PasswordField fx:id="txtContraseñaNueva" />
+                              <Button fx:id="btnngresarAdmin" mnemonicParsing="false" onAction="#registrarUsuario" text="Registrarme" />
                            </children>
                            <padding>
                               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

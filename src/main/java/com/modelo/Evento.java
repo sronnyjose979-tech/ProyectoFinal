@@ -10,6 +10,7 @@ public class Evento {
     private double precioBase;
 
     private List<Entrada> entradasVendidas;
+    
 
     public Evento(String nombre, String fecha, double precioBase) {
         this.nombre = nombre;

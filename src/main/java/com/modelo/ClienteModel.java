@@ -1,4 +1,4 @@
-package com.proyectou;
+package com.modelo;
 
 import java.util.ArrayList;
 

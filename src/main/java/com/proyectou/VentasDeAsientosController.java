@@ -1,5 +1,6 @@
 package com.proyectou;
 
+import com.modelo.ClienteModel;
 import java.io.IOException;
 import java.time.Duration;
 import javafx.animation.PauseTransition;

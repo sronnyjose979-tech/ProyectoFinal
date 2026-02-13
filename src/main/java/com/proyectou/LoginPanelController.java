@@ -4,6 +4,7 @@
  */
 package com.proyectou;
 
+import com.modelo.ClienteModel;
 import UtilsAlertas.NoHayUsuarioException;
 import java.io.IOException;
 import java.net.URL;
@@ -21,34 +22,41 @@ import static UtilsAlertas.mostrarAlerta.mostrarAlerta;
 public class LoginPanelController implements Initializable {
 
     private ClienteModel cliente = new ClienteModel("", 0);
+
     @FXML
-    private TextField txtNombre;
+    private PasswordField txtContraseñaNueva;
+
     @FXML
-    private PasswordField txtContra;
+    private PasswordField txtIniciarContra;
+
+    @FXML
+    private TextField txtIniciarNombre;
+
+    @FXML
+    private TextField txtRegistarUsuario;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
+    
+    
 
     @FXML
-    private void btnUsuatioInvitado(ActionEvent e) throws IOException {
+    private void btnIniciarSesion(ActionEvent e) throws IOException {
 
         App.setRoot("VistaVentaAsientos");
 
     }
+    
+    
 
     @FXML
-    private void btnngresarAdmin() throws IOException {
-        App.setRoot("adminPanel");
-    }
-
-    @FXML
-    public void registrarYValidarUsuarioEnElLogin() throws NoHayUsuarioException, IOException {
+    public void btnRegistrarUsuario() throws NoHayUsuarioException, IOException {
         try {
 
-            String nombreAValidar = txtNombre.getText();
-            String contraEscrita = txtContra.getText();
+            String nombreAValidar = txtRegistarUsuario.getText();
+            String contraEscrita = txtContraseñaNueva.getText();
 
             if (nombreAValidar.trim().isEmpty() || contraEscrita.isEmpty()) {
                 mostrarAlerta("Error", "Por favor rellene todos los campos", Alert.AlertType.WARNING);
@@ -66,7 +74,6 @@ public class LoginPanelController implements Initializable {
                 mostrarAlerta("Error", "Contra incorrecta", Alert.AlertType.ERROR);
             }
 
-            //SI LO ENCUENTRA DEJA ENTRAR
         } catch (NoHayUsuarioException e) {
             mostrarAlerta("Aviso", e.getMessage(), Alert.AlertType.INFORMATION);
         } catch (NumberFormatException e) {
@@ -78,9 +85,8 @@ public class LoginPanelController implements Initializable {
     }
 
     @FXML
-    public void panelAdministrador() throws IOException {
+    private void btnngresarAdmin() throws IOException {
         App.setRoot("adminPanel");
-
     }
 
 }

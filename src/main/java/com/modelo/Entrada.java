@@ -10,7 +10,6 @@ package com.modelo;
  */
 public abstract class Entrada implements IVendible {
     
-    Cliente cliente;
     
     
     
