@@ -206,11 +206,7 @@ public class VentasDeAsientosController {
 
     @FXML
     public void coordinadorDeBoton() throws IOException {
-        String tipo = comboTipo.getValue();
-        if (tipo == null || filaSeleccionada == -1) {
-            mostrarAlerta("Aviso", "Seleccione tipo y asiento", Alert.AlertType.WARNING);
-            return;
-        }
+      
         creacionDeEntradasConElComboBox();
         reservacion();
     }
