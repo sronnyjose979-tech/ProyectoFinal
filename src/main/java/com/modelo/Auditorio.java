@@ -8,6 +8,7 @@ public class Auditorio {
     private ArrayList<ClienteModel> Clientes;// se crea un arrayList de cliente en el auditorio
     private ClienteModel clienteActual;
     public Evento evento;
+    
 
     public Evento getEvento() {
         return evento;

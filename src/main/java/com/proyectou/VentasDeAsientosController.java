@@ -219,8 +219,8 @@ public class VentasDeAsientosController {
     public void guardarSeleccionComboBox() {
 
         if (auditorio.getEvento() == null) {
-            mostrarAlerta("Aviso", "El auditorio no tenía evento. Se creara por defecto...", Alert.AlertType.WARNING);
-            auditorio.setEvento(new Evento("Gran Concierto 2026", "15/12/2026", 50.0));
+            mostrarAlerta("Aviso", "El auditorio no tenía evento.", Alert.AlertType.WARNING);
+
         }
 
         String tipoSeleccionado = comboTipo.getValue();
