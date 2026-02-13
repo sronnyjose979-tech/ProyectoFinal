@@ -1,52 +1,37 @@
 package com.modelo;
 
-import java.util.ArrayList;
+public class ClienteModel {// solo va a ser un modelo de cliente, se va controlar mediante el auditorio que va registrar el cliente
 
-public class ClienteModel {
+    private String nombreUsuario;
+    private String contra;
 
-    private static String nombreUsuario;
-    private static int contra;
-
-    private static ArrayList<String> nombre = new ArrayList<>();
-
-    public ClienteModel(String nombreUsuario, int contra) {
-        ClienteModel.nombreUsuario = nombreUsuario;
+    public ClienteModel(String nombreUsuario, String contra) {
+        this.nombreUsuario = nombreUsuario;
         this.contra = contra;
-        if (!nombre.contains(nombreUsuario)) {
-            nombre.add(nombreUsuario);
-        }
     }
 
-    public void agregarNombreALista(String nuevoNombre) {
-        ClienteModel.nombre.add(nuevoNombre);
-    }
-
-    public ArrayList<String> getListaNombres() {
-        return nombre;
-    }
-
-    public static String getNombreUsuario() {
+    public String getNombreUsuario() {
         return nombreUsuario;
     }
 
     public void setNombreUsuario(String nombreUsuario) {
-        ClienteModel.nombreUsuario = nombreUsuario;
+        this.nombreUsuario = nombreUsuario;
     }
 
-    public int getContra() {
+    public String getContra() {
         return contra;
     }
 
-    public void setContra(int contra) {
+    public void setContra(String contra) {
         this.contra = contra;
     }
 
-    public boolean comprobacion(String nombreUsuario, int contra) {
-
-        if (this.nombreUsuario.equals(nombreUsuario) && this.contra == contra) {
-            return true;
-        }
-
-        return false;
-    }
+//    public boolean comprobacion(String nombreUsuario, int contra) {
+//
+//        if (this.nombreUsuario.equals(nombreUsuario) && this.contra) {
+//            return true;
+//        }
+//
+//        return false;
+//    }
 }

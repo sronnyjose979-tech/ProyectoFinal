@@ -1,5 +1,6 @@
 package com.proyectou;
 
+import com.modelo.Auditorio;
 import com.modelo.ClienteModel;
 import java.io.IOException;
 import java.time.Duration;
@@ -15,6 +16,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 public class VentasDeAsientosController {
+
+    Auditorio auditorio;
 
     @FXML
     private GridPane gridButacas;
@@ -43,7 +46,10 @@ public class VentasDeAsientosController {
 
     @FXML
     public void initialize() throws IOException {
-        String nombreGuardado = ClienteModel.getNombreUsuario();
+        this.auditorio = App.auditorio;
+
+        ClienteModel cliente = auditorio.getClienteActual();// se le asigna el valor de cliente que esta actualmente
+        String nombreGuardado = cliente.getNombreUsuario();
         mensajeNombreUsuario.setText(nombreGuardado);
         gridButacas.setDisable(false);
         crearMesas();
@@ -161,6 +167,12 @@ public class VentasDeAsientosController {
 
         filaSeleccionada = -1;
         colSeleccionada = -1;
+    }
+    
+    @FXML
+    public void CerrarSesion() throws IOException{
+        App.setRoot("LoginPanel");
+        
     }
 
 }

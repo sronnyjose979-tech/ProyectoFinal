@@ -1,5 +1,6 @@
 package com.proyectou;
 
+import com.modelo.Auditorio;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,6 +13,7 @@ import java.io.IOException;
  * JavaFX App
  */
 public class App extends Application {
+    public static Auditorio auditorio = new Auditorio();
 
     private static Scene scene;
 
