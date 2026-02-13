@@ -59,9 +59,9 @@ public class Evento {
         return entradasVendidas;
     }
 
-    // ======================
+    // ========================
     // REPORTE
-    // ======================
+    // ========================
 
     public double calcularRecaudacion() {
         double total = 0;
