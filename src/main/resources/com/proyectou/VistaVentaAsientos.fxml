@@ -12,171 +12,158 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.proyectou.VentasDeAsientosController">
+<BorderPane style="-fx-background-color: #0A0C21;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.proyectou.VentasDeAsientosController">
    <right>
-      <VBox prefHeight="635.0" prefWidth="243.0" spacing="20.0" style="-fx-background-color: #0A0C21;" BorderPane.alignment="CENTER">
+      <VBox prefHeight="619.0" prefWidth="321.0" spacing="20.0" style="-fx-background-color: #0A0C21;" BorderPane.alignment="CENTER">
          <children>
-            <HBox maxWidth="-Infinity" prefHeight="100.0" prefWidth="226.0" spacing="20.0" style="-fx-background-color: #0A0C21;">
+            <HBox spacing="20.0" style="-fx-background-color: #0A0C21;">
                <children>
-                  <VBox prefHeight="133.0" prefWidth="240.0" spacing="15.0" style="-fx-background-color: #0A0C21;">
+                  <VBox spacing="15.0" style="-fx-background-color: #0A0C21;">
                      <children>
                         <Label text="Datos de compra" textFill="WHITE">
-                           <padding>
-                              <Insets top="5.0" />
-                           </padding>
+                           <padding><Insets top="5.0" /></padding>
                         </Label>
                         <Label text="Tipo" textFill="WHITE">
-                           <padding>
-                              <Insets top="4.0" />
-                           </padding>
+                           <padding><Insets top="4.0" /></padding>
                         </Label>
                         <Label text="Cliente" textFill="WHITE" />
                         <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Comprar" />
                      </children>
-                     <padding>
-                        <Insets left="4.0" />
-                     </padding>
-                     <HBox.margin>
-                        <Insets right="4.0" />
-                     </HBox.margin>
+                     <padding><Insets left="4.0" /></padding>
                   </VBox>
-                  <VBox prefHeight="133.0" prefWidth="249.0" spacing="10.0" style="-fx-background-color: #0A0C21;">
+                  <VBox spacing="10.0" style="-fx-background-color: #0A0C21;">
                      <children>
-                        <ComboBox id="comboTipo" fx:id="comboTipo" maxWidth="-Infinity" prefWidth="150.0" />
-                        <TextField id="mensajeNombreUsuario" fx:id="mensajeNombreUsuario" />
+                        <ComboBox fx:id="comboTipo" prefWidth="150.0" />
+                        <TextField fx:id="mensajeNombreUsuario" />
                      </children>
-                     <padding>
-                        <Insets right="4.0" top="35.0" />
-                     </padding>
+                     <padding><Insets right="4.0" top="35.0" /></padding>
                   </VBox>
                </children>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
             </HBox>
             <Separator prefWidth="200.0" />
-            <VBox prefHeight="114.0" prefWidth="230.0" spacing="15.0">
+            <VBox spacing="15.0">
                <children>
                   <Label text="Buscar Entrada" textFill="WHITE" />
-                  <TextField maxWidth="-Infinity" prefHeight="26.0" prefWidth="137.0" />
+                  <TextField maxWidth="-Infinity" prefWidth="137.0" />
                   <Button mnemonicParsing="false" text="Buscar" />
                </children>
-               <padding>
-                  <Insets left="4.0" />
-               </padding>
+               <padding><Insets left="4.0" /></padding>
             </VBox>
             <Separator prefWidth="200.0" />
-            <VBox prefHeight="285.0" prefWidth="230.0" spacing="5.0">
+            <VBox spacing="5.0" VBox.vgrow="ALWAYS">
                <children>
                   <Label text="Ticket" textFill="WHITE" />
-                  <Pane prefHeight="256.0" prefWidth="222.0" style="-fx-background-color: white;" />
+                  <Pane prefHeight="256.0" style="-fx-background-color: white;" />
                </children>
-               <padding>
-                  <Insets left="4.0" right="4.0" />
-               </padding>
+               <padding><Insets left="4.0" right="4.0" /></padding>
             </VBox>
          </children>
-         <padding>
-            <Insets bottom="1.0" left="4.0" right="9.0" top="1.0" />
-         </padding>
+         <padding><Insets bottom="10.0" left="4.0" right="9.0" top="10.0" /></padding>
       </VBox>
    </right>
+   
    <center>
-      <VBox prefHeight="635.0" prefWidth="765.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="619.0" prefWidth="786.0" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
-            <Pane prefHeight="279.0" prefWidth="766.0" style="-fx-background-color: #0A0C21;">
+            <StackPane>
                <children>
-                  <Pane layoutX="194.0" layoutY="69.0" prefHeight="59.0" prefWidth="390.0" style="-fx-background-color: #E6B84A;">
+                  <VBox alignment="CENTER" maxWidth="390.0" prefHeight="60.0" style="-fx-background-color: #E6B84A; -fx-background-radius: 5;">
                      <children>
-                        <Label alignment="CENTER" layoutX="102.0" layoutY="5.0" text="ESCENARIO">
-                           <font>
-                              <Font name="System Bold" size="34.0" />
-                           </font>
+                        <Label text="ESCENARIO">
+                           <font><Font name="System Bold" size="34.0" /></font>
                         </Label>
                      </children>
-                  </Pane>
+                  </VBox>
                </children>
-            </Pane>
-            <Pane prefHeight="527.0" prefWidth="766.0" style="-fx-background-color: #0A0C21;">
+            </StackPane>
+
+            <HBox alignment="CENTER" prefHeight="402.0" prefWidth="746.0" spacing="10.0">
                <children>
-                  <Label layoutX="166.0" layoutY="31.0" text="A" textFill="#c4c0c0" />
-                  <Label layoutX="166.0" layoutY="69.0" text="B" textFill="#c4c0c0" />
-                  <Label layoutX="166.0" layoutY="103.0" text="C" textFill="#c4c0c0" />
-                  <Label layoutX="165.0" layoutY="141.0" prefHeight="17.0" prefWidth="9.0" text="D" textFill="#c4c0c0" />
-                  <Label layoutX="166.0" layoutY="182.0" text="E" textFill="#c4c0c0" />
-                  <Label layoutX="166.0" layoutY="223.0" text="F" textFill="#c4c0c0" />
-                  <Label layoutX="165.0" layoutY="252.0" text="G" textFill="#c4c0c0" />
-                  <Label layoutX="165.0" layoutY="287.0" text="H" textFill="#c4c0c0" />
-                  <Label layoutX="168.0" layoutY="327.0" text="I" textFill="#c4c0c0" />
-                  <Label layoutX="167.0" layoutY="363.0" text="J" textFill="#c4c0c0" />
-                  <GridPane id="gridButacas" fx:id="gridButacas" hgap="5.0" layoutX="177.0" layoutY="23.0" prefHeight="364.0" prefWidth="411.0" style="-fx-background-color: #0A0C21;" vgap="5.0">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                  </GridPane>
-                  <Separator layoutX="761.0" layoutY="-234.0" orientation="VERTICAL" prefHeight="706.0" prefWidth="15.0" />
-                  <Label layoutX="595.0" layoutY="25.0" text="A" textFill="#c4c0c0" />
-                  <Label layoutX="595.0" layoutY="63.0" text="B" textFill="#c4c0c0" />
-                  <Label layoutX="595.0" layoutY="97.0" text="C" textFill="#c4c0c0" />
-                  <Label layoutX="594.0" layoutY="135.0" prefHeight="17.0" prefWidth="9.0" text="D" textFill="#c4c0c0" />
-                  <Label layoutX="595.0" layoutY="176.0" text="E" textFill="#c4c0c0" />
-                  <Label layoutX="595.0" layoutY="217.0" text="F" textFill="#c4c0c0" />
-                  <Label layoutX="594.0" layoutY="246.0" text="G" textFill="#c4c0c0" />
-                  <Label layoutX="594.0" layoutY="281.0" text="H" textFill="#c4c0c0" />
-                  <Label layoutX="597.0" layoutY="321.0" text="I" textFill="#c4c0c0" />
-                  <Label layoutX="596.0" layoutY="357.0" text="J" textFill="#c4c0c0" />
-                  <Label layoutX="196.0" layoutY="9.0" text="1" textFill="#c4c0c0" />
-                  <Label layoutX="234.0" layoutY="9.0" text="2" textFill="#c4c0c0" />
-                  <Label layoutX="276.0" layoutY="9.0" text="3" textFill="#c4c0c0" />
-                  <Label layoutX="317.0" layoutY="9.0" text="4" textFill="#c4c0c0" />
-                  <Label layoutX="357.0" layoutY="9.0" text="5" textFill="#c4c0c0" />
-                  <Label layoutX="402.0" layoutY="9.0" text="6" textFill="#c4c0c0" />
-                  <Label layoutX="447.0" layoutY="9.0" text="7" textFill="#c4c0c0" />
-                  <Label layoutX="486.0" layoutY="9.0" text="8" textFill="#c4c0c0" />
-                  <Label layoutX="528.0" layoutY="9.0" text="9" textFill="#c4c0c0" />
-                  <Label layoutX="562.0" layoutY="9.0" text="10" textFill="#c4c0c0" />
+                  <VBox alignment="CENTER" spacing="19.0">
+                     <children>
+                        <Label text="A" textFill="#c4c0c0" /><Label text="B" textFill="#c4c0c0" /><Label text="C" textFill="#c4c0c0" />
+                        <Label text="D" textFill="#c4c0c0" /><Label text="E" textFill="#c4c0c0" /><Label text="F" textFill="#c4c0c0" />
+                        <Label text="G" textFill="#c4c0c0" /><Label text="H" textFill="#c4c0c0" /><Label text="I" textFill="#c4c0c0" />
+                        <Label text="J" textFill="#c4c0c0" />
+                     </children>
+                  </VBox>
+
+                  <VBox alignment="CENTER" prefHeight="395.0" prefWidth="395.0" spacing="5.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="38.0" prefWidth="395.0" spacing="25.0">
+                           <children>
+                              <Label text="1" textFill="#c4c0c0" /><Label text="2" textFill="#c4c0c0" /><Label text="3" textFill="#c4c0c0" />
+                              <Label text="4" textFill="#c4c0c0" /><Label text="5" textFill="#c4c0c0" /><Label text="6" textFill="#c4c0c0" />
+                              <Label text="7" textFill="#c4c0c0" /><Label text="8" textFill="#c4c0c0" /><Label text="9" textFill="#c4c0c0" />
+                              <Label text="10" textFill="#c4c0c0" />
+                           </children>
+                           <padding><Insets bottom="5.0" /></padding>
+                        </HBox>
+                        
+                        <GridPane fx:id="gridButacas" alignment="CENTER" hgap="5.0" vgap="5.0">
+                          <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="35.0" prefWidth="35.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="35.0" prefWidth="35.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="35.0" prefWidth="35.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="35.0" prefWidth="35.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="35.0" prefWidth="35.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="35.0" prefWidth="35.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="35.0" prefWidth="35.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="35.0" prefWidth="35.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="35.0" prefWidth="35.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="35.0" prefWidth="35.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                        </GridPane>
+                     </children>
+                  </VBox>
+
+                  <VBox alignment="CENTER" spacing="19.0">
+                     <children>
+                        <Label text="A" textFill="#c4c0c0" /><Label text="B" textFill="#c4c0c0" /><Label text="C" textFill="#c4c0c0" />
+                        <Label text="D" textFill="#c4c0c0" /><Label text="E" textFill="#c4c0c0" /><Label text="F" textFill="#c4c0c0" />
+                        <Label text="G" textFill="#c4c0c0" /><Label text="H" textFill="#c4c0c0" /><Label text="I" textFill="#c4c0c0" />
+                        <Label text="J" textFill="#c4c0c0" />
+                     </children>
+                  </VBox>
                </children>
-            </Pane>
-            <Pane prefHeight="177.0" prefWidth="766.0" style="-fx-background-color: #0A0C21;">
+            </HBox>
+
+            <HBox alignment="CENTER" spacing="40.0">
                <children>
-                  <Pane layoutX="396.0" layoutY="17.0" prefHeight="26.0" prefWidth="34.0" style="-fx-background-color: red;" />
-                  <Pane layoutX="187.0" layoutY="15.0" prefHeight="26.0" prefWidth="34.0" style="-fx-background-color: blue;" />
-                  <Pane layoutX="271.0" layoutY="15.0" prefHeight="26.0" prefWidth="34.0" style="-fx-background-color: green;" />
-                  <Button id="btnReserva" fx:id="btnReserva" layoutX="639.0" layoutY="8.0" mnemonicParsing="false" onAction="#reservacion" prefHeight="40.0" prefWidth="105.0" text="Reservar">
-                     <font>
-                        <Font name="System Bold" size="19.0" />
-                     </font>
+                  <HBox alignment="CENTER" spacing="10.0">
+                     <children>
+                        <Pane prefHeight="40.0" prefWidth="57.0" style="-fx-background-color: blue;" />
+                        <Label text="Libre" textFill="WHITE" />
+                        <Pane prefHeight="40.0" prefWidth="54.0" style="-fx-background-color: green;" />
+                        <Label text="Seleccionado" textFill="WHITE" />
+                        <Pane prefHeight="40.0" prefWidth="60.0" style="-fx-background-color: red;" />
+                        <Label text="Reservado" textFill="WHITE" />
+                     </children>
+                  </HBox>
+                  <Button fx:id="btnReserva" onAction="#reservacion" prefHeight="40.0" prefWidth="120.0" text="Reservar">
+                     <font><Font name="System Bold" size="18.0" /></font>
                   </Button>
-                  <Label layoutX="315.0" layoutY="21.0" text="Seleccionado" textFill="WHITE" />
-                  <Label layoutX="441.0" layoutY="20.0" text="Reservado" textFill="WHITE" />
-                  <Label layoutX="233.0" layoutY="20.0" text="Libre" textFill="WHITE" />
                </children>
-            </Pane>
+               <padding><Insets top="20.0" /></padding>
+            </HBox>
          </children>
+         <padding><Insets bottom="20.0" left="20.0" right="20.0" top="20.0" /></padding>
       </VBox>
    </center>
 </BorderPane>
