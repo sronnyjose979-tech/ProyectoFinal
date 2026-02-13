@@ -32,7 +32,7 @@
                            <padding><Insets top="4.0" /></padding>
                         </Label>
                         <Label text="Cliente" textFill="WHITE" />
-                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Comprar" />
+                        <Button id="btnComprar" fx:id="btnComprar" onAction="#coordinadorDeBoton" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Comprar" />
                      </children>
                      <padding><Insets left="4.0" /></padding>
                   </VBox>
@@ -163,7 +163,7 @@
                         <Label text="Reservado" textFill="WHITE" />
                      </children>
                   </HBox>
-                  <Button fx:id="btnReserva" onAction="#coordinadorDeBoton" prefHeight="40.0" prefWidth="120.0" text="Reservar">
+                  <Button fx:id="btnReserva" onAction="#reservacion" prefHeight="40.0" prefWidth="120.0" text="Reservar">
                      <font><Font name="System Bold" size="18.0" /></font>
                   </Button>
                </children>

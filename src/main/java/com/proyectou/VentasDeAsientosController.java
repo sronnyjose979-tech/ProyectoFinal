@@ -40,6 +40,9 @@ public class VentasDeAsientosController {
 
     @FXML
     public TextArea txtAreaTicket;
+    
+    @FXML
+    public Button btnComprar;
 
     private static final int FILAS = 10;
     private static final int COLUMNAS = 10;
@@ -208,7 +211,7 @@ public class VentasDeAsientosController {
     public void coordinadorDeBoton() throws IOException {
       
         creacionDeEntradasConElComboBox();
-        reservacion();
+        
     }
 
     @FXML
