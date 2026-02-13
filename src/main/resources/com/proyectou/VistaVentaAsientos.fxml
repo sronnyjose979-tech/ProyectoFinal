@@ -12,13 +12,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane style="-fx-background-color: #0A0C21;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.proyectou.VentasDeAsientosController">
    <right>
-      <VBox prefWidth="243.0" spacing="20.0" style="-fx-background-color: #0A0C21;" BorderPane.alignment="CENTER">
+      <VBox prefHeight="619.0" prefWidth="321.0" spacing="20.0" style="-fx-background-color: #0A0C21;" BorderPane.alignment="CENTER">
          <children>
             <HBox spacing="20.0" style="-fx-background-color: #0A0C21;">
                <children>
@@ -67,7 +67,7 @@
    </right>
    
    <center>
-      <VBox alignment="CENTER" spacing="30.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="619.0" prefWidth="786.0" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
             <StackPane>
                <children>
@@ -81,7 +81,7 @@
                </children>
             </StackPane>
 
-            <HBox alignment="CENTER" spacing="10.0">
+            <HBox alignment="CENTER" prefHeight="402.0" prefWidth="746.0" spacing="10.0">
                <children>
                   <VBox alignment="CENTER" spacing="19.0">
                      <children>
@@ -92,9 +92,9 @@
                      </children>
                   </VBox>
 
-                  <VBox alignment="CENTER" spacing="5.0">
+                  <VBox alignment="CENTER" prefHeight="395.0" prefWidth="395.0" spacing="5.0">
                      <children>
-                        <HBox alignment="CENTER" spacing="25.0">
+                        <HBox alignment="CENTER" prefHeight="38.0" prefWidth="395.0" spacing="25.0">
                            <children>
                               <Label text="1" textFill="#c4c0c0" /><Label text="2" textFill="#c4c0c0" /><Label text="3" textFill="#c4c0c0" />
                               <Label text="4" textFill="#c4c0c0" /><Label text="5" textFill="#c4c0c0" /><Label text="6" textFill="#c4c0c0" />
@@ -148,11 +148,11 @@
                <children>
                   <HBox alignment="CENTER" spacing="10.0">
                      <children>
-                        <Pane prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: blue;" />
+                        <Pane prefHeight="40.0" prefWidth="57.0" style="-fx-background-color: blue;" />
                         <Label text="Libre" textFill="WHITE" />
-                        <Pane prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: green;" />
+                        <Pane prefHeight="40.0" prefWidth="54.0" style="-fx-background-color: green;" />
                         <Label text="Seleccionado" textFill="WHITE" />
-                        <Pane prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red;" />
+                        <Pane prefHeight="40.0" prefWidth="60.0" style="-fx-background-color: red;" />
                         <Label text="Reservado" textFill="WHITE" />
                      </children>
                   </HBox>
