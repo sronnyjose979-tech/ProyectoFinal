@@ -12,9 +12,13 @@ public class EntradaEstudiante extends Entrada {
 
     private static final double DESCUENTO_PORCENTAJE = 0.20;
 
+    public EntradaEstudiante(String nombreCliente, int fila, int columna, Evento evento) {
+        super(nombreCliente, fila, columna, evento);
+    }
+
     @Override
     public String tipoEntrada() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "Estudiantil";
     }
 
     @Override
@@ -24,13 +28,13 @@ public class EntradaEstudiante extends Entrada {
 
     @Override
     public double calcularPrecio() {
-        return super.calcularPrecio(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        double precioBase = this.evento.getPrecioBase();
+        return precioBase - DESCUENTO_PORCENTAJE;    
     }
 
     @Override
     public String getDescripcionVenta() {
         return super.getDescripcionVenta(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
     }
-    
 
 }

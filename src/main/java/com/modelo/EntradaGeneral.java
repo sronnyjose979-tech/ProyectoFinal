@@ -10,9 +10,18 @@ package com.modelo;
  */
 public class EntradaGeneral extends Entrada {
 
+    public EntradaGeneral(String nombreCliente, int fila, int columna, Evento evento) {
+        super(nombreCliente, fila, columna, evento);
+    }
+
+    /*  public EntradaGeneral(String nombreCliente, Evento evento, int fila, int columna) {
+        super(nombreCliente, evento, fila, columna);
+    }
+     */
     @Override
     public String tipoEntrada() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        return "GENERAL";
     }
 
     @Override
@@ -22,12 +31,14 @@ public class EntradaGeneral extends Entrada {
 
     @Override
     public double calcularPrecio() {
-        return super.calcularPrecio(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        return this.evento.getPrecioBase(); //Solo taje el precio
     }
 
-    @Override
-    public String getDescripcionVenta() {
+        @Override
+        public String getDescripcionVenta
+        
+            () {
         return super.getDescripcionVenta(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
-    }
+        }
 
-}
+    }

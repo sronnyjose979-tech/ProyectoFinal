@@ -10,9 +10,13 @@ package com.modelo;
  */
 public class EntradaVip extends Entrada {
 
+    public EntradaVip(String nombreCliente, int fila, int columna, Evento evento) {
+        super(nombreCliente, fila, columna, evento);
+    }
+
     @Override
     public String tipoEntrada() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "VIP";
     }
 
     @Override
@@ -22,7 +26,7 @@ public class EntradaVip extends Entrada {
 
     @Override
     public double calcularPrecio() {
-        return super.calcularPrecio(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        return this.evento.getPrecioBase()* 1.50; 
     }
 
     @Override

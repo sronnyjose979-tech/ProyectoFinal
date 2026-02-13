@@ -7,6 +7,15 @@ public class Auditorio {
     private boolean[][] asientos;
     private ArrayList<ClienteModel> Clientes;// se crea un arrayList de cliente en el auditorio
     private ClienteModel clienteActual;
+    public Evento evento;
+
+    public Evento getEvento() {
+        return evento;
+    }
+
+    public void setEvento(Evento evento) {
+        this.evento = evento;
+    }
 
     public Auditorio() {
         asientos = new boolean[10][10]; // matriz obligatoria del proyecto
