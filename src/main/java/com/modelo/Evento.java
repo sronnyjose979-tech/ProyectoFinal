@@ -19,7 +19,7 @@ public class Evento {
         this.entradasVendidas = new ArrayList<>();
     }
 
-    // ======================
+    // ===========================
     // GETTERS Y SETTERS
     // ======================
 
