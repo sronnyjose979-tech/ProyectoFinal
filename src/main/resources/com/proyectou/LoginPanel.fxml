@@ -63,7 +63,7 @@
                               <TextField fx:id="txtRegistarUsuario" promptText="Ej.Juan,Russell" />
                               <Label text="Contraseña Nueva" textFill="WHITE" />
                               <PasswordField fx:id="txtContraseñaNueva" />
-                              <Button fx:id="btnngresarAdmin" mnemonicParsing="false" onAction="#registrarUsuario" text="Registrarme" />
+                              <Button fx:id="btnngresarAdmin" mnemonicParsing="false" onAction="#btnRegistrarUsuario" text="Registrarme" />
                            </children>
                            <padding>
                               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
