@@ -14,6 +14,7 @@ public class Administrador {
     private String contraseñaAdmin;
 
     public Administrador(String nombreAdministrador, String contraseñaAdmin) {
+
         this.nombreAdministrador = nombreAdministrador;
         this.contraseñaAdmin = contraseñaAdmin;
     }

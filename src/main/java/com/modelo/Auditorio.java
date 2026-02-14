@@ -8,7 +8,7 @@ public class Auditorio {
     private ArrayList<ClienteModel> Clientes;// se crea un arrayList de cliente en el auditorio
     private ClienteModel clienteActual;
     public Evento evento;
-    
+    private Administrador admin;
 
     public Evento getEvento() {
         return evento;
@@ -28,9 +28,15 @@ public class Auditorio {
         Clientes.add(cliente);
 
     }
-    public void cargarCliente(ClienteModel cliente){
-        this.clienteActual=cliente;
-        
+
+    public Administrador cargarAdmin() {
+        return admin=new Administrador("a", "1");
+
+    }
+
+    public void cargarCliente(ClienteModel cliente) {
+        this.clienteActual = cliente;
+
     }
 
     public ClienteModel getClienteActual() {
@@ -52,7 +58,6 @@ public class Auditorio {
     public void setClientes(ArrayList<ClienteModel> Clientes) {
         this.Clientes = Clientes;
     }
-    
 
     public void reiniciarAsientos() {
         for (int i = 0; i < asientos.length; i++) {
