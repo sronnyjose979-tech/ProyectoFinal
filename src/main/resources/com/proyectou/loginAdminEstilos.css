@@ -1,0 +1,66 @@
+.root-pane {
+    -fx-background-color: #0A0C21;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+.login-card {
+    -fx-background-color: #11142B;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 25, 0, 0, 10);
+    -fx-border-color: #D4AF37;
+    -fx-border-width: 1;
+    -fx-border-radius: 15;
+}
+
+.titulo-principal {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.label-form {
+    -fx-text-fill: #A0A5C0;
+    -fx-font-size: 13px;
+}
+
+.text-field, .password-field {
+    -fx-background-color: #1A1E3F;
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+    -fx-border-color: #2D325A;
+    -fx-border-radius: 8;
+    -fx-padding: 12;
+    -fx-prompt-text-fill: #555A7D;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #D4AF37;
+    -fx-background-color: #1E234A;
+    -fx-effect: dropshadow(three-pass-box, rgba(212, 175, 55, 0.2), 5, 0, 0, 0);
+}
+
+.btn-principal {
+    -fx-background-color: linear-gradient(to bottom right, #D4AF37, #B8860B);
+    -fx-text-fill: #0A0C21;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-background-radius: 25;
+    -fx-cursor: hand;
+}
+
+.btn-principal:hover {
+    -fx-background-color: linear-gradient(to bottom right, #FCECAE, #D4AF37);
+    -fx-effect: dropshadow(three-pass-box, rgba(212, 175, 55, 0.4), 15, 0, 0, 0);
+}
+
+.btn-volver {
+    -fx-background-color: transparent;
+    -fx-text-fill: #6A7095;
+    -fx-font-size: 12px;
+    -fx-cursor: hand;
+    -fx-underline: true;
+}
+
+.btn-volver:hover {
+    -fx-text-fill: #D4AF37;
+}

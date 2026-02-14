@@ -59,9 +59,13 @@ public class AdminLoginController implements Initializable {
                 mostrarAlerta.mostrarAlerta("Error", "Nombre o contraseña incorrectos", Alert.AlertType.ERROR);
             }
         } catch (NullPointerException e) {
-            mostrarAlerta.mostrarAlerta("Error", "No hay administrador registrado contacte con soporte", Alert.AlertType.ERROR);
+            mostrarAlerta.mostrarAlerta("Error", "No hay administradoFr registrado contacte con soporte", Alert.AlertType.ERROR);
 
         }
+    }
+
+    public void btnregresarInicio() throws IOException {
+        App.setRoot("LoginPanel");
     }
 
 }
