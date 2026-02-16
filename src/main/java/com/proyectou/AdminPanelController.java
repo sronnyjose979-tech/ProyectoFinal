@@ -35,6 +35,7 @@ public class AdminPanelController {
             double precio = Double.parseDouble(txtPrecioBase.getText());
             
             eventoActual = new Evento(nombre, fecha, precio);
+            App.auditorio.setEvento(eventoActual);//aca se crea el auditorio
             
             mostrarAlerta("Evento creado","El evento se creo correctaamente.", Alert.AlertType.INFORMATION);
             
