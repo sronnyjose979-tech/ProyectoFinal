@@ -66,13 +66,7 @@ public class Auditorio {
 
     public void reiniciarAsientos() {
 
-       // butacas.crearMesas();
-
-        for (int i = 0; i < asientos.length; i++) {
-            for (int j = 0; j < asientos[i].length; j++) {
-                asientos[i][j] = false;
-            }
-        }
+      butacas.reiniciarButacas();
     }
     
      public void crearEventoPorDefecto() {
