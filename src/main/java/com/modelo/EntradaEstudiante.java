@@ -1,40 +1,28 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.modelo;
 
-/**
- *
- * @author sronn
- */
 public class EntradaEstudiante extends Entrada {
 
-    private static final double DESCUENTO_PORCENTAJE = 0.20;
-
-    public EntradaEstudiante(String nombreCliente, int fila, int columna, Evento evento) {
-        super(nombreCliente, fila, columna, evento);
+    public EntradaEstudiante(String nombreCliente, Evento evento, double precioFinal, int cantidad, String detalleAsientos) {
+        super(nombreCliente, evento, precioFinal, cantidad, detalleAsientos);
     }
 
     @Override
     public String tipoEntrada() {
-        return "Estudiantil";
+        return "ESTUDIANTIL";
     }
 
     @Override
     public String generarTicket() {
-        return super.generarTicket(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        return super.generarTicket(); 
     }
 
     @Override
     public double calcularPrecio() {
-        double precioBase = this.evento.getPrecioBase();
-        return precioBase - DESCUENTO_PORCENTAJE;    
+        return this.precioFinalCalculado; 
     }
 
     @Override
     public String getDescripcionVenta() {
-        return super.getDescripcionVenta(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        return super.getDescripcionVenta();
     }
-
 }
