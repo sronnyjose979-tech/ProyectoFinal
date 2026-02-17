@@ -22,7 +22,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("LoginPanel"), 950, 700);
-       // auditorio.setEvento(new Evento("asdf", "asdf", 1000)); SOLO USAR SI NO HAY EVENTO
+       //
         stage.setScene(scene);
         stage.show();
     }

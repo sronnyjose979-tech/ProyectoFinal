@@ -1,0 +1,82 @@
+/* --- Estilos Generales --- */
+.root {
+    -fx-background-color: #0A0C21;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+/* --- Escenario y Layout --- */
+.escenario-container {
+    -fx-background-color: linear-gradient(to bottom, #D4AF37, #B8860B);
+    -fx-background-radius: 0 0 40 40;
+    -fx-effect: dropshadow(three-pass-box, rgba(212, 175, 55, 0.4), 10, 0, 0, 5);
+}
+
+.label-guia {
+    -fx-text-fill: #6A7095;
+    -fx-font-weight: bold;
+}
+
+/* --- Botones --- */
+.btn-principal {
+    -fx-background-color: linear-gradient(to bottom right, #D4AF37, #B8860B);
+    -fx-text-fill: #0A0C21;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+.btn-principal:hover {
+    -fx-background-color: linear-gradient(to bottom right, #FCECAE, #D4AF37);
+}
+
+.btn-cerrar {
+    -fx-background-color: transparent;
+    -fx-border-color: #4A4E69;
+    -fx-text-fill: #A0A5C0;
+    -fx-border-radius: 5;
+    -fx-cursor: hand;
+}
+
+/* --- Campos de Texto y ComboBox --- */
+.text-field, .combo-box {
+    -fx-background-color: #1A1E3F;
+    -fx-text-fill: white;
+    -fx-border-color: #2D325A;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: white;
+    -fx-background-color: #1A1E3F;
+}
+
+/* --- Butacas --- */
+.button-butaca {
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-border-width: 1;
+}
+
+.butaca-libre {
+    -fx-background-color: #0000FF;
+    -fx-border-color: #2D325A;
+}
+
+.butaca-seleccionada {
+    -fx-background-color: #008000;
+    -fx-border-color: white;
+}
+
+.butaca-reservada {
+    -fx-background-color: #FF0000;
+    -fx-opacity: 0.6;
+}
+
+/* --- Ticket --- */
+.text-area {
+    -fx-control-inner-background: #11142B;
+    -fx-text-fill: #D4AF37;
+    -fx-font-family: "Consolas", monospace;
+    -fx-border-color: #2D325A;
+}

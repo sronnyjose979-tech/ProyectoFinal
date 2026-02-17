@@ -1,6 +1,10 @@
 package com.modelo;
 
+import static UtilsAlertas.mostrarAlerta.mostrarAlerta;
+import static com.proyectou.App.auditorio;
+import com.proyectou.VentasDeAsientosController;
 import java.util.ArrayList;
+import javafx.scene.control.Alert;
 
 public class Auditorio {
 
@@ -9,6 +13,7 @@ public class Auditorio {
     private ClienteModel clienteActual;
     public Evento evento;
     private Administrador admin;
+    VentasDeAsientosController butacas;
 
     public Evento getEvento() {
         return evento;
@@ -30,7 +35,7 @@ public class Auditorio {
     }
 
     public Administrador cargarAdmin() {
-        return admin=new Administrador("a", "1");
+        return admin = new Administrador("a", "1");
 
     }
 
@@ -60,10 +65,19 @@ public class Auditorio {
     }
 
     public void reiniciarAsientos() {
+
+       // butacas.crearMesas();
+
         for (int i = 0; i < asientos.length; i++) {
             for (int j = 0; j < asientos[i].length; j++) {
                 asientos[i][j] = false;
             }
         }
+    }
+    
+     public void crearEventoPorDefecto() {
+        mostrarAlerta("Aviso", "Se ha creado un evento de prueba!", Alert.AlertType.WARNING);
+
+        auditorio.setEvento(new Evento("EVENTO DE PRUEBA", "01/01/2001", 1000)); //SOLO USAR SI NO HAY EVENTO
     }
 }

@@ -1,13 +1,15 @@
 package com.proyectou;
 
+import static UtilsAlertas.mostrarAlerta.mostrarAlerta;
 import com.modelo.Evento;
 import com.modelo.Auditorio;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TextField; 
+import javafx.scene.control.TextField;
 
 public class AdminPanelController {
-      @FXML
+
+    @FXML
     private TextField txtNombreEvento;
 
     @FXML
@@ -15,31 +17,32 @@ public class AdminPanelController {
 
     @FXML
     private TextField txtPrecioBase;
-    
+
     private Auditorio auditorio;
     private Evento eventoActual;
-    
-    public void  initialize(){
+    VentasDeAsientosController butacas;
+
+    public void initialize() {
         auditorio = new Auditorio();
-        
+
     }
-    
+
     ///
     ///GESTOR DE LOS EVENTO
     ///
     @FXML
-    private void crearEvento(){
+    private void crearEvento() {
         try {
             String nombre = txtNombreEvento.getText();
             String fecha = txtFechaEvento.getText();
             double precio = Double.parseDouble(txtPrecioBase.getText());
-            
+
             eventoActual = new Evento(nombre, fecha, precio);
             App.auditorio.setEvento(eventoActual);//aca se crea el auditorio
-            
-            mostrarAlerta("Evento creado","El evento se creo correctaamente.", Alert.AlertType.INFORMATION);
-            
-        } catch(NumberFormatException e){
+
+            mostrarAlerta("Evento creado", "El evento se creo correctaamente.", Alert.AlertType.INFORMATION);
+
+        } catch (NumberFormatException e) {
             mostrarAlerta("Erorr", "El precio debe de ser un numero", Alert.AlertType.ERROR);
         } catch (Exception e) {
             mostrarAlerta("Error",
@@ -47,8 +50,11 @@ public class AdminPanelController {
                     Alert.AlertType.ERROR);
         }
     }
+
+   
+
     @FXML
-     private void editarEvento() {
+    private void editarEvento() {
         if (eventoActual == null) {
             mostrarAlerta("Aviso",
                     "No hay evento para editar.",
@@ -75,7 +81,7 @@ public class AdminPanelController {
     }
 
     @FXML
-     private void eliminarEvento() {
+    private void eliminarEvento() {
         if (eventoActual == null) {
             mostrarAlerta("Aviso",
                     "No hay evento para eliminar.",
@@ -90,32 +96,30 @@ public class AdminPanelController {
                 "El evento fue eliminado correctamente.",
                 Alert.AlertType.INFORMATION);
     }
-         
+
     ///
     /// FIN GESTOR DE LOS EVENTO
     ///
-     
-        //==========================
-     
+    //==========================
     /// 
     /// Funciones administrativas
     ///
- @FXML
-private void verReporte() {
-    if (eventoActual == null) {
-        mostrarAlerta("Reporte",
-                "No hay evento activo.",
+    @FXML
+    private void verReporte() {
+        if (eventoActual == null) {
+            mostrarAlerta("Reporte",
+                    "No hay evento activo.",
+                    Alert.AlertType.INFORMATION);
+            return;
+        }
+
+        double total = eventoActual.calcularRecaudacion();
+
+        mostrarAlerta("Reporte de Ventas",
+                "Total recaudado para el evento \"" + eventoActual.getNombre()
+                + "\": ₡" + total,
                 Alert.AlertType.INFORMATION);
-        return;
     }
-
-    double total = eventoActual.calcularRecaudacion();
-
-    mostrarAlerta("Reporte de Ventas",
-            "Total recaudado para el evento \"" + eventoActual.getNombre() +
-            "\": ₡" + total,
-            Alert.AlertType.INFORMATION);
-}
 
     @FXML
     private void reiniciarSala() {
@@ -125,19 +129,19 @@ private void verReporte() {
                 "Todos los asientos fueron liberados.",
                 Alert.AlertType.INFORMATION);
     }
+
     @FXML
-private void regresarLogin() {
-    try {
-        App.setRoot("loginPanel");
-    } catch (Exception e) {
-        System.out.println("Error al regresar al login: " + e.getMessage());
+    private void regresarLogin() {
+        try {
+            App.setRoot("loginPanel");
+        } catch (Exception e) {
+            System.out.println("Error al regresar al login: " + e.getMessage());
+        }
     }
-}
 
     // =========================
     // Métodos auxiliares
     // =========================
-
     private void limpiarCampos() {
         txtNombreEvento.clear();
         txtFechaEvento.clear();
@@ -151,7 +155,8 @@ private void regresarLogin() {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
+
+    private void cargarEstadosDesdeArchivo() {
+        // FALTA LOGICA
+    }
 }
-
-
-

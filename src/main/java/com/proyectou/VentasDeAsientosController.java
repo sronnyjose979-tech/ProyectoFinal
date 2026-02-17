@@ -40,7 +40,7 @@ public class VentasDeAsientosController {
 
     @FXML
     public TextArea txtAreaTicket;
-    
+
     @FXML
     public Button btnComprar;
 
@@ -83,7 +83,7 @@ public class VentasDeAsientosController {
                 Button btn = new Button();
                 btn.setPrefSize(34, 25);
                 botones[i][j] = btn;
-                estados[i][j] = LIBRE;
+                //estados[i][j] = LIBRE;
 
                 final int fila = i;
                 final int col = j;
@@ -201,7 +201,6 @@ public class VentasDeAsientosController {
                 }
 
             }
-            //  txtAreaTicket.setText(asientosTexto.toString());
 
         }
         return asientosTexto.toString();
@@ -209,9 +208,14 @@ public class VentasDeAsientosController {
 
     @FXML
     public void coordinadorDeBoton() throws IOException {
-      
+
         creacionDeEntradasConElComboBox();
-        
+        guardarEstadosEnArchivo();
+
+    }
+
+    private void guardarEstadosEnArchivo() {
+        // tengo que hacer logica de guardado
     }
 
     @FXML
@@ -220,6 +224,7 @@ public class VentasDeAsientosController {
         if (auditorio.getEvento() == null) {
             mostrarAlerta("Aviso", "El auditorio no tenía evento.", Alert.AlertType.WARNING);
 
+            auditorio.crearEventoPorDefecto();
         }
 
         String tipoSeleccionado = comboTipo.getValue();

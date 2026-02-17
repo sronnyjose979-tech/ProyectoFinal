@@ -39,8 +39,8 @@ public abstract class Entrada implements IVendible {
         sb.append("==========================================\n");
 
         // Citas a errores corregidos:
-        sb.append(" Cliente      : ").append(this.nombreCliente).append("\n"); // Soluciona
-        sb.append(" Evento       : ").append(this.evento.getNombre()).append("\n"); // Soluciona
+        sb.append(" Cliente      : ").append(this.nombreCliente).append("\n"); 
+        sb.append(" Evento       : ").append(this.evento.getNombre()).append("\n"); 
         sb.append(" Fecha Evento : ").append(this.evento.getFecha()).append("\n");
         sb.append(" Asiento      : Fila ").append(fila + 1).append(" - Col ").append(columna + 1).append("\n");
         sb.append(" Precio Final : $").append(String.format("%.2f", calcularPrecio())).append("\n");
