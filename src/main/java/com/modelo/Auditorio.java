@@ -11,20 +11,24 @@ public class Auditorio {
     private boolean[][] asientos;
     private ArrayList<ClienteModel> Clientes;// se crea un arrayList de cliente en el auditorio
     private ClienteModel clienteActual;
-    public Evento evento;
+    public ArrayList<Evento> eventoArrayList;
+    public Evento eventoActual;
     private Administrador admin;
 
     public Evento getEvento() {
-        return evento;
+        return eventoActual;
     }
 
     public void setEvento(Evento evento) {
-        this.evento = evento;
+        this.eventoActual = evento;
     }
 
     public Auditorio() {
         asientos = new boolean[10][10]; // matriz obligatoria del proyecto
         Clientes = new ArrayList<>();
+        eventoActual = null;
+        eventoArrayList = new ArrayList<>();
+
         clienteActual = null;
     }
 
@@ -66,6 +70,24 @@ public class Auditorio {
     public void reiniciarAsientos() {
 
         VentasDeAsientosController.reiniciarButacas();
+    }
+
+    public void agregarEvento(Evento evento) {
+        eventoArrayList.add(evento);
+
+    }
+
+    public void cargarEvento(Evento evento) {
+        this.eventoActual = evento;
+
+    }
+
+    public ArrayList<Evento> getEventoArrayList() {
+        return eventoArrayList;
+    }
+
+    public void setEventoArrayList(ArrayList<Evento> eventoArrayList) {
+        this.eventoArrayList = eventoArrayList;
     }
 
     public void crearEventoPorDefecto() {

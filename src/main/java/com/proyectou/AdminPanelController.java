@@ -3,11 +3,14 @@ package com.proyectou;
 import static UtilsAlertas.mostrarAlerta.mostrarAlerta;
 import com.modelo.Evento;
 import com.modelo.Auditorio;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 
-public class AdminPanelController {
+public class AdminPanelController implements Initializable {
 
     @FXML
     private TextField txtNombreEvento;
@@ -22,10 +25,6 @@ public class AdminPanelController {
     private Evento eventoActual;
     VentasDeAsientosController butacas;
 
-    public void initialize() {
-        this.auditorio = App.auditorio;
-    }
-
     ///
     ///GESTOR DE LOS EVENTO
     ///
@@ -36,10 +35,12 @@ public class AdminPanelController {
             String fecha = txtFechaEvento.getText();
             double precio = Double.parseDouble(txtPrecioBase.getText());
 
-            eventoActual = new Evento(nombre, fecha, precio);
-            App.auditorio.setEvento(eventoActual);//aca se crea el auditorio
+            Evento eventoNuevo = new Evento(nombre, fecha, precio);
+            auditorio.agregarEvento(eventoNuevo);//aca se crea el auditorio
 
             mostrarAlerta("Evento creado", "El evento se creo correctaamente.", Alert.AlertType.INFORMATION);
+            auditorio.cargarEvento(eventoNuevo);
+            limpiarCampos();
 
         } catch (NumberFormatException e) {
             mostrarAlerta("Erorr", "El precio debe de ser un numero", Alert.AlertType.ERROR);
@@ -51,7 +52,7 @@ public class AdminPanelController {
     }
 
     @FXML
-    private void editarEvento() {
+    private void editarEvento() {        
         if (eventoActual == null) {
             mostrarAlerta("Aviso",
                     "No hay evento para editar.",
@@ -155,5 +156,10 @@ public class AdminPanelController {
 
     private void cargarEstadosDesdeArchivo() {
         // FALTA LOGICA
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        this.auditorio = App.auditorio;
     }
 }
