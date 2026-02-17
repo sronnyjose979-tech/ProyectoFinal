@@ -13,7 +13,6 @@ public class Auditorio {
     private ClienteModel clienteActual;
     public Evento evento;
     private Administrador admin;
-    VentasDeAsientosController butacas;
 
     public Evento getEvento() {
         return evento;
@@ -66,10 +65,10 @@ public class Auditorio {
 
     public void reiniciarAsientos() {
 
-      butacas.reiniciarButacas();
+        VentasDeAsientosController.reiniciarButacas();
     }
-    
-     public void crearEventoPorDefecto() {
+
+    public void crearEventoPorDefecto() {
         mostrarAlerta("Aviso", "Se ha creado un evento de prueba!", Alert.AlertType.WARNING);
 
         auditorio.setEvento(new Evento("EVENTO DE PRUEBA", "01/01/2001", 1000)); //SOLO USAR SI NO HAY EVENTO

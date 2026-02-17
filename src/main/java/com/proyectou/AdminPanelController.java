@@ -23,8 +23,7 @@ public class AdminPanelController {
     VentasDeAsientosController butacas;
 
     public void initialize() {
-        auditorio = new Auditorio();
-
+        this.auditorio = App.auditorio;
     }
 
     ///
@@ -50,8 +49,6 @@ public class AdminPanelController {
                     Alert.AlertType.ERROR);
         }
     }
-
-   
 
     @FXML
     private void editarEvento() {

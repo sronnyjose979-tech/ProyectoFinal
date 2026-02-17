@@ -101,28 +101,12 @@ public class VentasDeAsientosController {
 
     }
     
-    public void reiniciarButacas(){
+    public static void reiniciarButacas(){
         for (int i = 0; i < FILAS; i++) {
-            for (int j = 0; j < COLUMNAS; j++) {
-                Button btn = new Button();
-                btn.setPrefSize(34, 25);
-                botones[i][j] = btn;
-                estados[i][j] = LIBRE;
-
-                final int fila = i;
-                final int col = j;
-
-                btn.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        manejarClickMesa(fila, col);
-                    }
-                });
-
-                gridButacas.add(btn, j, i);
-                actualizarColor(i, j);
-            }
+        for (int j = 0; j < COLUMNAS; j++) {
+            estados[i][j] = LIBRE;
         }
+    }
     }
 
     // MANEJO DE CLICK
