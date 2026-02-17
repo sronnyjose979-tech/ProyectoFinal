@@ -57,6 +57,10 @@ public class VentasDeAsientosController {
     private static final int SELECCIONADA = 1;
     private static final int RESERVADA = 2;
 
+    public static double precioTotal;
+
+    public static int cantidadAsientos;
+
     @FXML
     public void initialize() throws IOException {
         this.auditorio = App.auditorio;
@@ -100,13 +104,13 @@ public class VentasDeAsientosController {
         }
 
     }
-    
-    public static void reiniciarButacas(){
+
+    public static void reiniciarButacas() {
         for (int i = 0; i < FILAS; i++) {
-        for (int j = 0; j < COLUMNAS; j++) {
-            estados[i][j] = LIBRE;
+            for (int j = 0; j < COLUMNAS; j++) {
+                estados[i][j] = LIBRE;
+            }
         }
-    }
     }
 
     // MANEJO DE CLICK
@@ -137,7 +141,6 @@ public class VentasDeAsientosController {
         actualizarColor(fila, col);
     }
 
-    // COLORES SEGÚN ESTADO
     private void actualizarColor(int fila, int col) {
 
         Button btn = botones[fila][col];
@@ -213,6 +216,10 @@ public class VentasDeAsientosController {
         return asientosTexto.toString();
     }
 
+    public void guardarEstadosEnArchivo() {
+
+    }
+
     @FXML
     public void coordinadorDeBoton() throws IOException {
 
@@ -221,8 +228,29 @@ public class VentasDeAsientosController {
 
     }
 
-    private void guardarEstadosEnArchivo() {
-        // tengo que hacer logica de guardado
+    public double verElPrecio() {
+
+        Evento eventoActual = auditorio.getEvento();
+        String tipo = comboTipo.getValue();
+        double precioBase = eventoActual.getPrecioBase();
+        double subtotal = precioBase * cantidadAsientos;
+
+        if (tipo == null) {
+            return subtotal;
+        }
+
+        switch (tipo) {
+            case "VIP":
+                precioTotal = subtotal * 1.50; //CON AUMENTO
+                break;
+            case "ESTUDIANTE":
+                precioTotal = subtotal * 0.80; // CON DESCUENTO
+                break;
+            default:
+                precioTotal = subtotal; //NORMAL
+                break;
+        }
+        return precioTotal;
     }
 
     @FXML
@@ -230,7 +258,6 @@ public class VentasDeAsientosController {
 
         if (auditorio.getEvento() == null) {
             mostrarAlerta("Aviso", "El auditorio no tenía evento.", Alert.AlertType.WARNING);
-
             auditorio.crearEventoPorDefecto();
         }
 
@@ -241,21 +268,42 @@ public class VentasDeAsientosController {
         if (tipoSeleccionado == null) {
             return;
         }
+        cantidadAsientos = contarAsientosSeleccionados();
 
+        if (cantidadAsientos == 0) {
+            mostrarAlerta("Aviso", "No ha seleccionado ningún asiento", Alert.AlertType.WARNING);
+            return;
+        }
+
+        double total = verElPrecio();
+        String detalle = identificadorDeButacas();
         Entrada nuevaEntrada;
 
         switch (tipoSeleccionado) {
             case "VIP":
-                nuevaEntrada = new EntradaVip(nombre, filaSeleccionada, colSeleccionada, eventoActual);
+                nuevaEntrada = new EntradaVip(nombre, eventoActual, precioTotal, cantidadAsientos, detalle);
                 break;
             case "ESTUDIANTE":
-                nuevaEntrada = new EntradaEstudiante(nombre, filaSeleccionada, colSeleccionada, eventoActual);
+                nuevaEntrada = new EntradaEstudiante(nombre, eventoActual, precioTotal, cantidadAsientos, detalle);
                 break;
             default:
-                nuevaEntrada = new EntradaGeneral(nombre, filaSeleccionada, colSeleccionada, eventoActual);
+                nuevaEntrada = new EntradaGeneral(nombre, eventoActual, precioTotal, cantidadAsientos, detalle);
                 break;
         }
 
-        txtAreaTicket.setText(nuevaEntrada.generarTicket());
+        txtAreaTicket.setText(nuevaEntrada.generarTicket());//+ "\n Cantidad de asientos: "+cantidadAsientos + " y un total a pagar de: "+precioTotal
     }
+
+    private int contarAsientosSeleccionados() {
+        int contador = 0;
+        for (int i = 0; i < FILAS; i++) {
+            for (int j = 0; j < COLUMNAS; j++) {
+                if (estados[i][j] == RESERVADA) {
+                    contador++;
+                }
+            }
+        }
+        return contador;
+    }
+
 }
