@@ -1,5 +1,8 @@
 package com.modelo;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public abstract class Entrada implements IVendible {
 
     protected String nombreCliente;
@@ -7,6 +10,8 @@ public abstract class Entrada implements IVendible {
     protected double precioFinalCalculado;
     protected int cantidadAsientos;
     protected String detalleAsientos;
+        ObservableList<Evento> listaEventos = FXCollections.observableArrayList();
+
 
     public Entrada(String nombreCliente, Evento evento, double precioFinal, int cantidad, String detalleAsientos) {
         this.nombreCliente = nombreCliente;

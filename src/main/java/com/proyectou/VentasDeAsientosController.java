@@ -31,6 +31,9 @@ public class VentasDeAsientosController {
     private ComboBox<String> comboTipo;
 
     @FXML
+    private ComboBox<String> comboEvento;
+
+    @FXML
     private Label mensaje;
 
     @FXML
@@ -59,6 +62,8 @@ public class VentasDeAsientosController {
 
     public static int cantidadAsientos;
 
+    private Evento eventoActual;
+
     @FXML
     public void initialize() throws IOException {
         this.auditorio = App.auditorio;
@@ -75,6 +80,38 @@ public class VentasDeAsientosController {
                 "ESTUDIANTE"
         );
 
+        if (auditorio.getEventoArrayList() != null && !auditorio.getEventoArrayList().isEmpty()) {
+
+            for (int i = 0; i < auditorio.getEventoArrayList().size(); i++) {
+                Evento evento = auditorio.getEventoArrayList().get(i);
+                comboEvento.getItems().add(evento.getNombre());
+            }
+
+            this.eventoActual = auditorio.getEvento();
+            if (eventoActual != null) {
+                comboEvento.getSelectionModel().select(eventoActual.getNombre());
+            } else {
+                comboEvento.getSelectionModel().selectFirst();
+            }
+        } else {
+            comboEvento.setPromptText("No hay eventos creados");
+        }
+
+        comboEvento.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                String nombreSelec = comboEvento.getValue();
+                for (int i = 0; i < auditorio.getEventoArrayList().size(); i++) {
+                    Evento evento = auditorio.getEventoArrayList().get(i);
+
+                    if (evento.getNombre().equals(nombreSelec)) {
+                        eventoActual = evento;
+                        break;
+                    }
+
+                }
+            }
+        });
     }
 
     @FXML
@@ -83,9 +120,9 @@ public class VentasDeAsientosController {
             for (int j = 0; j < COLUMNAS; j++) {
                 Button btn = new Button();
                 btn.setPrefSize(34, 25);
-                
+
                 // --- CAMBIO DE ESTILO (SOLO ESTO SE AGREGÓ) ---
-                btn.getStyleClass().add("seat-button"); 
+                btn.getStyleClass().add("seat-button");
                 // ----------------------------------------------
 
                 botones[i][j] = btn;
@@ -241,87 +278,85 @@ public class VentasDeAsientosController {
 
     }
 
-   public double verElPrecio() {
+    public double verElPrecio() {
 
-    Evento eventoActual = auditorio.getEvento();
+        Evento eventoActual = auditorio.getEvento();
 
-    if (eventoActual == null) {
-        return 0;
+        if (eventoActual == null) {
+            return 0;
+        }
+
+        String tipo = comboTipo.getValue();
+        double precioBase = eventoActual.getPrecioBase();
+        double subtotal = precioBase * cantidadAsientos;
+
+        if (tipo == null) {
+            return subtotal;
+        }
+
+        switch (tipo) {
+            case "VIP":
+                precioTotal = subtotal * 1.50;
+                break;
+            case "ESTUDIANTE":
+                precioTotal = subtotal * 0.80;
+                break;
+            default:
+                precioTotal = subtotal;
+                break;
+        }
+        return precioTotal;
     }
-
-    String tipo = comboTipo.getValue();
-    double precioBase = eventoActual.getPrecioBase();
-    double subtotal = precioBase * cantidadAsientos;
-
-    if (tipo == null) {
-        return subtotal;
-    }
-
-    switch (tipo) {
-        case "VIP":
-            precioTotal = subtotal * 1.50;
-            break;
-        case "ESTUDIANTE":
-            precioTotal = subtotal * 0.80;
-            break;
-        default:
-            precioTotal = subtotal;
-            break;
-    }
-    return precioTotal;
-}
-
 
     @FXML
-public void creacionDeEntradasConElComboBox() {
+    public void creacionDeEntradasConElComboBox() {
 
-    Evento eventoActual = auditorio.getEvento();
+        Evento eventoActual = auditorio.getEvento();
 
-    // VALIDAR EVENTO ACTIVO
-    if (eventoActual == null) {
-        mostrarAlerta("No hay función activa",
-                "El administrador debe cargar un evento antes de vender entradas",
-                Alert.AlertType.ERROR);
-        return;
+        // VALIDAR EVENTO ACTIVO
+        if (eventoActual == null) {
+            mostrarAlerta("No hay función activa",
+                    "El administrador debe cargar un evento antes de vender entradas",
+                    Alert.AlertType.ERROR);
+            return;
+        }
+
+        String tipoSeleccionado = comboTipo.getValue();
+        String nombre = mensajeNombreUsuario.getText();
+
+        if (tipoSeleccionado == null) {
+            return;
+        }
+
+        cantidadAsientos = contarAsientosSeleccionados();
+
+        if (cantidadAsientos == 0) {
+            mostrarAlerta("Aviso", "No ha seleccionado ningún asiento", Alert.AlertType.WARNING);
+            return;
+        }
+
+        double total = verElPrecio();
+        String detalle = identificadorDeButacas();
+        Entrada nuevaEntrada;
+
+        switch (tipoSeleccionado) {
+            case "VIP":
+                nuevaEntrada = new EntradaVip(nombre, eventoActual, precioTotal, cantidadAsientos, detalle);
+                break;
+            case "ESTUDIANTE":
+                nuevaEntrada = new EntradaEstudiante(nombre, eventoActual, precioTotal, cantidadAsientos, detalle);
+                break;
+            default:
+                nuevaEntrada = new EntradaGeneral(nombre, eventoActual, precioTotal, cantidadAsientos, detalle);
+                break;
+        }
+
+        // 🔥 REGISTRAR LA VENTA EN EL EVENTO
+        eventoActual.agregarEntrada(nuevaEntrada);
+
+        // MOSTRAR TICKET
+        txtAreaTicket.setText(nuevaEntrada.generarTicket());
     }
-
-    String tipoSeleccionado = comboTipo.getValue();
-    String nombre = mensajeNombreUsuario.getText();
-
-    if (tipoSeleccionado == null) {
-        return;
-    }
-
-    cantidadAsientos = contarAsientosSeleccionados();
-
-    if (cantidadAsientos == 0) {
-        mostrarAlerta("Aviso", "No ha seleccionado ningún asiento", Alert.AlertType.WARNING);
-        return;
-    }
-
-    double total = verElPrecio();
-    String detalle = identificadorDeButacas();
-    Entrada nuevaEntrada;
-
-    switch (tipoSeleccionado) {
-        case "VIP":
-            nuevaEntrada = new EntradaVip(nombre, eventoActual, precioTotal, cantidadAsientos, detalle);
-            break;
-        case "ESTUDIANTE":
-            nuevaEntrada = new EntradaEstudiante(nombre, eventoActual, precioTotal, cantidadAsientos, detalle);
-            break;
-        default:
-            nuevaEntrada = new EntradaGeneral(nombre, eventoActual, precioTotal, cantidadAsientos, detalle);
-            break;
-    }
-
-    // 🔥 REGISTRAR LA VENTA EN EL EVENTO
-    eventoActual.agregarEntrada(nuevaEntrada);
-
-    // MOSTRAR TICKET
-    txtAreaTicket.setText(nuevaEntrada.generarTicket());
-}
-
 
     private int contarAsientosSeleccionados() {
         int contador = 0;

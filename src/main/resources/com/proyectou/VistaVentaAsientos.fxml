@@ -8,26 +8,25 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane styleClass="root-pane" stylesheets="@VentasDeAsientos.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.proyectou.VentasDeAsientosController">
+<BorderPane prefHeight="659.0" prefWidth="969.0" styleClass="root-pane" stylesheets="@VentasDeAsientos.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.proyectou.VentasDeAsientosController">
    <right>
       <VBox prefHeight="619.0" prefWidth="321.0" spacing="20.0" styleClass="side-panel" BorderPane.alignment="CENTER">
          <children>
             <HBox spacing="15.0">
                <children>
-                  <VBox spacing="15.0">
+                  <VBox spacing="17.0">
                      <children>
-                        <Label styleClass="title-label" text="Datos de compra" />
+                        <Label prefHeight="23.0" prefWidth="186.0" styleClass="title-label" text="Datos de compra" />
                         <Label styleClass="text-label" text="Tipo Entrada" />
                         <Label styleClass="text-label" text="Cliente" />
+                        <Label styleClass="text-label" text="Evento" />
                         <Button fx:id="btnComprar" mnemonicParsing="false" onAction="#coordinadorDeBoton" prefWidth="90.0" styleClass="btn-action" text="Comprar">
                            <VBox.margin>
                               <Insets top="10.0" />
@@ -40,6 +39,7 @@
                         <Pane prefHeight="25.0" /> 
                         <ComboBox fx:id="comboTipo" maxWidth="1.7976931348623157E308" styleClass="combo-box" />
                         <TextField fx:id="mensajeNombreUsuario" styleClass="modern-input" />
+                        <ComboBox id="comboEvento" fx:id="comboEvento" prefWidth="150.0" />
                      </children>
                   </VBox>
                </children>
@@ -72,65 +72,121 @@
    </right>
    
    <center>
-      <VBox alignment="CENTER" spacing="30.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" spacing="25.0" BorderPane.alignment="CENTER">
          <children>
             <StackPane>
                <children>
-                  <VBox alignment="CENTER" maxWidth="390.0" prefHeight="60.0" styleClass="stage-banner">
+                  <VBox alignment="CENTER" maxWidth="400.0" prefHeight="50.0" styleClass="stage-banner">
                      <children>
                         <Label text="ESCENARIO" textFill="#0a0c21">
-                           <font><Font name="System Bold" size="28.0" /></font>
+                           <font><Font name="System Bold" size="24.0" /></font>
                         </Label>
                      </children>
                   </VBox>
                </children>
             </StackPane>
 
-            <HBox alignment="CENTER" spacing="10.0">
+            <VBox alignment="CENTER" spacing="5.0">
                <children>
-                  <VBox alignment="CENTER" spacing="19.0">
+                  <HBox alignment="CENTER" spacing="5.0">
                      <children>
-                        <Label styleClass="text-label" text="A" /><Label styleClass="text-label" text="B" /><Label styleClass="text-label" text="C" />
-                        <Label styleClass="text-label" text="D" /><Label styleClass="text-label" text="E" /><Label styleClass="text-label" text="F" />
-                        <Label styleClass="text-label" text="G" /><Label styleClass="text-label" text="H" /><Label styleClass="text-label" text="I" />
-                        <Label styleClass="text-label" text="J" />
-                     </children>
-                  </VBox>
+                        <Pane prefWidth="30.0" /> <Label alignment="CENTER" prefWidth="34.0" styleClass="text-label" text="1" />
+                        <Label alignment="CENTER" prefWidth="34.0" styleClass="text-label" text="2" />
+                        <Label alignment="CENTER" prefWidth="34.0" styleClass="text-label" text="3" />
+                        <Label alignment="CENTER" prefWidth="34.0" styleClass="text-label" text="4" />
+                        <Label alignment="CENTER" prefWidth="34.0" styleClass="text-label" text="5" />
+                        <Label alignment="CENTER" prefWidth="34.0" styleClass="text-label" text="6" />
+                        <Label alignment="CENTER" prefWidth="34.0" styleClass="text-label" text="7" />
+                        <Label alignment="CENTER" prefWidth="34.0" styleClass="text-label" text="8" />
+                        <Label alignment="CENTER" prefWidth="34.0" styleClass="text-label" text="9" />
+                        <Label alignment="CENTER" prefWidth="34.0" styleClass="text-label" text="10" />
+                        <Pane prefWidth="30.0" /> </children>
+                  </HBox>
 
-                  <VBox alignment="CENTER" spacing="5.0">
+                  <HBox alignment="CENTER" spacing="10.0">
                      <children>
-                        <HBox alignment="CENTER" spacing="39.0">
+                        <VBox alignment="CENTER" spacing="5.0">
                            <children>
-                              <Label styleClass="text-label" text="1" /><Label styleClass="text-label" text="2" /><Label styleClass="text-label" text="3" />
-                              <Label styleClass="text-label" text="4" /><Label styleClass="text-label" text="5" /><Label styleClass="text-label" text="6" />
-                              <Label styleClass="text-label" text="7" /><Label styleClass="text-label" text="8" /><Label styleClass="text-label" text="9" />
-                              <Label styleClass="text-label" text="10" />
+                              <Label alignment="CENTER" prefHeight="25.0" prefWidth="20.0" styleClass="text-label" text="A" />
+                              <Label alignment="CENTER" prefHeight="25.0" prefWidth="20.0" styleClass="text-label" text="B" />
+                              <Label alignment="CENTER" prefHeight="25.0" prefWidth="20.0" styleClass="text-label" text="C" />
+                              <Label alignment="CENTER" prefHeight="25.0" prefWidth="20.0" styleClass="text-label" text="D" />
+                              <Label alignment="CENTER" prefHeight="25.0" prefWidth="20.0" styleClass="text-label" text="E" />
+                              <Label alignment="CENTER" prefHeight="25.0" prefWidth="20.0" styleClass="text-label" text="F" />
+                              <Label alignment="CENTER" prefHeight="25.0" prefWidth="20.0" styleClass="text-label" text="G" />
+                              <Label alignment="CENTER" prefHeight="25.0" prefWidth="20.0" styleClass="text-label" text="H" />
+                              <Label alignment="CENTER" prefHeight="25.0" prefWidth="20.0" styleClass="text-label" text="I" />
+                              <Label alignment="CENTER" prefHeight="25.0" prefWidth="20.0" styleClass="text-label" text="J" />
                            </children>
-                           <padding><Insets bottom="5.0" /></padding>
-                        </HBox>
-                        
+                        </VBox>
+
                         <GridPane fx:id="gridButacas" alignment="CENTER" hgap="5.0" vgap="5.0">
-                             </GridPane>
+                           </GridPane>
+
+                        <VBox alignment="CENTER" spacing="5.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="25.0" prefWidth="20.0" styleClass="text-label" text="A">
+                                 <padding>
+                                    <Insets bottom="2.0" />
+                                 </padding></Label>
+                              <Label alignment="CENTER" prefHeight="25.0" prefWidth="20.0" styleClass="text-label" text="B">
+                                 <padding>
+                                    <Insets bottom="2.0" />
+                                 </padding></Label>
+                              <Label alignment="CENTER" prefHeight="25.0" prefWidth="20.0" styleClass="text-label" text="C">
+                                 <padding>
+                                    <Insets bottom="2.0" />
+                                 </padding></Label>
+                              <Label alignment="CENTER" prefHeight="25.0" prefWidth="20.0" styleClass="text-label" text="D">
+                                 <padding>
+                                    <Insets bottom="2.0" />
+                                 </padding></Label>
+                              <Label alignment="CENTER" prefHeight="25.0" prefWidth="20.0" styleClass="text-label" text="E">
+                                 <padding>
+                                    <Insets bottom="2.0" />
+                                 </padding></Label>
+                              <Label alignment="CENTER" prefHeight="25.0" prefWidth="20.0" styleClass="text-label" text="F">
+                                 <padding>
+                                    <Insets bottom="2.0" />
+                                 </padding></Label>
+                              <Label alignment="CENTER" prefHeight="25.0" prefWidth="20.0" styleClass="text-label" text="G">
+                                 <padding>
+                                    <Insets bottom="2.0" />
+                                 </padding></Label>
+                              <Label alignment="CENTER" prefHeight="25.0" prefWidth="20.0" styleClass="text-label" text="H">
+                                 <padding>
+                                    <Insets bottom="2.0" />
+                                 </padding></Label>
+                              <Label alignment="CENTER" prefHeight="25.0" prefWidth="20.0" styleClass="text-label" text="I">
+                                 <padding>
+                                    <Insets bottom="2.0" />
+                                 </padding></Label>
+                              <Label alignment="CENTER" prefHeight="25.0" prefWidth="20.0" styleClass="text-label" text="J">
+                                 <padding>
+                                    <Insets bottom="2.0" />
+                                 </padding></Label>
+                           </children>
+                        </VBox>
                      </children>
-                  </VBox>
+                  </HBox>
                </children>
-            </HBox>
+            </VBox>
 
             <HBox alignment="CENTER" spacing="40.0">
                <children>
                   <HBox alignment="CENTER" spacing="15.0">
                      <children>
                         <HBox alignment="CENTER_LEFT" spacing="5.0">
-                            <Pane prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: #1A1E3F; -fx-border-color: #2D325A; -fx-background-radius: 4;" />
-                            <Label styleClass="text-label" text="Libre" />
+                           <Pane id="labelLibre" fx:id="labelLibre" prefHeight="18.0" prefWidth="18.0" style="-fx-background-color: #0D3D28; -fx-border-color: #2D325A; -fx-background-radius: 4;" />
+                           <Label styleClass="text-label" text="Libre" />
                         </HBox>
                         <HBox alignment="CENTER_LEFT" spacing="5.0">
-                            <Pane prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: linear-gradient(to bottom right, #D4AF37, #FCECAE); -fx-background-radius: 4;" />
-                            <Label styleClass="text-label" text="Selecc." />
+                           <Pane prefHeight="18.0" prefWidth="18.0" style="-fx-background-color: linear-gradient(to bottom right, #D4AF37, #FCECAE); -fx-background-radius: 4;" />
+                           <Label styleClass="text-label" text="Selecc." />
                         </HBox>
                         <HBox alignment="CENTER_LEFT" spacing="5.0">
-                            <Pane prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: #500a0a; -fx-background-radius: 4;" />
-                            <Label styleClass="text-label" text="Reserv." />
+                           <Pane prefHeight="18.0" prefWidth="18.0" style="-fx-background-color: #500a0a; -fx-background-radius: 4;" />
+                           <Label styleClass="text-label" text="Reserv." />
                         </HBox>
                      </children>
                   </HBox>
@@ -138,10 +194,9 @@
                      <font><Font name="System Bold" size="16.0" /></font>
                   </Button>
                </children>
-               <padding><Insets top="10.0" /></padding>
             </HBox>
          </children>
-         <padding><Insets bottom="20.0" left="20.0" right="20.0" top="20.0" /></padding>
+         <padding><Insets bottom="20.0" left="20.0" right="20.0" top="10.0" /></padding>
       </VBox>
    </center>
    

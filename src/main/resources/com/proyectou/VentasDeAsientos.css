@@ -78,14 +78,16 @@
     -fx-border-width: 1;
 }
 
-/* Estado LIBRE */
+/* Estado LIBRE - Verde oscuro elegante */
 .seat-free {
-    -fx-background-color: #1A1E3F;
-    -fx-border-color: #2D325A;
+    -fx-background-color: #0D3D28; /* Verde esmeralda muy oscuro */
+    -fx-border-color: #1A5235;     /* Borde un poco más claro para dar relieve */
 }
+
 .seat-free:hover {
-    -fx-border-color: #D4AF37;
-    -fx-effect: dropshadow(three-pass-box, rgba(212, 175, 55, 0.4), 10, 0, 0, 0);
+    -fx-background-color: #145A32; /* Verde un poco más vivo al pasar el mouse */
+    -fx-border-color: #D4AF37;     /* Borde dorado al hacer hover */
+    -fx-effect: dropshadow(three-pass-box, rgba(20, 90, 50, 0.6), 10, 0, 0, 0);
 }
 
 /* Estado SELECCIONADO */
