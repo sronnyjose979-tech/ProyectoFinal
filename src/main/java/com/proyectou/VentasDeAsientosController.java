@@ -310,7 +310,6 @@ public class VentasDeAsientosController {
 
         Evento eventoActual = auditorio.getEvento();
 
-        // VALIDAR EVENTO ACTIVO
         if (eventoActual == null) {
             mostrarAlerta("No hay función activa",
                     "El administrador debe cargar un evento antes de vender entradas",
@@ -334,22 +333,22 @@ public class VentasDeAsientosController {
         }
 
         double total = verElPrecio();
-        String detalle = identificadorDeButacas();
+        String numeroAsiento = identificadorDeButacas();
         Entrada nuevaEntrada;
 
         switch (tipoSeleccionado) {
             case "VIP":
-                nuevaEntrada = new EntradaVip(nombre, eventoActual, precioTotal, cantidadAsientos, detalle);
+                nuevaEntrada = new EntradaVip(nombre, eventoActual, precioTotal, cantidadAsientos, numeroAsiento);
                 break;
             case "ESTUDIANTE":
-                nuevaEntrada = new EntradaEstudiante(nombre, eventoActual, precioTotal, cantidadAsientos, detalle);
+                nuevaEntrada = new EntradaEstudiante(nombre, eventoActual, precioTotal, cantidadAsientos, numeroAsiento);
                 break;
             default:
-                nuevaEntrada = new EntradaGeneral(nombre, eventoActual, precioTotal, cantidadAsientos, detalle);
+                nuevaEntrada = new EntradaGeneral(nombre, eventoActual, precioTotal, cantidadAsientos, numeroAsiento);
                 break;
         }
 
-        // 🔥 REGISTRAR LA VENTA EN EL EVENTO
+        // REGISTRAR LA VENTA EN EL EVENTO
         eventoActual.agregarEntrada(nuevaEntrada);
 
         // MOSTRAR TICKET
