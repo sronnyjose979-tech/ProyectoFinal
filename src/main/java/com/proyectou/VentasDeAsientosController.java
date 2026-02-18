@@ -216,10 +216,7 @@ public class VentasDeAsientosController {
 
         String tipoSeleccionado = comboTipo.getValue();
 
-        if (tipoSeleccionado == null) {
-            mostrarAlerta("Aviso", "Debe seleccionar un tipo de entrada!", Alert.AlertType.WARNING);
-            return;
-        }
+        
         if (filaSeleccionada == -1 || colSeleccionada == -1) {
             mostrarAlerta("Aviso", " No hay mesas seleccionadas", Alert.AlertType.WARNING);
             return;
@@ -274,7 +271,7 @@ public class VentasDeAsientosController {
     public void coordinadorDeBoton() throws IOException {
 
         creacionDeEntradasConElComboBox();
-        guardarEstadosEnArchivo();
+       // guardarEstadosEnArchivo();
 
     }
 
@@ -323,8 +320,9 @@ public class VentasDeAsientosController {
 
         String tipoSeleccionado = comboTipo.getValue();
         String nombre = mensajeNombreUsuario.getText();
-
+        
         if (tipoSeleccionado == null) {
+            mostrarAlerta("Aviso", "Debe seleccionar un tipo de entrada!", Alert.AlertType.WARNING);
             return;
         }
 
