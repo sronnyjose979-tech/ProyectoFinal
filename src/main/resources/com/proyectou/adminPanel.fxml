@@ -80,6 +80,7 @@
                               </TableView>
                                         <Region VBox.vgrow="ALWAYS" />
                                         <Button maxWidth="Infinity" onAction="#verReporte" styleClass="btn-principal" text="Generar Reporte" />
+                                        <Button maxWidth="Infinity" onAction="#verReporteGeneral" styleClass="btn-principal" text="Reporte Total"/>
                                     </children>
                                 </VBox>
                             </children>

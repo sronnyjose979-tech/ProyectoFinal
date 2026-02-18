@@ -78,16 +78,25 @@ public class AdminPanelController implements Initializable {
         }
     }
 
-    @FXML
-    private void cargarEvento() {
-        Evento seleccionado = tableEvento.getSelectionModel().getSelectedItem();
-        if (seleccionado == null) {
-            return;
-        }
-        lblEventoActivo.setText("Evento Activo: " + seleccionado.getNombre());
-        auditorio.cargarEventoEnSala(seleccionado);
-        mostrarAlerta("Éxito", "Evento '" + seleccionado.getNombre() + "' cargado en sala.", Alert.AlertType.INFORMATION);
+ @FXML
+private void cargarEvento() {
+
+    Evento seleccionado = tableEvento.getSelectionModel().getSelectedItem();
+
+    if (seleccionado == null) {
+        mostrarAlerta("Aviso",
+                "Debe seleccionar un evento en la tabla",
+                Alert.AlertType.WARNING);
+        return;
     }
+
+    lblEventoActivo.setText("Evento Activo: " + seleccionado.getNombre());
+    auditorio.cargarEventoEnSala(seleccionado);
+
+    mostrarAlerta("Éxito",
+            "Evento '" + seleccionado.getNombre() + "' cargado en sala.",
+            Alert.AlertType.INFORMATION);
+}
 
     @FXML
     private void editarEvento() {
@@ -142,23 +151,37 @@ public class AdminPanelController implements Initializable {
     /// 
     /// Funciones administrativas
     ///
-    @FXML
-    private void verReporte() {
-        if (eventoActual == null) {
-            mostrarAlerta("Reporte",
-                    "No hay evento activo.",
-                    Alert.AlertType.INFORMATION);
-            return;
-        }
+   @FXML
+private void verReporte() {
 
-        double total = eventoActual.calcularRecaudacion();
+    Evento evento = auditorio.getEvento();
 
-        mostrarAlerta("Reporte de Ventas",
-                "Total recaudado para el evento \"" + eventoActual.getNombre()
-                + "\": ₡" + total,
+    if (evento == null) {
+        mostrarAlerta("Reporte",
+                "No hay evento activo.",
                 Alert.AlertType.INFORMATION);
+        return;
     }
 
+    double total = evento.calcularRecaudacion();
+
+    mostrarAlerta("Reporte de Ventas",
+            "Total recaudado para el evento \"" + evento.getNombre()
+            + "\": ₡" + total,
+            Alert.AlertType.INFORMATION);
+}
+
+// ⭐ REPORTE GLOBAL
+    @FXML
+    private void verReporteGeneral() {
+
+        double total = auditorio.getRecaudacionGlobal();
+
+        mostrarAlerta("Reporte Global",
+                "Recaudación total del sistema: ₡" + total,
+                Alert.AlertType.INFORMATION);
+    }
+    
     @FXML
     private void reiniciarSala() {
         Evento seleccionado = tableEvento.getSelectionModel().getSelectedItem();

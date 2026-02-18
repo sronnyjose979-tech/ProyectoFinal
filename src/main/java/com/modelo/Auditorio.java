@@ -88,6 +88,7 @@ public class Auditorio {
         this.eventoActual = evento;
 
     }
+    
 
     public ArrayList<Evento> getEventoArrayList() {
         return eventoArrayList;
@@ -127,6 +128,17 @@ public class Auditorio {
 
         VentasDeAsientosController.reiniciarButacas();
     }
+    public double getRecaudacionGlobal() {
+
+    double total = 0;
+
+    for (Evento evento : eventoArrayList) {
+        total += evento.calcularRecaudacion();
+    }
+
+    return total;
+}
+
 
     public void crearEventoPorDefecto() {
         mostrarAlerta("Aviso", "Se ha creado un evento de prueba!", Alert.AlertType.WARNING);

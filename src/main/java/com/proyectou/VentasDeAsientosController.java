@@ -241,73 +241,87 @@ public class VentasDeAsientosController {
 
     }
 
-    public double verElPrecio() {
+   public double verElPrecio() {
 
-        Evento eventoActual = auditorio.getEvento();
-        String tipo = comboTipo.getValue();
-        double precioBase = eventoActual.getPrecioBase();
-        double subtotal = precioBase * cantidadAsientos;
+    Evento eventoActual = auditorio.getEvento();
 
-        if (tipo == null) {
-            return subtotal;
-        }
-
-        switch (tipo) {
-            case "VIP":
-                precioTotal = subtotal * 1.50; //CON AUMENTO
-                break;
-            case "ESTUDIANTE":
-                precioTotal = subtotal * 0.80; // CON DESCUENTO
-                break;
-            default:
-                precioTotal = subtotal; //NORMAL
-                break;
-        }
-        return precioTotal;
+    if (eventoActual == null) {
+        return 0;
     }
+
+    String tipo = comboTipo.getValue();
+    double precioBase = eventoActual.getPrecioBase();
+    double subtotal = precioBase * cantidadAsientos;
+
+    if (tipo == null) {
+        return subtotal;
+    }
+
+    switch (tipo) {
+        case "VIP":
+            precioTotal = subtotal * 1.50;
+            break;
+        case "ESTUDIANTE":
+            precioTotal = subtotal * 0.80;
+            break;
+        default:
+            precioTotal = subtotal;
+            break;
+    }
+    return precioTotal;
+}
+
 
     @FXML
-    public void creacionDeEntradasConElComboBox() {
+public void creacionDeEntradasConElComboBox() {
 
-        if (auditorio.getEvento() == null) {
-            Evento evento = auditorio.getEventoActual();
+    Evento eventoActual = auditorio.getEvento();
 
-            mostrarAlerta("Aviso", "El auditorio no tenía evento.", Alert.AlertType.WARNING);
-            //auditorio.crearEventoPorDefecto();
-        }
-
-        String tipoSeleccionado = comboTipo.getValue();
-        String nombre = mensajeNombreUsuario.getText();
-        Evento eventoActual = auditorio.getEvento();
-
-        if (tipoSeleccionado == null) {
-            return;
-        }
-        cantidadAsientos = contarAsientosSeleccionados();
-
-        if (cantidadAsientos == 0) {
-            mostrarAlerta("Aviso", "No ha seleccionado ningún asiento", Alert.AlertType.WARNING);
-            return;
-        }
-
-        double total = verElPrecio();
-        String detalle = identificadorDeButacas();
-        Entrada nuevaEntrada;
-
-        switch (tipoSeleccionado) {
-            case "VIP":
-                nuevaEntrada = new EntradaVip(nombre, eventoActual, precioTotal, cantidadAsientos, detalle);
-                break;
-            case "ESTUDIANTE":
-                nuevaEntrada = new EntradaEstudiante(nombre, eventoActual, precioTotal, cantidadAsientos, detalle);
-                break;
-            default:
-                nuevaEntrada = new EntradaGeneral(nombre, eventoActual, precioTotal, cantidadAsientos, detalle);
-                break;
-        }
-
-        txtAreaTicket.setText(nuevaEntrada.generarTicket());
+    // VALIDAR EVENTO ACTIVO
+    if (eventoActual == null) {
+        mostrarAlerta("No hay función activa",
+                "El administrador debe cargar un evento antes de vender entradas",
+                Alert.AlertType.ERROR);
+        return;
     }
+
+    String tipoSeleccionado = comboTipo.getValue();
+    String nombre = mensajeNombreUsuario.getText();
+
+    if (tipoSeleccionado == null) {
+        return;
+    }
+
+    cantidadAsientos = contarAsientosSeleccionados();
+
+    if (cantidadAsientos == 0) {
+        mostrarAlerta("Aviso", "No ha seleccionado ningún asiento", Alert.AlertType.WARNING);
+        return;
+    }
+
+    double total = verElPrecio();
+    String detalle = identificadorDeButacas();
+    Entrada nuevaEntrada;
+
+    switch (tipoSeleccionado) {
+        case "VIP":
+            nuevaEntrada = new EntradaVip(nombre, eventoActual, precioTotal, cantidadAsientos, detalle);
+            break;
+        case "ESTUDIANTE":
+            nuevaEntrada = new EntradaEstudiante(nombre, eventoActual, precioTotal, cantidadAsientos, detalle);
+            break;
+        default:
+            nuevaEntrada = new EntradaGeneral(nombre, eventoActual, precioTotal, cantidadAsientos, detalle);
+            break;
+    }
+
+    // 🔥 REGISTRAR LA VENTA EN EL EVENTO
+    eventoActual.agregarEntrada(nuevaEntrada);
+
+    // MOSTRAR TICKET
+    txtAreaTicket.setText(nuevaEntrada.generarTicket());
+}
+
 
     private int contarAsientosSeleccionados() {
         int contador = 0;
