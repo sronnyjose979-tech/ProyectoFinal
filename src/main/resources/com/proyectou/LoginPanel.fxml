@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane stylesheets="@loginEstilos.css" styleClass="root-pane" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.proyectou.LoginPanelController">
+<StackPane styleClass="root-pane" stylesheets="@loginEstilos.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.proyectou.LoginPanelController">
     <children>
         <Button fx:id="btnAdmin" mnemonicParsing="false" onAction="#btnngresarAdmin" text="Administrador" StackPane.alignment="TOP_RIGHT">
             <StackPane.margin>
@@ -19,7 +19,7 @@
             </StackPane.margin>
         </Button>
 
-        <VBox alignment="CENTER" maxWidth="450.0" maxHeight="500.0" spacing="10.0" styleClass="login-card" StackPane.alignment="CENTER">
+        <VBox alignment="CENTER" maxHeight="500.0" maxWidth="450.0" spacing="10.0" styleClass="login-card" StackPane.alignment="CENTER">
             <children>
                 <Label styleClass="titulo-principal" text="Auditorio">
                     <VBox.margin>
@@ -27,7 +27,7 @@
                     </VBox.margin>
                 </Label>
 
-                <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+                <TabPane fx:id="tabLogin" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
                     <tabs>
                         <Tab text="Iniciar sesión">
                             <content>
@@ -41,9 +41,9 @@
                                                 <Insets bottom="10.0" />
                                             </VBox.margin>
                                         </Label>
-                                        <Label fx:id="labelNombre" text="Usuario" styleClass="label-form"/>
+                                        <Label fx:id="labelNombre" styleClass="label-form" text="Usuario" />
                                         <TextField fx:id="txtIniciarNombre" promptText="Ingrese su usuario" />
-                                        <Label fx:id="labelContra" text="Contraseña" styleClass="label-form"/>
+                                        <Label fx:id="labelContra" styleClass="label-form" text="Contraseña" />
                                         <PasswordField fx:id="txtIniciarContra" promptText="Ingrese su contraseña" />
                                         <VBox alignment="CENTER" prefHeight="60.0">
                                             <children>
@@ -61,7 +61,7 @@
                             </content>
                         </Tab>
 
-                        <Tab fx:id="btnRegistrar" text="Registrarse">
+                        <Tab text="Registrarse">
                             <content>
                                 <VBox alignment="CENTER_LEFT" spacing="15.0">
                                     <children>
@@ -73,13 +73,13 @@
                                                 <Insets bottom="10.0" />
                                             </VBox.margin>
                                         </Label>
-                                        <Label text="Nombre de Usuario" styleClass="label-form"/>
+                                        <Label styleClass="label-form" text="Nombre de Usuario" />
                                         <TextField fx:id="txtRegistarUsuario" promptText="Ej. Juan, Russell" />
-                                        <Label text="Contraseña Nueva" styleClass="label-form"/>
+                                        <Label styleClass="label-form" text="Contraseña Nueva" />
                                         <PasswordField fx:id="txtContraseñaNueva" promptText="Cree una contraseña" />
                                         <VBox alignment="CENTER" prefHeight="60.0">
                                             <children>
-                                                <Button fx:id="btnRegistrarUsuario" styleClass="btn-secundario" mnemonicParsing="false" onAction="#btnRegistrarUsuario" prefWidth="200.0" text="Registrarme" />
+                                                <Button fx:id="btnRegistrarUsuario" mnemonicParsing="false" onAction="#btnRegistrarUsuario" prefWidth="200.0" styleClass="btn-secundario" text="Registrarme" />
                                             </children>
                                             <VBox.margin>
                                                 <Insets top="15.0" />

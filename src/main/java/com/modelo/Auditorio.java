@@ -32,13 +32,9 @@ public class Auditorio {
         clienteActual = null;
     }
 
+    //seccion cliente
     public void agregarCliente(ClienteModel cliente) {// se va agregar el cliente para poder usarse en todas las clases
         Clientes.add(cliente);
-
-    }
-
-    public Administrador cargarAdmin() {
-        return admin = new Administrador("a", "1");
 
     }
 
@@ -51,12 +47,9 @@ public class Auditorio {
         return clienteActual;
     }
 
-    public void ocuparAsiento(int fila, int columna) {
-        asientos[fila][columna] = true;
-    }
+    public Administrador cargarAdmin() {
+        return admin = new Administrador("a", "1");
 
-    public boolean estaOcupado(int fila, int columna) {
-        return asientos[fila][columna];
     }
 
     public ArrayList<ClienteModel> getClientes() {
@@ -67,11 +60,25 @@ public class Auditorio {
         this.Clientes = Clientes;
     }
 
-    public void reiniciarAsientos() {
-
-        VentasDeAsientosController.reiniciarButacas();
+    public ClienteModel autenticarCliente(String usuario, String contra) {
+        for (ClienteModel c : Clientes) {
+            if (c.getNombreUsuario().equalsIgnoreCase(usuario) && c.getContra().equals(contra)) {
+                return c;
+            }
+        }
+        return null;
     }
 
+    public boolean usuarioExiste(String nombre) {
+        for (ClienteModel c : Clientes) {
+            if (c.getNombreUsuario().equalsIgnoreCase(nombre)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //seccion evento
     public void agregarEvento(Evento evento) {
         eventoArrayList.add(evento);
 
@@ -106,7 +113,20 @@ public class Auditorio {
     public void setEventoActual(Evento eventoActual) {
         this.eventoActual = eventoActual;
     }
-    
+
+    //seccion asiento
+    public void ocuparAsiento(int fila, int columna) {
+        asientos[fila][columna] = true;
+    }
+
+    public boolean estaOcupado(int fila, int columna) {
+        return asientos[fila][columna];
+    }
+
+    public void reiniciarAsientos() {
+
+        VentasDeAsientosController.reiniciarButacas();
+    }
 
     public void crearEventoPorDefecto() {
         mostrarAlerta("Aviso", "Se ha creado un evento de prueba!", Alert.AlertType.WARNING);

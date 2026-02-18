@@ -9,8 +9,6 @@ import com.modelo.EntradaGeneral;
 import com.modelo.EntradaVip;
 import com.modelo.Evento;
 import java.io.IOException;
-import java.time.Duration;
-import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -65,7 +63,7 @@ public class VentasDeAsientosController {
     public void initialize() throws IOException {
         this.auditorio = App.auditorio;
 
-        ClienteModel cliente = auditorio.getClienteActual();// se le asigna el valor de cliente que esta actualmente
+        ClienteModel cliente = auditorio.getClienteActual();
         String nombreGuardado = cliente.getNombreUsuario();
         mensajeNombreUsuario.setText(nombreGuardado);
         gridButacas.setDisable(false);
@@ -85,6 +83,11 @@ public class VentasDeAsientosController {
             for (int j = 0; j < COLUMNAS; j++) {
                 Button btn = new Button();
                 btn.setPrefSize(34, 25);
+                
+                // --- CAMBIO DE ESTILO (SOLO ESTO SE AGREGÓ) ---
+                btn.getStyleClass().add("seat-button"); 
+                // ----------------------------------------------
+
                 botones[i][j] = btn;
                 //estados[i][j] = LIBRE;
 
@@ -145,20 +148,30 @@ public class VentasDeAsientosController {
 
         Button btn = botones[fila][col];
 
+        // --- CAMBIO DE ESTILO (Reemplaza los setStyle anteriores) ---
+        // 1. Limpiar clases viejas para que no se acumulen
+        btn.getStyleClass().removeAll("seat-free", "seat-selected", "seat-reserved");
+        // 2. Quitar cualquier estilo manual residual
+        btn.setStyle(null);
+
         switch (estados[fila][col]) {
             case LIBRE:
-                btn.setStyle("-fx-background-color: #0000FF;");
+                btn.getStyleClass().add("seat-free");
+                btn.setDisable(false);
                 break;
 
             case SELECCIONADA:
-                btn.setStyle("-fx-background-color: #4CAF50;");
+                btn.getStyleClass().add("seat-selected");
+                btn.setDisable(false);
                 break;
 
             case RESERVADA:
-                btn.setStyle("-fx-background-color: #FF2A00;");
+                btn.getStyleClass().add("seat-reserved");
                 btn.setDisable(true);
+                btn.setOpacity(1.0); // Para que se vea el color rojo aunque esté deshabilitado
                 break;
         }
+        // ------------------------------------------------------------
     }
 
     @FXML
@@ -293,7 +306,7 @@ public class VentasDeAsientosController {
                 break;
         }
 
-        txtAreaTicket.setText(nuevaEntrada.generarTicket());//+ "\n Cantidad de asientos: "+cantidadAsientos + " y un total a pagar de: "+precioTotal
+        txtAreaTicket.setText(nuevaEntrada.generarTicket());
     }
 
     private int contarAsientosSeleccionados() {

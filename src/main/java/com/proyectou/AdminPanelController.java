@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -39,6 +40,9 @@ public class AdminPanelController implements Initializable {
     private TextField txtPrecioBase;
     ObservableList<Evento> listaEventos = FXCollections.observableArrayList();
 
+    @FXML
+    private Label lblEventoActivo;
+
     private Auditorio auditorio;
     private Evento eventoActual;
     VentasDeAsientosController butacas;
@@ -48,30 +52,29 @@ public class AdminPanelController implements Initializable {
     }
 
     ///
-    ///GESTOR DE LOS EVENTO
+    ///Crud evento
     ///
     @FXML
     private void crearEvento() {
 
+        if (txtNombreEvento.getText().trim().isEmpty() || txtFechaEvento.getText().trim().isEmpty() || txtPrecioBase.getText().trim().isEmpty()) {
+            mostrarAlerta("Error", "No pueden quedar espacios en blanco", Alert.AlertType.ERROR);
+            return;
+        }
         try {
             String nombre = txtNombreEvento.getText();
             String fecha = txtFechaEvento.getText();
             double precio = Double.parseDouble(txtPrecioBase.getText());
 
             Evento eventoNuevo = new Evento(nombre, fecha, precio);
-            auditorio.agregarEvento(eventoNuevo);//aca se crea el auditorio
+            auditorio.agregarEvento(eventoNuevo);
             listaEventos.add(eventoNuevo);
 
             mostrarAlerta("Evento creado", "El evento se creo correctaamente.", Alert.AlertType.INFORMATION);
-            auditorio.cargarEvento(eventoNuevo);
             limpiarCampos();
 
         } catch (NumberFormatException e) {
             mostrarAlerta("Erorr", "El precio debe de ser un numero", Alert.AlertType.ERROR);
-        } catch (Exception e) {
-            mostrarAlerta("Error",
-                    "Complete todos los campos.",
-                    Alert.AlertType.ERROR);
         }
     }
 
@@ -81,11 +84,9 @@ public class AdminPanelController implements Initializable {
         if (seleccionado == null) {
             return;
         }
+        lblEventoActivo.setText("Evento Activo: " + seleccionado.getNombre());
         auditorio.cargarEventoEnSala(seleccionado);
-//        if (ventaController != null) {
-//            ventaController.actualizarVista();
-//        }
-//        mostrarAlerta("Éxito", "Evento '" + seleccionado.getNombre() + "' cargado en sala.");
+        mostrarAlerta("Éxito", "Evento '" + seleccionado.getNombre() + "' cargado en sala.", Alert.AlertType.INFORMATION);
     }
 
     @FXML
@@ -160,6 +161,13 @@ public class AdminPanelController implements Initializable {
 
     @FXML
     private void reiniciarSala() {
+        Evento seleccionado = tableEvento.getSelectionModel().getSelectedItem();
+        if (seleccionado == null) {
+            mostrarAlerta("Aviso",
+                    "No hay evento para limpiar.",
+                    Alert.AlertType.WARNING);
+            return;
+        }
         auditorio.reiniciarAsientos();
 
         mostrarAlerta("Sala reiniciada",

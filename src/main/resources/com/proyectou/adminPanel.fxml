@@ -69,7 +69,7 @@
                                             </font>
                                         </Label>
                                         <VBox spacing="10" style="-fx-background-color: rgba(255,255,255,0.05); -fx-padding: 15; -fx-background-radius: 5;">
-                                            <Label style="-fx-text-fill: white;" text="Evento Activo: Ninguno" wrapText="true" />
+                                            <Label fx:id="lblEventoActivo" style="-fx-text-fill: white;" text="Evento Activo: Ninguno" wrapText="true" />
                                         </VBox>
                               <TableView fx:id="tableEvento" prefHeight="200.0" prefWidth="200.0">
                                 <columns>
