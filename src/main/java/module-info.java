@@ -4,5 +4,6 @@ module com.proyectou {
     requires java.base;
 
     opens com.proyectou to javafx.fxml;
+    opens com.modelo to javafx.base;
     exports com.proyectou;
 }

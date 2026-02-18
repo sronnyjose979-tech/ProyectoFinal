@@ -5,12 +5,29 @@ import com.modelo.Evento;
 import com.modelo.Auditorio;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class AdminPanelController implements Initializable {
+
+    @FXML
+    private TableColumn<?, ?> eventoCol;
+
+    @FXML
+    private TableColumn<?, ?> fechaCol;
+
+    @FXML
+    private TableColumn<?, ?> precioCol;
+
+    @FXML
+    private TableView<Evento> tableEvento;
 
     @FXML
     private TextField txtNombreEvento;
@@ -20,16 +37,22 @@ public class AdminPanelController implements Initializable {
 
     @FXML
     private TextField txtPrecioBase;
+    ObservableList<Evento> listaEventos = FXCollections.observableArrayList();
 
     private Auditorio auditorio;
     private Evento eventoActual;
     VentasDeAsientosController butacas;
+
+    public void setAuditorio(Auditorio auditorio) {
+        this.auditorio = auditorio;
+    }
 
     ///
     ///GESTOR DE LOS EVENTO
     ///
     @FXML
     private void crearEvento() {
+
         try {
             String nombre = txtNombreEvento.getText();
             String fecha = txtFechaEvento.getText();
@@ -37,6 +60,7 @@ public class AdminPanelController implements Initializable {
 
             Evento eventoNuevo = new Evento(nombre, fecha, precio);
             auditorio.agregarEvento(eventoNuevo);//aca se crea el auditorio
+            listaEventos.add(eventoNuevo);
 
             mostrarAlerta("Evento creado", "El evento se creo correctaamente.", Alert.AlertType.INFORMATION);
             auditorio.cargarEvento(eventoNuevo);
@@ -52,7 +76,20 @@ public class AdminPanelController implements Initializable {
     }
 
     @FXML
-    private void editarEvento() {        
+    private void cargarEvento() {
+        Evento seleccionado = tableEvento.getSelectionModel().getSelectedItem();
+        if (seleccionado == null) {
+            return;
+        }
+        auditorio.cargarEventoEnSala(seleccionado);
+//        if (ventaController != null) {
+//            ventaController.actualizarVista();
+//        }
+//        mostrarAlerta("Éxito", "Evento '" + seleccionado.getNombre() + "' cargado en sala.");
+    }
+
+    @FXML
+    private void editarEvento() {
         if (eventoActual == null) {
             mostrarAlerta("Aviso",
                     "No hay evento para editar.",
@@ -80,14 +117,16 @@ public class AdminPanelController implements Initializable {
 
     @FXML
     private void eliminarEvento() {
-        if (eventoActual == null) {
+        Evento seleccionado = tableEvento.getSelectionModel().getSelectedItem();
+        if (seleccionado == null) {
             mostrarAlerta("Aviso",
                     "No hay evento para eliminar.",
                     Alert.AlertType.WARNING);
             return;
         }
+        auditorio.eliminarEvento(seleccionado);
+        listaEventos.remove(seleccionado);
 
-        eventoActual = null;
         limpiarCampos();
 
         mostrarAlerta("Evento eliminado",
@@ -161,5 +200,14 @@ public class AdminPanelController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.auditorio = App.auditorio;
+
+        if (auditorio.getEventoArrayList() != null) {
+            listaEventos.setAll(auditorio.getEventoArrayList());
+        }
+
+        eventoCol.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        fechaCol.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+        precioCol.setCellValueFactory(new PropertyValueFactory<>("precioBase"));
+        tableEvento.setItems(listaEventos);
     }
 }

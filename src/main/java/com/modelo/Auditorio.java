@@ -90,6 +90,24 @@ public class Auditorio {
         this.eventoArrayList = eventoArrayList;
     }
 
+    public void eliminarEvento(Evento evento) {
+        eventoArrayList.remove(evento);
+    }
+
+    public void cargarEventoEnSala(Evento evento) {
+        this.eventoActual = evento;
+
+    }
+
+    public Evento getEventoActual() {
+        return eventoActual;
+    }
+
+    public void setEventoActual(Evento eventoActual) {
+        this.eventoActual = eventoActual;
+    }
+    
+
     public void crearEventoPorDefecto() {
         mostrarAlerta("Aviso", "Se ha creado un evento de prueba!", Alert.AlertType.WARNING);
 

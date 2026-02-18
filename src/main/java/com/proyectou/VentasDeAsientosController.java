@@ -257,8 +257,10 @@ public class VentasDeAsientosController {
     public void creacionDeEntradasConElComboBox() {
 
         if (auditorio.getEvento() == null) {
+            Evento evento = auditorio.getEventoActual();
+
             mostrarAlerta("Aviso", "El auditorio no tenía evento.", Alert.AlertType.WARNING);
-            auditorio.crearEventoPorDefecto();
+            //auditorio.crearEventoPorDefecto();
         }
 
         String tipoSeleccionado = comboTipo.getValue();
