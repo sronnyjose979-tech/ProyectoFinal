@@ -190,9 +190,6 @@
                         </HBox>
                      </children>
                   </HBox>
-                  <Button fx:id="btnReserva" onAction="#reservacion" prefWidth="120.0" styleClass="btn-action" text="Reservar">
-                     <font><Font name="System Bold" size="16.0" /></font>
-                  </Button>
                </children>
             </HBox>
          </children>

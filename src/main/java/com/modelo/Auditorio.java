@@ -12,6 +12,7 @@ public class Auditorio {
     private ArrayList<ClienteModel> Clientes;// se crea un arrayList de cliente en el auditorio
     private ClienteModel clienteActual;
     public ArrayList<Evento> eventoArrayList;
+    public ArrayList<Evento> eventosEnCartelera; 
     public Evento eventoActual;
     private Administrador admin;
 
@@ -28,11 +29,12 @@ public class Auditorio {
         Clientes = new ArrayList<>();
         eventoActual = null;
         eventoArrayList = new ArrayList<>();
+        eventosEnCartelera = new ArrayList<>();
 
         clienteActual = null;
     }
 
-    //seccion cliente
+    // seccion cliente
     public void agregarCliente(ClienteModel cliente) {// se va agregar el cliente para poder usarse en todas las clases
         Clientes.add(cliente);
 
@@ -78,7 +80,7 @@ public class Auditorio {
         return false;
     }
 
-    //seccion evento
+    // seccion evento
     public void agregarEvento(Evento evento) {
         eventoArrayList.add(evento);
 
@@ -88,7 +90,6 @@ public class Auditorio {
         this.eventoActual = evento;
 
     }
-    
 
     public ArrayList<Evento> getEventoArrayList() {
         return eventoArrayList;
@@ -113,9 +114,16 @@ public class Auditorio {
 
     public void setEventoActual(Evento eventoActual) {
         this.eventoActual = eventoActual;
+        if (eventoActual != null && !eventosEnCartelera.contains(eventoActual)) {
+            eventosEnCartelera.add(eventoActual);
+        }
     }
 
-    //seccion asiento
+    public ArrayList<Evento> getEventosEnCartelera() {
+        return eventosEnCartelera;
+    }
+
+    // seccion asiento
     public void ocuparAsiento(int fila, int columna) {
         asientos[fila][columna] = true;
     }
@@ -125,24 +133,30 @@ public class Auditorio {
     }
 
     public void reiniciarAsientos() {
-
-        VentasDeAsientosController.reiniciarButacas();
+        if (eventoActual != null) {
+            int[][] matriz = eventoActual.getMatrizAsientos();
+            for (int i = 0; i < 10; i++) {
+                for (int j = 0; j < 10; j++) {
+                    matriz[i][j] = 0; 
+                }
+            }
+        }
     }
+
     public double getRecaudacionGlobal() {
 
-    double total = 0;
+        double total = 0;
 
-    for (Evento evento : eventoArrayList) {
-        total += evento.calcularRecaudacion();
+        for (Evento evento : eventoArrayList) {
+            total += evento.calcularRecaudacion();
+        }
+
+        return total;
     }
-
-    return total;
-}
-
 
     public void crearEventoPorDefecto() {
         mostrarAlerta("Aviso", "Se ha creado un evento de prueba!", Alert.AlertType.WARNING);
 
-        auditorio.setEvento(new Evento("EVENTO DE PRUEBA", "01/01/2001", 1000)); //SOLO USAR SI NO HAY EVENTO
+        auditorio.setEvento(new Evento("EVENTO DE PRUEBA", "01/01/2001", 1000)); // SOLO USAR SI NO HAY EVENTO
     }
 }

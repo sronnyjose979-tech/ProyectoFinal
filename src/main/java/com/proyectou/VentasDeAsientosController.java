@@ -55,7 +55,6 @@ public class VentasDeAsientosController {
     private static final int COLUMNAS = 10;
 
     private static Button[][] botones = new Button[FILAS][COLUMNAS];
-    private static int[][] estados = new int[FILAS][COLUMNAS];
 
     private int filaSeleccionada = -1;
     private int colSeleccionada = -1;
@@ -64,15 +63,16 @@ public class VentasDeAsientosController {
     private static final int SELECCIONADA = 1;
     private static final int RESERVADA = 2;
 
-    public static double precioTotal;
-
-    public static int cantidadAsientos;
+    public double precioTotal;
+    public int cantidadAsientos;
 
     private Evento eventoActual;
 
     @FXML
     public void initialize() throws IOException {
         this.auditorio = App.auditorio;
+
+        eventoActual = auditorio.eventoActual;
 
         ClienteModel cliente = auditorio.getClienteActual();
         String nombreGuardado = cliente.getNombreUsuario();
@@ -83,17 +83,16 @@ public class VentasDeAsientosController {
         comboTipo.getItems().addAll(
                 "GENERAL",
                 "VIP",
-                "ESTUDIANTE"
-        );
+                "ESTUDIANTE");
 
-        if (auditorio.getEventoArrayList() != null && !auditorio.getEventoArrayList().isEmpty()) {
+        if (auditorio.getEventosEnCartelera() != null && !auditorio.getEventosEnCartelera().isEmpty()) {
 
-            for (int i = 0; i < auditorio.getEventoArrayList().size(); i++) {
-                Evento evento = auditorio.getEventoArrayList().get(i);
+            for (int i = 0; i < auditorio.getEventosEnCartelera().size(); i++) {
+                Evento evento = auditorio.getEventosEnCartelera().get(i);
                 comboEvento.getItems().add(evento.getNombre());
             }
 
-            this.eventoActual = auditorio.getEvento();
+            // this.eventoActual = auditorio.getEvento();
             if (eventoActual != null) {
                 comboEvento.getSelectionModel().select(eventoActual.getNombre());
             } else {
@@ -107,17 +106,27 @@ public class VentasDeAsientosController {
             @Override
             public void handle(ActionEvent e) {
                 String nombreSelec = comboEvento.getValue();
-                for (int i = 0; i < auditorio.getEventoArrayList().size(); i++) {
-                    Evento evento = auditorio.getEventoArrayList().get(i);
+                for (int i = 0; i < auditorio.getEventosEnCartelera().size(); i++) {
+                    Evento evento = auditorio.getEventosEnCartelera().get(i);
 
                     if (evento.getNombre().equals(nombreSelec)) {
                         eventoActual = evento;
+                        for (int f = 0; f < FILAS; f++) {
+                            for (int c = 0; c < COLUMNAS; c++) {
+                                actualizarColor(f, c);
+                            }
+                        }
                         break;
                     }
-
                 }
             }
         });
+
+        for (int fila = 0; fila < FILAS; fila++) {
+            for (int col = 0; col < COLUMNAS; col++) {
+                actualizarColor(fila, col);
+            }
+        }
     }
 
     @FXML
@@ -127,12 +136,11 @@ public class VentasDeAsientosController {
                 Button btn = new Button();
                 btn.setPrefSize(34, 25);
 
-                // --- CAMBIO DE ESTILO (SOLO ESTO SE AGREGÓ) ---
                 btn.getStyleClass().add("seat-button");
                 // ----------------------------------------------
 
                 botones[i][j] = btn;
-                //estados[i][j] = LIBRE;
+                // estados[i][j] = LIBRE;
 
                 final int fila = i;
                 final int col = j;
@@ -151,34 +159,38 @@ public class VentasDeAsientosController {
 
     }
 
-    public static void reiniciarButacas() {
+    public void reiniciarButacas() {
         for (int i = 0; i < FILAS; i++) {
             for (int j = 0; j < COLUMNAS; j++) {
-                estados[i][j] = LIBRE;
+                eventoActual.getMatrizAsientos()[i][j] = LIBRE;
             }
         }
     }
 
     // MANEJO DE CLICK
     private void manejarClickMesa(int fila, int col) {
+        if (eventoActual == null) {
+            mostrarAlerta("error", "no hay evento en sala", Alert.AlertType.WARNING);
+            return;
+        }
 
-        int estado = estados[fila][col];
+        int estado = eventoActual.getMatrizAsientos()[fila][col];
 
         switch (estado) {
             case LIBRE:
-                estados[fila][col] = SELECCIONADA;
+                eventoActual.getMatrizAsientos()[fila][col] = SELECCIONADA;
                 filaSeleccionada = fila;
                 colSeleccionada = col;
                 break;
 
             case SELECCIONADA:
-                estados[fila][col] = LIBRE;
+                eventoActual.getMatrizAsientos()[fila][col] = LIBRE;
                 filaSeleccionada = -1;
                 colSeleccionada = -1;
                 break;
 
             case RESERVADA:
-                estados[fila][col] = LIBRE; //SI LO DEJO ME PERMITE QUITAR LA RESERVA
+                eventoActual.getMatrizAsientos()[fila][col] = LIBRE; 
                 filaSeleccionada = -1;
                 colSeleccionada = -1;
                 return;
@@ -191,13 +203,16 @@ public class VentasDeAsientosController {
 
         Button btn = botones[fila][col];
 
-        // --- CAMBIO DE ESTILO (Reemplaza los setStyle anteriores) ---
-        // 1. Limpiar clases viejas para que no se acumulen
+     
         btn.getStyleClass().removeAll("seat-free", "seat-selected", "seat-reserved");
-        // 2. Quitar cualquier estilo manual residual
         btn.setStyle(null);
 
-        switch (estados[fila][col]) {
+        if (eventoActual == null) {
+            btn.getStyleClass().add("seat-free"); 
+            return;
+        }
+
+        switch (eventoActual.getMatrizAsientos()[fila][col]) {
             case LIBRE:
                 btn.getStyleClass().add("seat-free");
                 btn.setDisable(false);
@@ -214,35 +229,6 @@ public class VentasDeAsientosController {
                 btn.setOpacity(1.0); // Para que se vea el color rojo aunque esté deshabilitado
                 break;
         }
-        // ------------------------------------------------------------
-    }
-
-    @FXML
-    private void reservacion() throws IOException {
-
-        String tipoSeleccionado = comboTipo.getValue();
-
-        if (filaSeleccionada == -1 || colSeleccionada == -1) {
-            mostrarAlerta("Aviso", " No hay mesas seleccionadas", Alert.AlertType.WARNING);
-            return;
-        }
-
-        boolean huboSeleccion = false;
-        for (int i = 0; i < FILAS; i++) {
-            for (int j = 0; j < COLUMNAS; j++) {
-                if (estados[i][j] == SELECCIONADA) {
-                    estados[i][j] = RESERVADA;
-                    actualizarColor(i, j);
-                    huboSeleccion = true;
-                }
-            }
-
-        }
-        estados[filaSeleccionada][colSeleccionada] = RESERVADA;
-        actualizarColor(filaSeleccionada, colSeleccionada);
-
-        filaSeleccionada = -1;
-        colSeleccionada = -1;
     }
 
     @FXML
@@ -252,24 +238,16 @@ public class VentasDeAsientosController {
     }
 
     @FXML
-    public static String identificadorDeButacas() {
-
-        StringBuilder asientosTexto = new StringBuilder("Asientos reservados:\n");
-
+    public String identificadorDeButacas() {
+        StringBuilder asientosTexto = new StringBuilder("Asientos seleccionados:\n");
         for (int i = 0; i < FILAS; i++) {
             for (int j = 0; j < COLUMNAS; j++) {
-                if (estados[i][j] == RESERVADA) {
+                if (eventoActual.getMatrizAsientos()[i][j] == SELECCIONADA) {
                     asientosTexto.append("Fila: ").append(i + 1).append(" Col: ").append(j + 1).append("\n");
                 }
-
             }
-
         }
         return asientosTexto.toString();
-    }
-
-    public void guardarEstadosEnArchivo() {
-
     }
 
     @FXML
@@ -280,40 +258,8 @@ public class VentasDeAsientosController {
 
     }
 
-    public double verElPrecio() {
-
-        Evento eventoActual = auditorio.getEvento();
-
-        if (eventoActual == null) {
-            return 0;
-        }
-
-        String tipo = comboTipo.getValue();
-        double precioBase = eventoActual.getPrecioBase();
-        double subtotal = precioBase * cantidadAsientos;
-
-        if (tipo == null) {
-            return subtotal;
-        }
-
-        switch (tipo) {
-            case "VIP":
-                precioTotal = subtotal * 1.50;
-                break;
-            case "ESTUDIANTE":
-                precioTotal = subtotal * 0.80;
-                break;
-            default:
-                precioTotal = subtotal;
-                break;
-        }
-        return precioTotal;
-    }
-
     @FXML
     public void creacionDeEntradasConElComboBox() {
-
-        Evento eventoActual = auditorio.getEvento();
 
         if (eventoActual == null) {
             mostrarAlerta("No hay función activa",
@@ -337,35 +283,49 @@ public class VentasDeAsientosController {
             return;
         }
 
-        double total = verElPrecio();
         String numeroAsiento = identificadorDeButacas();
         Entrada nuevaEntrada;
 
         switch (tipoSeleccionado) {
             case "VIP":
-                nuevaEntrada = new EntradaVip(nombre, eventoActual, precioTotal, cantidadAsientos, numeroAsiento);
+                nuevaEntrada = new EntradaVip(nombre, eventoActual, 0, cantidadAsientos, numeroAsiento);
                 break;
             case "ESTUDIANTE":
-                nuevaEntrada = new EntradaEstudiante(nombre, eventoActual, precioTotal, cantidadAsientos, numeroAsiento);
+                nuevaEntrada = new EntradaEstudiante(nombre, eventoActual, 0, cantidadAsientos, numeroAsiento);
                 break;
             default:
-                nuevaEntrada = new EntradaGeneral(nombre, eventoActual, precioTotal, cantidadAsientos, numeroAsiento);
+                nuevaEntrada = new EntradaGeneral(nombre, eventoActual, 0, cantidadAsientos, numeroAsiento);
                 break;
         }
 
-        // REGISTRAR LA VENTA EN EL EVENTO
+        double precioCalculado = nuevaEntrada.calcularPrecio();
+        nuevaEntrada.setPrecioFinalCalculado(precioCalculado);
+
         ClienteModel cliente = auditorio.getClienteActual();
         cliente.agregarEntrada(nuevaEntrada);
+        eventoActual.agregarEntrada(nuevaEntrada);
 
-        // MOSTRAR TICKET
+        for (int i = 0; i < FILAS; i++) {
+            for (int j = 0; j < COLUMNAS; j++) {
+                if (eventoActual.getMatrizAsientos()[i][j] == SELECCIONADA) {
+                    eventoActual.getMatrizAsientos()[i][j] = RESERVADA;
+                    actualizarColor(i, j);
+                }
+            }
+        }
+
         txtAreaTicket.setText(nuevaEntrada.generarTicket());
+
+        filaSeleccionada = -1;
+        colSeleccionada = -1;
     }
 
+    @FXML
     private int contarAsientosSeleccionados() {
         int contador = 0;
         for (int i = 0; i < FILAS; i++) {
             for (int j = 0; j < COLUMNAS; j++) {
-                if (estados[i][j] == RESERVADA) {
+                if (eventoActual.getMatrizAsientos()[i][j] == SELECCIONADA) {
                     contador++;
                 }
             }
@@ -389,15 +349,13 @@ public class VentasDeAsientosController {
             return;
         }
 
-        ClienteModel cliente = auditorio.getClienteActual();
-
-        for (int i = 0; i < cliente.getEntradas().size(); i++) {
-
-            Entrada entrada = cliente.getEntradas().get(i);
-
-            if (entrada.getIdEntrada() == idBuscado) {
-                txtAreaTicket.setText(entrada.generarTicket());
-                return;
+        for (ClienteModel cliente : auditorio.getClientes()) {
+            for (int i = 0; i < cliente.getEntradas().size(); i++) {
+                Entrada entrada = cliente.getEntradas().get(i);
+                if (entrada.getIdEntrada() == idBuscado) {
+                    txtAreaTicket.setText(entrada.generarTicket());
+                    return;
+                }
             }
         }
 

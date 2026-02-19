@@ -52,12 +52,13 @@ public class AdminPanelController implements Initializable {
     }
 
     ///
-    ///Crud evento
+    /// Crud evento
     ///
     @FXML
     private void crearEvento() {
 
-        if (txtNombreEvento.getText().trim().isEmpty() || txtFechaEvento.getText().trim().isEmpty() || txtPrecioBase.getText().trim().isEmpty()) {
+        if (txtNombreEvento.getText().trim().isEmpty() || txtFechaEvento.getText().trim().isEmpty()
+                || txtPrecioBase.getText().trim().isEmpty()) {
             mostrarAlerta("Error", "No pueden quedar espacios en blanco", Alert.AlertType.ERROR);
             return;
         }
@@ -78,25 +79,25 @@ public class AdminPanelController implements Initializable {
         }
     }
 
- @FXML
-private void cargarEvento() {
+    @FXML
+    private void cargarEvento() {
 
-    Evento seleccionado = tableEvento.getSelectionModel().getSelectedItem();
+        Evento seleccionado = tableEvento.getSelectionModel().getSelectedItem();
 
-    if (seleccionado == null) {
-        mostrarAlerta("Aviso",
-                "Debe seleccionar un evento en la tabla",
-                Alert.AlertType.WARNING);
-        return;
+        if (seleccionado == null) {
+            mostrarAlerta("Aviso",
+                    "Debe seleccionar un evento en la tabla",
+                    Alert.AlertType.WARNING);
+            return;
+        }
+
+        lblEventoActivo.setText("Evento Activo: " + seleccionado.getNombre());
+        auditorio.setEventoActual(seleccionado);
+
+        mostrarAlerta("Éxito",
+                "Evento '" + seleccionado.getNombre() + "' cargado en sala.",
+                Alert.AlertType.INFORMATION);
     }
-
-    lblEventoActivo.setText("Evento Activo: " + seleccionado.getNombre());
-    auditorio.cargarEventoEnSala(seleccionado);
-
-    mostrarAlerta("Éxito",
-            "Evento '" + seleccionado.getNombre() + "' cargado en sala.",
-            Alert.AlertType.INFORMATION);
-}
 
     @FXML
     private void editarEvento() {
@@ -111,8 +112,7 @@ private void cargarEvento() {
             eventoActual.setNombre(txtNombreEvento.getText());
             eventoActual.setFecha(txtFechaEvento.getText());
             eventoActual.setPrecioBase(
-                    Double.parseDouble(txtPrecioBase.getText())
-            );
+                    Double.parseDouble(txtPrecioBase.getText()));
 
             mostrarAlerta("Evento actualizado",
                     "Los datos del evento fueron modificados.",
@@ -147,31 +147,31 @@ private void cargarEvento() {
     ///
     /// FIN GESTOR DE LOS EVENTO
     ///
-    //==========================
-    /// 
+    // ==========================
+    ///
     /// Funciones administrativas
     ///
-   @FXML
-private void verReporte() {
+    @FXML
+    private void verReporte() {
 
-    Evento evento = auditorio.getEvento();
+        Evento evento = auditorio.getEvento();
 
-    if (evento == null) {
-        mostrarAlerta("Reporte",
-                "No hay evento activo.",
+        if (evento == null) {
+            mostrarAlerta("Reporte",
+                    "No hay evento activo.",
+                    Alert.AlertType.INFORMATION);
+            return;
+        }
+
+        double total = evento.calcularRecaudacion();
+
+        mostrarAlerta("Reporte de Ventas",
+                "Total recaudado para el evento \"" + evento.getNombre()
+                + "\": ₡" + total,
                 Alert.AlertType.INFORMATION);
-        return;
     }
 
-    double total = evento.calcularRecaudacion();
-
-    mostrarAlerta("Reporte de Ventas",
-            "Total recaudado para el evento \"" + evento.getNombre()
-            + "\": ₡" + total,
-            Alert.AlertType.INFORMATION);
-}
-
-// ⭐ REPORTE GLOBAL
+    // ⭐ REPORTE GLOBAL
     @FXML
     private void verReporteGeneral() {
 
@@ -181,7 +181,7 @@ private void verReporte() {
                 "Recaudación total del sistema: ₡" + total,
                 Alert.AlertType.INFORMATION);
     }
-    
+
     @FXML
     private void reiniciarSala() {
         Evento seleccionado = tableEvento.getSelectionModel().getSelectedItem();

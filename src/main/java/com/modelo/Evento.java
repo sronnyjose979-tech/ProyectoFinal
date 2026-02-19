@@ -10,6 +10,7 @@ public class Evento {
     private double precioBase;
 
     private List<Entrada> entradasVendidas;
+    private int[][] matrizAsientos;
     
 
     public Evento(String nombre, String fecha, double precioBase) {
@@ -17,6 +18,7 @@ public class Evento {
         this.fecha = fecha;
         this.precioBase = precioBase;
         this.entradasVendidas = new ArrayList<>();
+        this.matrizAsientos=new int[10][10];
     }
 
     // ===========================
@@ -58,6 +60,11 @@ public class Evento {
     public List<Entrada> getEntradasVendidas() {
         return entradasVendidas;
     }
+
+    public int[][] getMatrizAsientos() {
+        return matrizAsientos;
+    }
+    
 
     // ========================
     // REPORTE

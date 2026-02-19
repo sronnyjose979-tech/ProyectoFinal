@@ -2,13 +2,10 @@ package com.modelo;
 
 public class EntradaGeneral extends Entrada {
 
-    public EntradaGeneral(String nombreCliente, Evento evento, double precioFinal, int cantidad, String detalleAsientos) {
+    public EntradaGeneral(String nombreCliente, Evento evento, double precioFinal, int cantidad,
+            String detalleAsientos) {
         super(nombreCliente, evento, precioFinal, cantidad, detalleAsientos);
     }
-
-    
-
-   
 
     @Override
     public String tipoEntrada() {
@@ -17,12 +14,12 @@ public class EntradaGeneral extends Entrada {
 
     @Override
     public String generarTicket() {
-        return super.generarTicket(); 
+        return super.generarTicket();
     }
 
     @Override
     public double calcularPrecio() {
-        return this.precioFinalCalculado; 
+        return this.evento.getPrecioBase() * this.cantidadAsientos;
     }
 
     @Override

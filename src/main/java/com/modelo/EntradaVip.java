@@ -6,9 +6,6 @@ public class EntradaVip extends Entrada {
         super(nombreCliente, evento, precioFinal, cantidad, detalleAsientos);
     }
 
-   
-    
-
     @Override
     public String tipoEntrada() {
         return "VIP";
@@ -16,12 +13,12 @@ public class EntradaVip extends Entrada {
 
     @Override
     public String generarTicket() {
-        return super.generarTicket(); 
+        return super.generarTicket();
     }
 
     @Override
     public double calcularPrecio() {
-        return this.precioFinalCalculado; 
+        return this.evento.getPrecioBase() * this.cantidadAsientos * 1.50;
     }
 
     @Override

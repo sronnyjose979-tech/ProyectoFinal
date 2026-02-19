@@ -55,4 +55,8 @@ public abstract class Entrada implements IVendible {
     public int getIdEntrada() {
         return idEntrada;
     }
+
+    public void setPrecioFinalCalculado(double precioFinalCalculado) {
+        this.precioFinalCalculado = precioFinalCalculado;
+    }
 }
