@@ -14,10 +14,14 @@ public class ClienteModel {// solo va a ser un modelo de cliente, se va controla
         Entradas = new ArrayList<>();
     }
 
-        public void agregarEntrada(Entrada entrada) {// se va agregar el cliente para poder usarse en todas las clases
+    public void agregarEntrada(Entrada entrada) {// se va agregar el cliente para poder usarse en todas las clases
         Entradas.add(entrada);
     }
-    
+
+    public ArrayList<Entrada> getEntradas() {
+        return Entradas;
+    }
+
     public String getNombreUsuario() {
         return nombreUsuario;
     }
@@ -34,12 +38,4 @@ public class ClienteModel {// solo va a ser un modelo de cliente, se va controla
         this.contra = contra;
     }
 
-//    public boolean comprobacion(String nombreUsuario, int contra) {
-//
-//        if (this.nombreUsuario.equals(nombreUsuario) && this.contra) {
-//            return true;
-//        }
-//
-//        return false;
-//    }
 }

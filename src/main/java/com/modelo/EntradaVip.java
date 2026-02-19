@@ -6,6 +6,9 @@ public class EntradaVip extends Entrada {
         super(nombreCliente, evento, precioFinal, cantidad, detalleAsientos);
     }
 
+   
+    
+
     @Override
     public String tipoEntrada() {
         return "VIP";

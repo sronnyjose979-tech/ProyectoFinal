@@ -15,11 +15,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="659.0" prefWidth="969.0" styleClass="root-pane" stylesheets="@VentasDeAsientos.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.proyectou.VentasDeAsientosController">
+<BorderPane prefHeight="659.0" prefWidth="1180.0" styleClass="root-pane" stylesheets="@VentasDeAsientos.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.proyectou.VentasDeAsientosController">
    <right>
-      <VBox prefHeight="619.0" prefWidth="321.0" spacing="20.0" styleClass="side-panel" BorderPane.alignment="CENTER">
+      <VBox prefHeight="634.0" prefWidth="370.0" spacing="20.0" styleClass="side-panel" BorderPane.alignment="CENTER">
          <children>
-            <HBox spacing="15.0">
+            <HBox prefHeight="182.0" prefWidth="322.0" spacing="15.0">
                <children>
                   <VBox spacing="17.0">
                      <children>
@@ -34,12 +34,12 @@
                         </Button>
                      </children>
                   </VBox>
-                  <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+                  <VBox prefHeight="182.0" prefWidth="206.0" spacing="11.0" HBox.hgrow="ALWAYS">
                      <children>
                         <Pane prefHeight="25.0" /> 
                         <ComboBox fx:id="comboTipo" maxWidth="1.7976931348623157E308" styleClass="combo-box" />
-                        <TextField fx:id="mensajeNombreUsuario" styleClass="modern-input" />
-                        <ComboBox id="comboEvento" fx:id="comboEvento" prefWidth="150.0" />
+                        <Label id="mensajeNombreUsuario" fx:id="mensajeNombreUsuario" prefHeight="23.0" prefWidth="168.0" styleClass="regular-label" />
+                        <ComboBox id="comboEvento" fx:id="comboEvento" prefHeight="25.0" prefWidth="169.0" />
                      </children>
                   </VBox>
                </children>
@@ -52,8 +52,8 @@
                   <Label styleClass="title-label" text="Buscar Entrada" />
                   <HBox spacing="10.0">
                      <children>
-                        <TextField maxWidth="1.7976931348623157E308" promptText="ID Entrada" styleClass="modern-input" HBox.hgrow="ALWAYS" />
-                        <Button mnemonicParsing="false" styleClass="btn-action" text="Buscar" />
+                        <TextField id="TxfbuscarEntrada" fx:id="TxfbuscarEntrada" maxWidth="1.7976931348623157E308" promptText="ID Entrada" styleClass="modern-input" HBox.hgrow="ALWAYS" />
+                       <Button id="buscarTicket" fx:id="buscarTicket" mnemonicParsing="false" onAction="#buscarEntrada" styleClass="btn-action" text="Buscar" />
                      </children>
                   </HBox>
                </children>

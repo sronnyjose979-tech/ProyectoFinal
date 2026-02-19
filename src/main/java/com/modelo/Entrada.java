@@ -10,10 +10,11 @@ public abstract class Entrada implements IVendible {
     protected double precioFinalCalculado;
     protected int cantidadAsientos;
     protected String detalleAsientos;
-        ObservableList<Evento> listaEventos = FXCollections.observableArrayList();
-
+    protected int idEntrada;
+    private static int contadorId = 1;
 
     public Entrada(String nombreCliente, Evento evento, double precioFinal, int cantidad, String detalleAsientos) {
+        this.idEntrada = contadorId++;
         this.nombreCliente = nombreCliente;
         this.evento = evento;
         this.precioFinalCalculado = precioFinal;
@@ -29,9 +30,10 @@ public abstract class Entrada implements IVendible {
         sb.append("========================================\n");
         sb.append("        AUDITORIO - TICKET DE COMPRA       \n");
         sb.append("========================================\n");
+        sb.append(" ID Entrada   : ").append(this.idEntrada).append("\n");
         sb.append(" Cliente      : ").append(this.nombreCliente).append("\n");
         sb.append(" Evento       : ").append(this.evento.getNombre()).append("\n");
-        sb.append(" Tipo Entrada : ").append(tipoEntrada()).append("\n"); 
+        sb.append(" Tipo Entrada : ").append(tipoEntrada()).append("\n");
         sb.append(" Cantidad     : ").append(this.cantidadAsientos).append(" asiento(s)\n");
         sb.append("----------------------------------------\n");
         sb.append(this.detalleAsientos).append("\n");
@@ -48,5 +50,9 @@ public abstract class Entrada implements IVendible {
     @Override
     public String getDescripcionVenta() {
         return "Entrada " + tipoEntrada() + " - " + nombreCliente;
+    }
+
+    public int getIdEntrada() {
+        return idEntrada;
     }
 }

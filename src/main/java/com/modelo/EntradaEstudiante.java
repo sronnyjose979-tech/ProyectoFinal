@@ -13,12 +13,12 @@ public class EntradaEstudiante extends Entrada {
 
     @Override
     public String generarTicket() {
-        return super.generarTicket(); 
+        return super.generarTicket();
     }
 
     @Override
     public double calcularPrecio() {
-        return this.precioFinalCalculado; 
+        return this.precioFinalCalculado;
     }
 
     @Override

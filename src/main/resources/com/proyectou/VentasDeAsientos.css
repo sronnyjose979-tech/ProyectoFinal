@@ -26,6 +26,20 @@
     -fx-font-weight: bold;
 }
 
+/* --- TEXTOS corriente --- */
+.regular-label {
+    -fx-text-fill: #D4AF37; /* Dorado */
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(two-pass-box, rgba(212, 175, 55, 0.3), 10, 0, 0, 0);
+}
+
+.text-label {
+    -fx-text-fill: #A0A5C0;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
 /* --- INPUTS Y COMBOBOX (Evitar fondo blanco) --- */
 .modern-input, .combo-box {
     -fx-background-color: #1A1E3F;

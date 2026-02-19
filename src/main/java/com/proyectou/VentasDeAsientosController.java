@@ -37,13 +37,19 @@ public class VentasDeAsientosController {
     private Label mensaje;
 
     @FXML
-    private TextField mensajeNombreUsuario;
+    private Label mensajeNombreUsuario;
 
     @FXML
     public TextArea txtAreaTicket;
 
     @FXML
+    public TextField TxfbuscarEntrada;
+
+    @FXML
     public Button btnComprar;
+
+    @FXML
+    public Button buscarTicket;
 
     private static final int FILAS = 10;
     private static final int COLUMNAS = 10;
@@ -94,7 +100,7 @@ public class VentasDeAsientosController {
                 comboEvento.getSelectionModel().selectFirst();
             }
         } else {
-            comboEvento.setPromptText("No hay eventos creados");
+            comboEvento.setPromptText("No hay eventos!");
         }
 
         comboEvento.setOnAction(new EventHandler<ActionEvent>() {
@@ -216,7 +222,6 @@ public class VentasDeAsientosController {
 
         String tipoSeleccionado = comboTipo.getValue();
 
-        
         if (filaSeleccionada == -1 || colSeleccionada == -1) {
             mostrarAlerta("Aviso", " No hay mesas seleccionadas", Alert.AlertType.WARNING);
             return;
@@ -271,7 +276,7 @@ public class VentasDeAsientosController {
     public void coordinadorDeBoton() throws IOException {
 
         creacionDeEntradasConElComboBox();
-       // guardarEstadosEnArchivo();
+        // guardarEstadosEnArchivo();
 
     }
 
@@ -319,7 +324,7 @@ public class VentasDeAsientosController {
 
         String tipoSeleccionado = comboTipo.getValue();
         String nombre = mensajeNombreUsuario.getText();
-        
+
         if (tipoSeleccionado == null) {
             mostrarAlerta("Aviso", "Debe seleccionar un tipo de entrada!", Alert.AlertType.WARNING);
             return;
@@ -349,7 +354,8 @@ public class VentasDeAsientosController {
         }
 
         // REGISTRAR LA VENTA EN EL EVENTO
-        eventoActual.agregarEntrada(nuevaEntrada);
+        ClienteModel cliente = auditorio.getClienteActual();
+        cliente.agregarEntrada(nuevaEntrada);
 
         // MOSTRAR TICKET
         txtAreaTicket.setText(nuevaEntrada.generarTicket());
@@ -365,6 +371,38 @@ public class VentasDeAsientosController {
             }
         }
         return contador;
+    }
+
+    public void buscarEntrada() {
+        String idButacas = TxfbuscarEntrada.getText();
+
+        if (idButacas.isEmpty()) {
+            mostrarAlerta("Error", "Ingrese una ID valida", Alert.AlertType.WARNING);
+            return;
+        }
+
+        int idBuscado;
+        try {
+            idBuscado = Integer.parseInt(idButacas);
+        } catch (NumberFormatException e) {
+            mostrarAlerta("Error", "El ID debe ser un numero", Alert.AlertType.ERROR);
+            return;
+        }
+
+        ClienteModel cliente = auditorio.getClienteActual();
+
+        for (int i = 0; i < cliente.getEntradas().size(); i++) {
+
+            Entrada entrada = cliente.getEntradas().get(i);
+
+            if (entrada.getIdEntrada() == idBuscado) {
+                txtAreaTicket.setText(entrada.generarTicket());
+                return;
+            }
+        }
+
+        mostrarAlerta("No encontrado", "No existe una entrada con ese ID", Alert.AlertType.INFORMATION);
+
     }
 
 }
