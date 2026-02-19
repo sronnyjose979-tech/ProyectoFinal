@@ -26,17 +26,17 @@ public abstract class Entrada implements IVendible {
     @Override
     public String generarTicket() {
         StringBuilder sb = new StringBuilder();
-        sb.append("==========================================\n");
+        sb.append("========================================\n");
         sb.append("        AUDITORIO - TICKET DE COMPRA       \n");
-        sb.append("==========================================\n");
+        sb.append("========================================\n");
         sb.append(" Cliente      : ").append(this.nombreCliente).append("\n");
         sb.append(" Evento       : ").append(this.evento.getNombre()).append("\n");
         sb.append(" Tipo Entrada : ").append(tipoEntrada()).append("\n"); 
         sb.append(" Cantidad     : ").append(this.cantidadAsientos).append(" asiento(s)\n");
-        sb.append("------------------------------------------\n");
+        sb.append("----------------------------------------\n");
         sb.append(this.detalleAsientos).append("\n");
         sb.append(" TOTAL PAGADO : $").append(String.format("%.2f", precioFinalCalculado)).append("\n");
-        sb.append("==========================================\n");
+        sb.append("========================================\n");
         return sb.toString();
     }
 
