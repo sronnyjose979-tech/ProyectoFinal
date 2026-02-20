@@ -1,20 +1,23 @@
 package com.modelo;
 
-import static UtilsAlertas.mostrarAlerta.mostrarAlerta;
-import static com.proyectou.App.auditorio;
-import com.proyectou.VentasDeAsientosController;
 import java.util.ArrayList;
-import javafx.scene.control.Alert;
 
 public class Auditorio {
 
-    private boolean[][] asientos;
-    private ArrayList<ClienteModel> Clientes;// se crea un arrayList de cliente en el auditorio
+    private ArrayList<ClienteModel> clientes;
     private ClienteModel clienteActual;
     public ArrayList<Evento> eventoArrayList;
-    public ArrayList<Evento> eventosEnCartelera; 
+    public ArrayList<Evento> eventosEnCartelera;
     public Evento eventoActual;
     private Administrador admin;
+
+    public Auditorio() {
+        clientes = new ArrayList<>();
+        eventoActual = null;
+        eventoArrayList = new ArrayList<>();
+        eventosEnCartelera = new ArrayList<>();
+        clienteActual = null;
+    }
 
     public Evento getEvento() {
         return eventoActual;
@@ -24,25 +27,13 @@ public class Auditorio {
         this.eventoActual = evento;
     }
 
-    public Auditorio() {
-        asientos = new boolean[10][10]; // matriz obligatoria del proyecto
-        Clientes = new ArrayList<>();
-        eventoActual = null;
-        eventoArrayList = new ArrayList<>();
-        eventosEnCartelera = new ArrayList<>();
-
-        clienteActual = null;
-    }
-
-    // seccion cliente
-    public void agregarCliente(ClienteModel cliente) {// se va agregar el cliente para poder usarse en todas las clases
-        Clientes.add(cliente);
-
+    // Sección Cliente
+    public void agregarCliente(ClienteModel cliente) {
+        clientes.add(cliente);
     }
 
     public void cargarCliente(ClienteModel cliente) {
         this.clienteActual = cliente;
-
     }
 
     public ClienteModel getClienteActual() {
@@ -51,19 +42,18 @@ public class Auditorio {
 
     public Administrador cargarAdmin() {
         return admin = new Administrador("a", "1");
-
     }
 
     public ArrayList<ClienteModel> getClientes() {
-        return Clientes;
+        return clientes;
     }
 
-    public void setClientes(ArrayList<ClienteModel> Clientes) {
-        this.Clientes = Clientes;
+    public void setClientes(ArrayList<ClienteModel> clientes) {
+        this.clientes = clientes;
     }
 
     public ClienteModel autenticarCliente(String usuario, String contra) {
-        for (ClienteModel c : Clientes) {
+        for (ClienteModel c : clientes) {
             if (c.getNombreUsuario().equalsIgnoreCase(usuario) && c.getContra().equals(contra)) {
                 return c;
             }
@@ -72,7 +62,7 @@ public class Auditorio {
     }
 
     public boolean usuarioExiste(String nombre) {
-        for (ClienteModel c : Clientes) {
+        for (ClienteModel c : clientes) {
             if (c.getNombreUsuario().equalsIgnoreCase(nombre)) {
                 return true;
             }
@@ -80,15 +70,13 @@ public class Auditorio {
         return false;
     }
 
-    // seccion evento
+    // Sección Evento
     public void agregarEvento(Evento evento) {
         eventoArrayList.add(evento);
-
     }
 
     public void cargarEvento(Evento evento) {
         this.eventoActual = evento;
-
     }
 
     public ArrayList<Evento> getEventoArrayList() {
@@ -105,7 +93,6 @@ public class Auditorio {
 
     public void cargarEventoEnSala(Evento evento) {
         this.eventoActual = evento;
-
     }
 
     public Evento getEventoActual() {
@@ -123,40 +110,28 @@ public class Auditorio {
         return eventosEnCartelera;
     }
 
-    // seccion asiento
-    public void ocuparAsiento(int fila, int columna) {
-        asientos[fila][columna] = true;
-    }
-
-    public boolean estaOcupado(int fila, int columna) {
-        return asientos[fila][columna];
-    }
-
+    // Sección Asiento
     public void reiniciarAsientos() {
         if (eventoActual != null) {
             int[][] matriz = eventoActual.getMatrizAsientos();
             for (int i = 0; i < 10; i++) {
                 for (int j = 0; j < 10; j++) {
-                    matriz[i][j] = 0; 
+                    matriz[i][j] = 0;
                 }
             }
         }
     }
 
     public double getRecaudacionGlobal() {
-
         double total = 0;
-
         for (Evento evento : eventoArrayList) {
             total += evento.calcularRecaudacion();
         }
-
         return total;
     }
 
     public void crearEventoPorDefecto() {
-        mostrarAlerta("Aviso", "Se ha creado un evento de prueba!", Alert.AlertType.WARNING);
-
-        auditorio.setEvento(new Evento("EVENTO DE PRUEBA", "01/01/2001", 1000)); // SOLO USAR SI NO HAY EVENTO
+        System.out.println("Creando evento de prueba interno...");
+        this.setEvento(new Evento("EVENTO DE PRUEBA", "01/01/2001", 1000));
     }
 }

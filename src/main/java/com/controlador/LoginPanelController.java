@@ -1,11 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
-package com.proyectou;
+package com.controlador;
 
+import com.app.App;
+import com.modelo.Auditorio;
 import com.modelo.ClienteModel;
-import UtilsAlertas.NoHayUsuarioException;
+import com.util.Alerta;
+import com.util.NoHayUsuarioException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,8 +14,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import static UtilsAlertas.mostrarAlerta.mostrarAlerta;
-import com.modelo.Auditorio;
 import javafx.scene.control.TabPane;
 
 public class LoginPanelController implements Initializable {
@@ -41,14 +38,12 @@ public class LoginPanelController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.auditorio = App.auditorio;
-
-        // TODO
     }
 
     @FXML
     private void btnIniciarSesion(ActionEvent e) throws IOException {
         if (txtIniciarNombre.getText().trim().isEmpty() || txtIniciarContra.getText().trim().isEmpty()) {
-            mostrarAlerta("Error", "No pueden quedar espacios en blanco", Alert.AlertType.ERROR);
+            Alerta.mostrar("Error", "No pueden quedar espacios en blanco", Alert.AlertType.ERROR);
             return;
         }
         String nombre = txtIniciarNombre.getText().trim();
@@ -56,44 +51,47 @@ public class LoginPanelController implements Initializable {
         ClienteModel cliente = auditorio.autenticarCliente(nombre, contra);
         if (cliente != null) {
             auditorio.cargarCliente(cliente);
-            mostrarAlerta("Éxito", "Bienvenido " + cliente.getNombreUsuario(), Alert.AlertType.INFORMATION);
+            Alerta.mostrar("Éxito", "Bienvenido " + cliente.getNombreUsuario(), Alert.AlertType.INFORMATION);
             App.setRoot("VistaVentaAsientos");
         } else {
-            mostrarAlerta("Error", "Usuario o Contraseña Incorrectos", Alert.AlertType.ERROR);
+            Alerta.mostrar("Error", "Usuario o Contraseña Incorrectos", Alert.AlertType.ERROR);
         }
     }
 
     @FXML
-    public void btnRegistrarUsuario() throws NoHayUsuarioException, IOException {
+    public void btnRegistrarUsuario() {
 
         if (txtRegistarUsuario.getText().trim().isEmpty() || txtContraseñaNueva.getText().isEmpty()) {
-            mostrarAlerta("Error", "Por favor rellene todos los campos", Alert.AlertType.ERROR);
+            Alerta.mostrar("Error", "Por favor rellene todos los campos", Alert.AlertType.ERROR);
             return;
         }
 
         String nombreAValidar = txtRegistarUsuario.getText().trim();
         String contraEscrita = txtContraseñaNueva.getText().trim();
 
-        auditorio.usuarioExiste(nombreAValidar);
-        if (auditorio.usuarioExiste(nombreAValidar)) {
-            mostrarAlerta("Error", "El nombre de usuario ya está en uso. Intente con otro.", Alert.AlertType.ERROR);
-            return;
+        try {
+            if (auditorio.usuarioExiste(nombreAValidar)) {
+                throw new NoHayUsuarioException("El nombre de usuario '" + nombreAValidar + "' ya está en uso.");
+            }
+
+            ClienteModel cliente = new ClienteModel(nombreAValidar, contraEscrita);
+            auditorio.agregarCliente(cliente);
+            auditorio.cargarCliente(cliente);
+            txtRegistarUsuario.setText("");
+            txtContraseñaNueva.setText("");
+
+            Alerta.mostrar("Éxito", "Usuario registrado correctamente. ¡Ya puedes iniciar sesión!",
+                    Alert.AlertType.INFORMATION);
+            // Cambiar a la pestaña de login
+            tabLogin.getSelectionModel().select(0);
+
+        } catch (NoHayUsuarioException ex) {
+            Alerta.mostrar("Error", "El nombre de usuario ya está en uso. Intente con otro.", Alert.AlertType.ERROR);
         }
-
-        ClienteModel cliente = new ClienteModel(nombreAValidar, contraEscrita);
-        auditorio.agregarCliente(cliente);
-        auditorio.cargarCliente(cliente);
-        txtRegistarUsuario.setText("");
-        txtContraseñaNueva.setText("");
-
-        mostrarAlerta("Éxito", "Usuario registrado correctamente. ¡Ya puedes iniciar sesión!", Alert.AlertType.INFORMATION);
-        tabLogin.getSelectionModel().select(0);
     }
 
     @FXML
     private void btnngresarAdmin() throws IOException {
         App.setRoot("AdminLogin");
-
     }
-
 }

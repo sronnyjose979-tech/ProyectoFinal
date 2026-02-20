@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane styleClass="root-pane" stylesheets="@/com/css/loginEstilos.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controlador.AdminPanelController">
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-background-color: #d4af37; -fx-padding: 15;">
+            <children>
+                <Label style="-fx-text-fill: black; -fx-font-weight: bold; -fx-font-size: 18px;" text="PANEL DE ADMINISTRACIÓN" />
+                <Region HBox.hgrow="ALWAYS" />
+                <Button onAction="#regresarLogin" styleClass="btn-volver" text="Cerrar Sesión" />
+            </children>
+        </HBox>
+    </top>
+
+    <center>
+        <StackPane>
+            <children>
+                <VBox alignment="TOP_CENTER" maxWidth="950" spacing="30" style="-fx-padding: 40;">
+                    <children>
+                        <Label styleClass="titulo-principal" text="Gestión de Eventos" />
+                        <HBox alignment="CENTER" spacing="30">
+                            <children>
+                                <VBox prefWidth="350" spacing="15" styleClass="login-card">
+                                    <padding>
+                                        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                                    </padding>
+                                    <children>
+                                        <Label styleClass="label-form" text="NUEVO / EDITAR EVENTO" textFill="#d4af37">
+                                            <font>
+                                                <Font name="System Bold" size="14.0" />
+                                            </font>
+                                        </Label>
+                                        <VBox spacing="5">
+                                            <Label styleClass="label-form" text="Nombre del Evento" />
+                                            <TextField fx:id="txtNombreEvento" promptText="Ej: Concierto Rock" />
+                                        </VBox>
+                                        <VBox spacing="5">
+                                            <Label styleClass="label-form" text="Fecha" />
+                                            <TextField fx:id="txtFechaEvento" promptText="dd/MM/yyyy" />
+                                        </VBox>
+                                        <VBox spacing="5">
+                                            <Label styleClass="label-form" text="Precio Base" />
+                                            <TextField fx:id="txtPrecioBase" promptText="0.00" />
+                                        </VBox>
+                                        <HBox spacing="10">
+                                            <children>
+                                                <Button maxWidth="Infinity" onAction="#crearEvento" styleClass="btn-principal" text="Crear" HBox.hgrow="ALWAYS" />
+                                                <Button maxWidth="Infinity" onAction="#editarEvento" styleClass="btn-principal" text="Editar" HBox.hgrow="ALWAYS" />
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </VBox>
+
+                                <VBox prefWidth="350" spacing="15" styleClass="login-card">
+                                    <padding>
+                                        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                                    </padding>
+                                    <children>
+                                        <Label styleClass="label-form" text="ESTADO ACTUAL" textFill="#d4af37">
+                                            <font>
+                                                <Font name="System Bold" size="14.0" />
+                                            </font>
+                                        </Label>
+                                        <VBox spacing="10" style="-fx-background-color: rgba(255,255,255,0.05); -fx-padding: 15; -fx-background-radius: 5;">
+                                            <Label fx:id="lblEventoActivo" style="-fx-text-fill: white;" text="Evento Activo: Ninguno" wrapText="true" />
+                                        </VBox>
+                                        <TableView fx:id="tableEvento" prefHeight="200.0" prefWidth="200.0">
+                                            <columns>
+                                                <TableColumn fx:id="eventoCol" prefWidth="100.0" text="Evento" />
+                                                <TableColumn fx:id="fechaCol" prefWidth="100.0" text="Fecha" />
+                                                <TableColumn fx:id="precioCol" prefWidth="100.0" text="Precio" />
+                                            </columns>
+                                        </TableView>
+                                        <Region VBox.vgrow="ALWAYS" />
+                                        <Button maxWidth="Infinity" onAction="#verReporte" styleClass="btn-principal" text="Generar Reporte" />
+                                        <Button maxWidth="Infinity" onAction="#verReporteGeneral" styleClass="btn-principal" text="Reporte Total"/>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </HBox>
+
+                        <HBox alignment="CENTER" spacing="20" style="-fx-padding: 20;" styleClass="login-card">
+                            <children>
+                                <Label styleClass="label-form" text="Acciones Rápidas:" />
+                                <Button onAction="#eliminarEvento" style="-fx-text-fill: #ff5555;" styleClass="btn-volver" text="Eliminar Evento" />
+                                <Button onAction="#reiniciarSala" styleClass="btn-volver" text="Reiniciar Sala" />
+                                <Button onAction="#cargarEvento" text="Cargar en Sala" />
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+        </StackPane>
+    </center>
+</BorderPane>

@@ -1,0 +1,6 @@
+VIP|1|21|21|31.5|1|Asientos seleccionados:\nFila: 1 Col: 5\n
+VIP|2|21|21|31.5|1|Asientos seleccionados:\nFila: 1 Col: 6\n
+VIP|3|21|21|31.5|1|Asientos seleccionados:\nFila: 1 Col: 7\n
+VIP|4|211|21|31.5|1|Asientos seleccionados:\nFila: 1 Col: 8\n
+VIP|5|211|21|31.5|1|Asientos seleccionados:\nFila: 1 Col: 9\n
+GENERAL|6|a|aaa|100.0|1|Asientos seleccionados:\nFila: 1 Col: 5\n
