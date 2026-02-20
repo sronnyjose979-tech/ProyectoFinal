@@ -7,6 +7,7 @@ public abstract class Entrada implements IVendible {
     protected double precioFinalCalculado;
     protected int cantidadAsientos;
     protected String detalleAsientos;
+    protected String fechaCompra;
     protected int idEntrada;
     private static int contadorId = 1;
 
@@ -17,6 +18,10 @@ public abstract class Entrada implements IVendible {
         this.precioFinalCalculado = precioFinal;
         this.cantidadAsientos = cantidad;
         this.detalleAsientos = detalleAsientos;
+        // Obtener fecha y hora actual formateada
+        java.time.LocalDateTime ahora = java.time.LocalDateTime.now();
+        java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        this.fechaCompra = ahora.format(formatter);
     }
 
     public static void setContadorId(int nuevo) {
@@ -32,18 +37,18 @@ public abstract class Entrada implements IVendible {
     @Override
     public String generarTicket() {
         StringBuilder sb = new StringBuilder();
-        sb.append("========================================\n");
-        sb.append("        AUDITORIO - TICKET DE COMPRA       \n");
-        sb.append("========================================\n");
-        sb.append(" ID Entrada   : ").append(this.idEntrada).append("\n");
-        sb.append(" Cliente      : ").append(this.nombreCliente).append("\n");
-        sb.append(" Evento       : ").append(this.evento.getNombre()).append("\n");
-        sb.append(" Tipo Entrada : ").append(tipoEntrada()).append("\n");
-        sb.append(" Cantidad     : ").append(this.cantidadAsientos).append(" asiento(s)\n");
-        sb.append("----------------------------------------\n");
-        sb.append(this.detalleAsientos).append("\n");
-        sb.append(" TOTAL PAGADO : $").append(String.format("%.2f", precioFinalCalculado)).append("\n");
-        sb.append("========================================\n");
+        sb.append("============================================\n");
+        sb.append("        AUDITORIO - TICKET DE ENTRADA       \n");
+        sb.append("============================================\n");
+        sb.append("  ID Entrada   : ").append(this.idEntrada).append("\n");
+        sb.append("  Cliente      : ").append(this.nombreCliente).append("\n");
+        sb.append("  Evento       : ").append(this.evento.getNombre()).append("\n");
+        sb.append("  Fecha Evento : ").append(this.evento.getFecha()).append("\n");
+        sb.append("  Tipo Entrada : ").append(tipoEntrada()).append("\n");
+        sb.append("  Asiento      : ").append(this.detalleAsientos.replace("\n", ", ")).append("\n");
+        sb.append("  Precio Final : $").append(String.format("%.2f", precioFinalCalculado)).append("\n");
+        sb.append("  Compra       : ").append(this.fechaCompra).append("\n");
+        sb.append("============================================\n");
         return sb.toString();
     }
 
@@ -75,6 +80,14 @@ public abstract class Entrada implements IVendible {
 
     public String getDetalleAsientos() {
         return detalleAsientos;
+    }
+
+    public String getFechaCompra() {
+        return fechaCompra;
+    }
+
+    public void setFechaCompra(String fechaCompra) {
+        this.fechaCompra = fechaCompra;
     }
 
     public void setPrecioFinalCalculado(double precioFinalCalculado) {

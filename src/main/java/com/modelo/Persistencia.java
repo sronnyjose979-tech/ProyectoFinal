@@ -1,153 +1,127 @@
 package com.modelo;
 
 import java.io.*;
+import java.nio.file.*;
 
 public class Persistencia {
 
-    private static final String ARCHIVO_EVENTOS = "eventos.txt";
-    private static final String ARCHIVO_CLIENTES = "clientes.txt";
-    private static final String ARCHIVO_ENTRADAS = "entradas.txt";
+    private static final String CARPETA_DATA = "data";
+    private static final String ARCHIVO_EVENTOS = CARPETA_DATA + "/eventos.csv";
+    private static final String ARCHIVO_CLIENTES = CARPETA_DATA + "/clientes.csv";
+    private static final String ARCHIVO_ENTRADAS = CARPETA_DATA + "/entradas.csv";
 
-    private static final int FILAS = 10;
-    private static final int COLUMNAS = 10;
+    // Método para asegurar que la carpeta de persistencia exista
+    private static void asegurarCarpeta() {
+        try {
+            Files.createDirectories(Paths.get(CARPETA_DATA));
+        } catch (IOException e) {
+            System.err.println("[Persistencia] No se pudo crear la carpeta de datos: " + e.getMessage());
+        }
+    }
 
     public static void guardarDatos(Auditorio auditorio) {
+        asegurarCarpeta();
         guardarEventos(auditorio);
         guardarClientes(auditorio);
         guardarEntradas(auditorio);
-        System.out.println("[Persistencia] Datos guardados correctamente.");
+        System.out.println("[Persistencia] Datos guardados en carpeta '" + CARPETA_DATA + "'.");
+    }
+
+    public static void exportarTicketATxt(Entrada entrada) {
+        asegurarCarpeta();
+        String nombreArchivo = CARPETA_DATA + "/Entrada_" + entrada.getIdEntrada() + ".txt";
+        try (PrintWriter pw = new PrintWriter(new FileWriter(nombreArchivo))) {
+            pw.print(entrada.generarTicket());
+        } catch (IOException e) {
+            /**/}
     }
 
     private static void guardarEventos(Auditorio auditorio) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(ARCHIVO_EVENTOS))) {
             if (auditorio.getEventoArrayList() != null) {
+                pw.println("NOMBRE,FECHA,PRECIO");
                 for (Evento evento : auditorio.getEventoArrayList()) {
-                    pw.println("EVENTO|" + evento.getNombre() + "|" + evento.getFecha()
-                            + "|" + evento.getPrecioBase());
-
-                    int[][] matriz = evento.getMatrizAsientos();
-                    for (int i = 0; i < FILAS; i++) {
-                        StringBuilder fila = new StringBuilder();
-                        for (int j = 0; j < COLUMNAS; j++) {
-                            fila.append(matriz[i][j]);
-                            if (j < COLUMNAS - 1) {
-                                fila.append(",");
-                            }
-                        }
-                        pw.println(fila.toString());
-                    }
-                    pw.println("---");
+                    pw.println(evento.getNombre() + "," + evento.getFecha() + "," + evento.getPrecioBase());
                 }
             }
         } catch (IOException e) {
-            System.err.println("[Persistencia] Error al guardar eventos: " + e.getMessage());
-        }
+            /**/}
     }
 
     private static void guardarClientes(Auditorio auditorio) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(ARCHIVO_CLIENTES))) {
             if (auditorio.getClientes() != null) {
+                pw.println("USUARIO,CONTRASEÑA");
                 for (ClienteModel cliente : auditorio.getClientes()) {
-                    pw.println(cliente.getNombreUsuario() + "|" + cliente.getContra());
+                    pw.println(cliente.getNombreUsuario() + "," + cliente.getContra());
                 }
             }
         } catch (IOException e) {
-            System.err.println("[Persistencia] Error al guardar clientes: " + e.getMessage());
-        }
+            /**/}
     }
 
     private static void guardarEntradas(Auditorio auditorio) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(ARCHIVO_ENTRADAS))) {
             if (auditorio.getClientes() != null) {
+                pw.println("TIPO,ID,CLIENTE,EVENTO,PRECIO,CANTIDAD,ASIENTOS,FECHA_COMPRA");
                 for (ClienteModel cliente : auditorio.getClientes()) {
                     if (cliente.getEntradas() != null) {
                         for (Entrada entrada : cliente.getEntradas()) {
-                            // TIPO|ID|NOMBRE_CLIENTE|NOMBRE_EVENTO|PRECIO|CANTIDAD|DETALLE
                             pw.println(
-                                    entrada.tipoEntrada() + "|" +
-                                            entrada.getIdEntrada() + "|" +
-                                            entrada.getNombreCliente() + "|" +
-                                            entrada.getEvento().getNombre() + "|" +
-                                            entrada.calcularPrecio() + "|" +
-                                            entrada.getCantidadAsientos() + "|" +
-                                            entrada.getDetalleAsientos().replace("\n", "\\n"));
+                                    entrada.tipoEntrada() + "," +
+                                            entrada.getIdEntrada() + "," +
+                                            entrada.getNombreCliente() + "," +
+                                            entrada.getEvento().getNombre() + "," +
+                                            entrada.calcularPrecio() + "," +
+                                            entrada.getCantidadAsientos() + "," +
+                                            "\"" + entrada.getDetalleAsientos().replace("\n", "; ") + "\"," +
+                                            entrada.getFechaCompra());
                         }
                     }
                 }
             }
         } catch (IOException e) {
-            System.err.println("[Persistencia] Error al guardar entradas: " + e.getMessage());
-        }
+            /**/}
     }
 
     public static void cargarDatos(Auditorio auditorio) {
+        asegurarCarpeta();
         cargarClientes(auditorio);
         cargarEventos(auditorio);
         cargarEntradas(auditorio);
-        System.out.println("[Persistencia] Datos cargados correctamente.");
     }
 
     private static void cargarClientes(Auditorio auditorio) {
         File archivo = new File(ARCHIVO_CLIENTES);
         if (!archivo.exists())
             return;
-
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+            br.readLine();
             String linea;
             while ((linea = br.readLine()) != null) {
-                linea = linea.trim();
-                if (linea.isEmpty())
-                    continue;
-                String[] partes = linea.split("\\|");
-                if (partes.length == 2) {
-                    ClienteModel cliente = new ClienteModel(partes[0], partes[1]);
-                    auditorio.agregarCliente(cliente);
-                }
+                String[] partes = linea.split(",");
+                if (partes.length == 2)
+                    auditorio.agregarCliente(new ClienteModel(partes[0], partes[1]));
             }
         } catch (IOException e) {
-            System.err.println("[Persistencia] Error al cargar clientes: " + e.getMessage());
-        }
+            /**/}
     }
 
     private static void cargarEventos(Auditorio auditorio) {
         File archivo = new File(ARCHIVO_EVENTOS);
         if (!archivo.exists())
             return;
-
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+            br.readLine();
             String linea;
-            Evento eventoActual = null;
-            int filaMatriz = 0;
-
             while ((linea = br.readLine()) != null) {
-                linea = linea.trim();
-                if (linea.isEmpty())
-                    continue;
-
-                if (linea.startsWith("EVENTO|")) {
-                    String[] partes = linea.split("\\|");
-                    if (partes.length == 4) {
-                        String nombre = partes[1];
-                        String fecha = partes[2];
-                        double precio = Double.parseDouble(partes[3]);
-                        eventoActual = new Evento(nombre, fecha, precio);
-                        filaMatriz = 0;
-                        auditorio.agregarEvento(eventoActual);
-                    }
-                } else if (linea.equals("---")) {
-                    eventoActual = null;
-                    filaMatriz = 0;
-                } else if (eventoActual != null && filaMatriz < FILAS) {
-                    String[] celdas = linea.split(",");
-                    for (int j = 0; j < Math.min(celdas.length, COLUMNAS); j++) {
-                        eventoActual.getMatrizAsientos()[filaMatriz][j] = Integer.parseInt(celdas[j].trim());
-                    }
-                    filaMatriz++;
+                String[] partes = linea.split(",");
+                if (partes.length == 3) {
+                    auditorio.agregarEvento(new Evento(partes[0], partes[1], Double.parseDouble(partes[2])));
                 }
             }
         } catch (IOException e) {
-            System.err.println("[Persistencia] Error al cargar eventos: " + e.getMessage());
-        }
+            /**/}
     }
 
     private static void cargarEntradas(Auditorio auditorio) {
@@ -156,71 +130,72 @@ public class Persistencia {
             return;
 
         int maxId = 0;
-
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+            br.readLine();
             String linea;
             while ((linea = br.readLine()) != null) {
-                linea = linea.trim();
-                if (linea.isEmpty())
-                    continue;
-
-                String[] partes = linea.split("\\|", 7);
-                if (partes.length < 7)
+                String[] partes = linea.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+                if (partes.length < 8)
                     continue;
 
                 String tipo = partes[0];
-                int idEntrada = Integer.parseInt(partes[1]);
-                String nombreCliente = partes[2];
-                String nombreEvento = partes[3];
+                int id = Integer.parseInt(partes[1]);
+                String cliente = partes[2];
+                String nombreEv = partes[3];
                 double precio = Double.parseDouble(partes[4]);
-                int cantidad = Integer.parseInt(partes[5]);
-                String detalle = partes[6].replace("\\n", "\n");
+                int cant = Integer.parseInt(partes[5]);
+                String detalle = partes[6].replace("\"", "");
+                String fecha = partes[7];
 
-                Evento evento = null;
+                Evento ev = null;
                 for (Evento e : auditorio.getEventoArrayList()) {
-                    if (e.getNombre().equals(nombreEvento)) {
-                        evento = e;
+                    if (e.getNombre().equals(nombreEv)) {
+                        ev = e;
                         break;
                     }
                 }
-                if (evento == null)
-                    continue; // Evento no encontrado, saltar entrada
+                if (ev == null)
+                    continue;
 
-                Entrada entrada;
-                switch (tipo) {
-                    case "VIP":
-                        entrada = new EntradaVip(nombreCliente, evento, precio, cantidad, detalle);
-                        break;
-                    case "ESTUDIANTIL":
-                        entrada = new EntradaEstudiante(nombreCliente, evento, precio, cantidad, detalle);
-                        break;
-                    default:
-                        entrada = new EntradaGeneral(nombreCliente, evento, precio, cantidad, detalle);
-                        break;
+                String[] ocupados = detalle.split("; ");
+                for (String silla : ocupados) {
+                    try {
+                        String[] coords = silla.replaceAll("[^0-9 ]", "").trim().split(" +");
+                        if (coords.length >= 2) {
+                            int f = Integer.parseInt(coords[0]) - 1;
+                            int c = Integer.parseInt(coords[1]) - 1;
+                            if (f >= 0 && f < 10 && c >= 0 && c < 10) {
+                                ev.getMatrizAsientos()[f][c] = 2;
+                            }
+                        }
+                    } catch (Exception ex) {
+                        /**/}
                 }
 
-                // Establecer ID real desde archivo
-                entrada.setIdEntrada(idEntrada);
-                entrada.setPrecioFinalCalculado(precio);
+                Entrada en;
+                if (tipo.equals("VIP"))
+                    en = new EntradaVip(cliente, ev, precio, cant, detalle.replace("; ", "\n"));
+                else if (tipo.equals("ESTUDIANTIL"))
+                    en = new EntradaEstudiante(cliente, ev, precio, cant, detalle.replace("; ", "\n"));
+                else
+                    en = new EntradaGeneral(cliente, ev, precio, cant, detalle.replace("; ", "\n"));
 
-                if (idEntrada > maxId) {
-                    maxId = idEntrada;
-                }
+                en.setIdEntrada(id);
+                en.setPrecioFinalCalculado(precio);
+                en.setFechaCompra(fecha);
+                if (id > maxId)
+                    maxId = id;
 
-                evento.agregarEntrada(entrada);
-                for (ClienteModel cliente : auditorio.getClientes()) {
-                    if (cliente.getNombreUsuario().equals(nombreCliente)) {
-                        cliente.agregarEntrada(entrada);
+                ev.agregarEntrada(en);
+                for (ClienteModel c : auditorio.getClientes()) {
+                    if (c.getNombreUsuario().equals(cliente)) {
+                        c.agregarEntrada(en);
                         break;
                     }
                 }
             }
-
-            // Actualizar contador estático para futuras entradas
             Entrada.setContadorId(maxId + 1);
-
         } catch (IOException e) {
-            System.err.println("[Persistencia] Error al cargar entradas: " + e.getMessage());
-        }
+            /**/}
     }
 }

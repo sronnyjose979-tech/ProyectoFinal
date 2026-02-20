@@ -8,6 +8,7 @@ import com.modelo.EntradaEstudiante;
 import com.modelo.EntradaGeneral;
 import com.modelo.EntradaVip;
 import com.modelo.Evento;
+import com.modelo.Persistencia;
 import com.util.Alerta;
 import java.io.IOException;
 import javafx.fxml.FXML;
@@ -263,7 +264,12 @@ public class VentasDeAsientosController {
             }
 
             txtAreaTicket.setText(nuevaEntrada.generarTicket());
-            Alerta.mostrar("Compra Exitosa", "Entrada generada correctamente.", Alert.AlertType.INFORMATION);
+
+            // EXPORTAR A TXT INDIVIDUAL
+            Persistencia.exportarTicketATxt(nuevaEntrada);
+
+            Alerta.mostrar("Compra Exitosa", "Entrada generada correctamente y guardada en TXT.",
+                    Alert.AlertType.INFORMATION);
 
         } catch (Exception e) {
             Alerta.mostrar("Error", "Ocurrió un error al procesar la compra.", Alert.AlertType.ERROR);
