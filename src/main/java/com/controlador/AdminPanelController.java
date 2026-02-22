@@ -44,8 +44,8 @@ public class AdminPanelController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         this.auditorio = App.auditorio;
 
-        if (auditorio.getEventoArrayList() != null) {
-            listaEventos.setAll(auditorio.getEventoArrayList());
+        if (auditorio.getArregloEventos()!= null) {
+            listaEventos.setAll(auditorio.getArregloEventos());
         }
 
         eventoCol.setCellValueFactory(new PropertyValueFactory<>("nombre"));

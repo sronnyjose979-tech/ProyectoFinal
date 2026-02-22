@@ -11,6 +11,8 @@ import com.modelo.Evento;
 import com.modelo.Persistencia;
 import com.util.Alerta;
 import java.io.IOException;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -68,12 +70,14 @@ public class VentasDeAsientosController {
         }
 
         gridButacas.setDisable(false);
-        crearMesas();
+        crearButacas();
 
         comboTipo.getItems().setAll("GENERAL", "VIP", "ESTUDIANTIL");
 
         if (auditorio.getEventosEnCartelera() != null && !auditorio.getEventosEnCartelera().isEmpty()) {
-            for (Evento evento : auditorio.getEventosEnCartelera()) {
+
+            for (int i = 0; i < auditorio.getEventosEnCartelera().size(); i++) {
+                Evento evento = auditorio.getEventosEnCartelera().get(i);
                 comboEvento.getItems().add(evento.getNombre());
             }
             if (eventoActual != null) {
@@ -85,19 +89,27 @@ public class VentasDeAsientosController {
             comboEvento.setPromptText("No hay eventos!");
         }
 
-        comboEvento.setOnAction(e -> {
-            String nombreSelec = comboEvento.getValue();
-            for (Evento evento : auditorio.getEventosEnCartelera()) {
-                if (evento.getNombre().equals(nombreSelec)) {
-                    eventoActual = evento;
-                    auditorio.setEventoActual(evento); // Sincronizar con auditorio global
-                    for (int f = 0; f < FILAS; f++) {
-                        for (int c = 0; c < COLUMNAS; c++) {
-                            actualizarColor(f, c);
+        comboEvento.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                String nombreSelec = comboEvento.getValue();
+
+                for (int i = 0; i < auditorio.getEventosEnCartelera().size(); i++) {
+                    Evento evento = auditorio.getEventosEnCartelera().get(i);
+                    if (evento.getNombre().equals(nombreSelec)) {
+                        eventoActual = evento;
+                        // Sincronizar con auditorio global
+                        auditorio.setEventoActual(evento);
+
+                        for (int f = 0; f < FILAS; f++) {
+                            for (int c = 0; c < COLUMNAS; c++) {
+                                actualizarColor(f, c);
+                            }
                         }
+                        break;
                     }
-                    break;
                 }
+
             }
         });
 
@@ -109,7 +121,7 @@ public class VentasDeAsientosController {
     }
 
     @FXML
-    public void crearMesas() {
+    public void crearButacas() {
         for (int i = 0; i < FILAS; i++) {
             for (int j = 0; j < COLUMNAS; j++) {
                 Button btn = new Button();
@@ -119,8 +131,12 @@ public class VentasDeAsientosController {
 
                 final int fila = i;
                 final int col = j;
-                btn.setOnAction(event -> manejarClickMesa(fila, col));
-
+                btn.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        manejarClickMesa(fila, col);
+                    }
+                });
                 gridButacas.add(btn, j, i);
                 actualizarColor(i, j);
             }
@@ -300,22 +316,27 @@ public class VentasDeAsientosController {
         // 1. Buscar por ID (Numérico)
         try {
             int idBuscado = Integer.parseInt(input);
-            for (ClienteModel cliente : auditorio.getClientes()) {
-                for (Entrada entrada : cliente.getEntradas()) {
+            for (int i = 0; i < auditorio.getClientes().size(); i++) {
+                ClienteModel cliente = auditorio.getClientes().get(i);
+                for (int j = 0; j < cliente.getEntradas().size(); j++) {
+                    Entrada entrada = cliente.getEntradas().get(i);
                     if (entrada.getIdEntrada() == idBuscado) {
                         txtAreaTicket.setText(entrada.generarTicket());
                         return;
                     }
                 }
             }
+
         } catch (NumberFormatException e) {
             // 2. Buscar por Nombre (Texto)
             StringBuilder resultados = new StringBuilder("Tickets de " + input + ":\n\n");
             boolean encontrado = false;
 
-            for (ClienteModel cliente : auditorio.getClientes()) {
+            for (int i = 0; i < auditorio.getClientes().size(); i++) {
+                ClienteModel cliente = auditorio.getClientes().get(i);
                 if (cliente.getNombreUsuario().equalsIgnoreCase(input)) {
-                    for (Entrada entrada : cliente.getEntradas()) {
+                    for (int j = 0; j < cliente.getEntradas().size(); j++) {
+                        Entrada entrada = cliente.getEntradas().get(i);
                         resultados.append("ID: ").append(entrada.getIdEntrada())
                                 .append(" | Evento: ").append(entrada.getEvento().getNombre())
                                 .append("\n");

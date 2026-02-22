@@ -1,0 +1,12 @@
+============================================
+        AUDITORIO - TICKET DE ENTRADA       
+============================================
+  ID Entrada   : 3
+  Cliente      : Russell
+  Evento       : Concierto de Jazz
+  Fecha Evento : 12/12/2026
+  Tipo Entrada : GENERAL
+  Asiento      : Asientos seleccionados:, Fila: 5 Col: 9, Fila: 5 Col: 10, 
+  Precio Final : $10000,00
+  Compra       : 19/02/2026 22:28
+============================================

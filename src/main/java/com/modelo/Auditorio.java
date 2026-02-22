@@ -4,19 +4,19 @@ import java.util.ArrayList;
 
 public class Auditorio {
 
-    private ArrayList<ClienteModel> clientes;
-    private ClienteModel clienteActual;
-    public ArrayList<Evento> eventoArrayList;
-    public ArrayList<Evento> eventosEnCartelera;
+    private ArrayList<ClienteModel> arregloClientes;//arregloClientes
+    private ClienteModel modeloCliente;//modeloCliente
+    public ArrayList<Evento> arregloEventos;//arregloEventos
+    public ArrayList<Evento> arregloEventoEnCartelera;//arregloEventoEnCartelera
     public Evento eventoActual;
     private Administrador admin;
 
     public Auditorio() {
-        clientes = new ArrayList<>();
+        arregloClientes = new ArrayList<>();//arregloClientes
         eventoActual = null;
-        eventoArrayList = new ArrayList<>();
-        eventosEnCartelera = new ArrayList<>();
-        clienteActual = null;
+        arregloEventos = new ArrayList<>();//arregloEventos
+        arregloEventoEnCartelera = new ArrayList<>();//arregloEventoEnCartelera
+        modeloCliente = null;//modeloCliente
     }
 
     public Evento getEvento() {
@@ -28,32 +28,32 @@ public class Auditorio {
     }
 
     // Sección Cliente
-    public void agregarCliente(ClienteModel cliente) {
-        clientes.add(cliente);
+    public void cargarCliente(ClienteModel cliente) {
+        this.modeloCliente = cliente;//modeloCliente
     }
 
-    public void cargarCliente(ClienteModel cliente) {
-        this.clienteActual = cliente;
+    public void agregarCliente(ClienteModel cliente) {
+        arregloClientes.add(cliente);//arregloClientes
+    }
+
+    public void setClientes(ArrayList<ClienteModel> clientes) {
+        this.arregloClientes = clientes;//arregloClientes
     }
 
     public ClienteModel getClienteActual() {
-        return clienteActual;
+        return modeloCliente;//modeloCliente
+    }
+
+    public ArrayList<ClienteModel> getClientes() {
+        return arregloClientes;//arregloClientes
     }
 
     public Administrador cargarAdmin() {
         return admin = new Administrador("a", "1");
     }
 
-    public ArrayList<ClienteModel> getClientes() {
-        return clientes;
-    }
-
-    public void setClientes(ArrayList<ClienteModel> clientes) {
-        this.clientes = clientes;
-    }
-
     public ClienteModel autenticarCliente(String usuario, String contra) {
-        for (ClienteModel c : clientes) {
+        for (ClienteModel c : arregloClientes) {//arregloClientes
             if (c.getNombreUsuario().equalsIgnoreCase(usuario) && c.getContra().equals(contra)) {
                 return c;
             }
@@ -61,8 +61,19 @@ public class Auditorio {
         return null;
     }
 
+    /*public ClienteModel sinUso(String usuario, String contra) {
+        for (int i = 0; i < arregloClientes.size(); i++) {
+            ClienteModel cliente = arregloClientes.get(i);
+            if(cliente.getNombreUsuario().equalsIgnoreCase(usuario)&&cliente.getContra().equals(contra)){
+                return cliente;
+            }
+        }
+        return null;
+
+    }*/
+
     public boolean usuarioExiste(String nombre) {
-        for (ClienteModel c : clientes) {
+        for (ClienteModel c : arregloClientes) {//arregloClientes
             if (c.getNombreUsuario().equalsIgnoreCase(nombre)) {
                 return true;
             }
@@ -72,23 +83,23 @@ public class Auditorio {
 
     // Sección Evento
     public void agregarEvento(Evento evento) {
-        eventoArrayList.add(evento);
+        arregloEventos.add(evento);//arregloEventos
     }
 
     public void cargarEvento(Evento evento) {
         this.eventoActual = evento;
     }
 
-    public ArrayList<Evento> getEventoArrayList() {
-        return eventoArrayList;
+    public ArrayList<Evento> getArregloEventos() {
+        return arregloEventos;//arregloEventos
     }
 
-    public void setEventoArrayList(ArrayList<Evento> eventoArrayList) {
-        this.eventoArrayList = eventoArrayList;
+    public void setArregloEventos(ArrayList<Evento> arregloEventos) {
+        this.arregloEventos = arregloEventos;//arregloEventos
     }
 
     public void eliminarEvento(Evento evento) {
-        eventoArrayList.remove(evento);
+        arregloEventos.remove(evento);//arregloEventos
     }
 
     public void cargarEventoEnSala(Evento evento) {
@@ -101,13 +112,13 @@ public class Auditorio {
 
     public void setEventoActual(Evento eventoActual) {
         this.eventoActual = eventoActual;
-        if (eventoActual != null && !eventosEnCartelera.contains(eventoActual)) {
-            eventosEnCartelera.add(eventoActual);
+        if (eventoActual != null && !arregloEventoEnCartelera.contains(eventoActual)) {//arregloEventoEnCartelera
+            arregloEventoEnCartelera.add(eventoActual);//arregloEventoEnCartelera
         }
     }
 
     public ArrayList<Evento> getEventosEnCartelera() {
-        return eventosEnCartelera;
+        return arregloEventoEnCartelera;//arregloEventoEnCartelera
     }
 
     // Sección Asiento
@@ -124,7 +135,7 @@ public class Auditorio {
 
     public double getRecaudacionGlobal() {
         double total = 0;
-        for (Evento evento : eventoArrayList) {
+        for (Evento evento : arregloEventos) {//arregloEventos
             total += evento.calcularRecaudacion();
         }
         return total;

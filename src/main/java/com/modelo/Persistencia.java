@@ -38,9 +38,9 @@ public class Persistencia {
 
     private static void guardarEventos(Auditorio auditorio) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(ARCHIVO_EVENTOS))) {
-            if (auditorio.getEventoArrayList() != null) {
+            if (auditorio.getArregloEventos()!= null) {
                 pw.println("NOMBRE,FECHA,PRECIO");
-                for (Evento evento : auditorio.getEventoArrayList()) {
+                for (Evento evento : auditorio.getArregloEventos()) {
                     pw.println(evento.getNombre() + "," + evento.getFecha() + "," + evento.getPrecioBase());
                 }
             }
@@ -148,7 +148,7 @@ public class Persistencia {
                 String fecha = partes[7];
 
                 Evento ev = null;
-                for (Evento e : auditorio.getEventoArrayList()) {
+                for (Evento e : auditorio.getArregloEventos()) {
                     if (e.getNombre().equals(nombreEv)) {
                         ev = e;
                         break;
