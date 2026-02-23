@@ -316,7 +316,7 @@ public class VentasDeAsientosController {
             for (int i = 0; i < auditorio.getClientes().size(); i++) {
                 ClienteModel cliente = auditorio.getClientes().get(i);
                 for (int j = 0; j < cliente.getEntradas().size(); j++) {
-                    Entrada entrada = cliente.getEntradas().get(i);
+                    Entrada entrada = cliente.getEntradas().get(j);
                     if (entrada.getIdEntrada() == idBuscado) {
                         txtAreaTicket.setText(entrada.generarTicket());
                         return;
