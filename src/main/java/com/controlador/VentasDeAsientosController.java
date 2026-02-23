@@ -98,7 +98,6 @@ public class VentasDeAsientosController {
                     Evento evento = auditorio.getEventosEnCartelera().get(i);
                     if (evento.getNombre().equals(nombreSelec)) {
                         eventoActual = evento;
-                        // Sincronizar con auditorio global
                         auditorio.setEventoActual(evento);
 
                         for (int f = 0; f < FILAS; f++) {
@@ -281,7 +280,6 @@ public class VentasDeAsientosController {
 
             txtAreaTicket.setText(nuevaEntrada.generarTicket());
 
-            // EXPORTAR A TXT INDIVIDUAL
             Persistencia.exportarTicketATxt(nuevaEntrada);
 
             Alerta.mostrar("Compra Exitosa", "Entrada generada correctamente y guardada en TXT.",
@@ -313,7 +311,6 @@ public class VentasDeAsientosController {
             return;
         }
 
-        // 1. Buscar por ID (Numérico)
         try {
             int idBuscado = Integer.parseInt(input);
             for (int i = 0; i < auditorio.getClientes().size(); i++) {
@@ -328,7 +325,6 @@ public class VentasDeAsientosController {
             }
 
         } catch (NumberFormatException e) {
-            // 2. Buscar por Nombre (Texto)
             StringBuilder resultados = new StringBuilder("Tickets de " + input + ":\n\n");
             boolean encontrado = false;
 
