@@ -18,9 +18,9 @@ public class AdminLoginController implements Initializable {
     Auditorio auditorioA;
 
     @FXML
-    private PasswordField txtContrasenaAdmin;
+    private PasswordField txtnombreAdmin;
     @FXML
-    private TextField txtnombreAdmin;
+    private PasswordField txtContraseña;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -33,7 +33,7 @@ public class AdminLoginController implements Initializable {
             Administrador admin = auditorioA.cargarAdmin();
 
             String nombreAdmin = txtnombreAdmin.getText();
-            String contraseñaAdmin = txtContrasenaAdmin.getText();
+            String contraseñaAdmin = txtContraseña.getText();
 
             if (nombreAdmin.trim().isEmpty() || contraseñaAdmin.trim().isEmpty()) {
                 Alerta.mostrar("Error", "No puede quedar un espacio en blanco", Alert.AlertType.WARNING);
