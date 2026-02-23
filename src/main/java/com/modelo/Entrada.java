@@ -47,6 +47,9 @@ public abstract class Entrada implements IVendible {
         sb.append("  Tipo Entrada : ").append(tipoEntrada()).append("\n");
         sb.append("  Asiento      : ").append(this.detalleAsientos.replace("\n", ", ")).append("\n");
         sb.append("  Precio Final : $").append(String.format("%.2f", precioFinalCalculado)).append("\n");
+        if (!acceso().isEmpty()) {
+        sb.append("  Beneficios   : ").append(acceso()).append("\n");
+        }
         sb.append("  Compra       : ").append(this.fechaCompra).append("\n");
         sb.append("============================================\n");
         return sb.toString();
@@ -92,5 +95,9 @@ public abstract class Entrada implements IVendible {
 
     public void setPrecioFinalCalculado(double precioFinalCalculado) {
         this.precioFinalCalculado = precioFinalCalculado;
+    }
+
+    public String acceso() {
+        return ""; // Por defecto no tiene acceso especial
     }
 }

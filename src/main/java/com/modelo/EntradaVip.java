@@ -10,6 +10,10 @@ public class EntradaVip extends Entrada {
     public String tipoEntrada() {
         return "VIP";
     }
+    
+    public String acceso(){
+        return "El cliente tiene acceso a lounge";
+    }
 
     @Override
     public String generarTicket() {
