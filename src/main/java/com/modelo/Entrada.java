@@ -98,6 +98,6 @@ public abstract class Entrada implements IVendible {
     }
 
     public String acceso() {
-        return ""; // Por defecto no tiene acceso especial
+        return ""; 
     }
 }
