@@ -42,9 +42,9 @@
                                             </VBox.margin>
                                         </Label>
                                         <Label fx:id="labelNombre" styleClass="label-form" text="Usuario" />
-                                        <TextField fx:id="txtIniciarNombre" promptText="Ingrese su usuario" />
+                                        <TextField fx:id="txtUsuarioIniciarSesion" promptText="Ingrese su usuario" />
                                         <Label fx:id="labelContra" styleClass="label-form" text="Contraseña" />
-                                        <PasswordField fx:id="txtIniciarContra" promptText="Ingrese su contraseña" />
+                                        <PasswordField fx:id="txtContrasenaIniciarSesion" promptText="Ingrese su contraseña" />
                                         <VBox alignment="CENTER" prefHeight="60.0">
                                             <children>
                                                 <Button fx:id="btnIniciarSesion" mnemonicParsing="false" onAction="#btnIniciarSesion" prefWidth="200.0" text="Iniciar Sesión" />
@@ -76,7 +76,7 @@
                                         <Label styleClass="label-form" text="Nombre de Usuario" />
                                         <TextField fx:id="txtRegistarUsuario" promptText="Ej. Juan, Russell" />
                                         <Label styleClass="label-form" text="Contraseña Nueva" />
-                                        <PasswordField fx:id="txtContraseñaNueva" promptText="Cree una contraseña" />
+                                        <PasswordField fx:id="txtRegistrarContrasena" promptText="Cree una contraseña" />
                                         <VBox alignment="CENTER" prefHeight="60.0">
                                             <children>
                                                 <Button fx:id="btnRegistrarUsuario" mnemonicParsing="false" onAction="#btnRegistrarUsuario" prefWidth="200.0" styleClass="btn-secundario" text="Registrarme" />

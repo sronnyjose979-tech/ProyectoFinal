@@ -21,16 +21,16 @@ public class LoginPanelController implements Initializable {
     Auditorio auditorio;
 
     @FXML
-    private PasswordField txtContraseñaNueva;
-
-    @FXML
-    private PasswordField txtIniciarContra;
-
-    @FXML
-    private TextField txtIniciarNombre;
+    private PasswordField txtRegistrarContrasena;
 
     @FXML
     private TextField txtRegistarUsuario;
+
+    @FXML
+    private PasswordField txtContrasenaIniciarSesion;
+
+    @FXML
+    private TextField txtUsuarioIniciarSesion;
 
     @FXML
     private TabPane tabLogin;
@@ -41,44 +41,26 @@ public class LoginPanelController implements Initializable {
     }
 
     @FXML
-    private void btnIniciarSesion(ActionEvent e) throws IOException {
-        if (txtIniciarNombre.getText().trim().isEmpty() || txtIniciarContra.getText().trim().isEmpty()) {
-            Alerta.mostrar("Error", "No pueden quedar espacios en blanco", Alert.AlertType.ERROR);
-            return;
-        }
-        String nombre = txtIniciarNombre.getText().trim();
-        String contra = txtIniciarContra.getText().trim();
-        ClienteModel cliente = auditorio.autenticarCliente(nombre, contra);
-        if (cliente != null) {
-            auditorio.cargarCliente(cliente);
-            Alerta.mostrar("Éxito", "Bienvenido " + cliente.getNombreUsuario(), Alert.AlertType.INFORMATION);
-            App.setRoot("VistaVentaAsientos");
-        } else {
-            Alerta.mostrar("Error", "Usuario o Contraseña Incorrectos", Alert.AlertType.ERROR);
-        }
-    }
-
-    @FXML
     public void btnRegistrarUsuario() {
 
-        if (txtRegistarUsuario.getText().trim().isEmpty() || txtContraseñaNueva.getText().isEmpty()) {
+        if (txtRegistarUsuario.getText().trim().isEmpty() || txtRegistrarContrasena.getText().isEmpty()) {
             Alerta.mostrar("Error", "Por favor rellene todos los campos", Alert.AlertType.ERROR);
             return;
         }
 
-        String nombreAValidar = txtRegistarUsuario.getText().trim();
-        String contraEscrita = txtContraseñaNueva.getText().trim();
+        String nombreARegistrar = txtRegistarUsuario.getText().trim();
+        String contraARegistrar = txtRegistrarContrasena.getText().trim();
 
         try {
-            if (auditorio.usuarioExiste(nombreAValidar)) {
-                throw new NoHayUsuarioException("El nombre de usuario '" + nombreAValidar + "' ya está en uso.");
+            if (auditorio.usuarioExiste(nombreARegistrar)) {
+                throw new NoHayUsuarioException("El nombre de usuario '" + nombreARegistrar + "' ya está en uso.");
             }
 
-            ClienteModel cliente = new ClienteModel(nombreAValidar, contraEscrita);
+            ClienteModel cliente = new ClienteModel(nombreARegistrar, contraARegistrar);
             auditorio.agregarCliente(cliente);
             auditorio.cargarCliente(cliente);
             txtRegistarUsuario.setText("");
-            txtContraseñaNueva.setText("");
+            txtRegistrarContrasena.setText("");
 
             Alerta.mostrar("Éxito", "Usuario registrado correctamente. ¡Ya puedes iniciar sesión!",
                     Alert.AlertType.INFORMATION);
@@ -87,6 +69,24 @@ public class LoginPanelController implements Initializable {
 
         } catch (NoHayUsuarioException ex) {
             Alerta.mostrar("Error", "El nombre de usuario ya está en uso. Intente con otro.", Alert.AlertType.ERROR);
+        }
+    }
+
+    @FXML
+    private void btnIniciarSesion(ActionEvent e) throws IOException {
+        if (txtUsuarioIniciarSesion.getText().trim().isEmpty() || txtContrasenaIniciarSesion.getText().trim().isEmpty()) {
+            Alerta.mostrar("Error", "No pueden quedar espacios en blanco", Alert.AlertType.ERROR);
+            return;
+        }
+        String nombreUsuario = txtUsuarioIniciarSesion.getText().trim();
+        String contrasenaUsuario = txtContrasenaIniciarSesion.getText().trim();
+        ClienteModel cliente = auditorio.autenticarCliente(nombreUsuario, contrasenaUsuario);
+        if (cliente != null) {
+            auditorio.cargarCliente(cliente);
+            Alerta.mostrar("Éxito", "Bienvenido " + cliente.getNombreUsuario(), Alert.AlertType.INFORMATION);
+            App.setRoot("VistaVentaAsientos");
+        } else {
+            Alerta.mostrar("Error", "Usuario o Contraseña Incorrectos", Alert.AlertType.ERROR);
         }
     }
 
