@@ -18,7 +18,7 @@ public class AdminLoginController implements Initializable {
     Auditorio auditorioA;
 
     @FXML
-    private PasswordField txtContraseña;
+    private PasswordField txtContrasenaAdmin;
     @FXML
     private TextField txtnombreAdmin;
 
@@ -33,7 +33,7 @@ public class AdminLoginController implements Initializable {
             Administrador admin = auditorioA.cargarAdmin();
 
             String nombreAdmin = txtnombreAdmin.getText();
-            String contraseñaAdmin = txtContraseña.getText();
+            String contraseñaAdmin = txtContrasenaAdmin.getText();
 
             if (nombreAdmin.trim().isEmpty() || contraseñaAdmin.trim().isEmpty()) {
                 Alerta.mostrar("Error", "No puede quedar un espacio en blanco", Alert.AlertType.WARNING);
@@ -42,7 +42,7 @@ public class AdminLoginController implements Initializable {
             if (admin != null && admin.getNombreAdministrador().equals(nombreAdmin)
                     && admin.getContraseñaAdmin().equals(contraseñaAdmin)) {
                 Alerta.mostrar("Exito", "Iniciando sesión", Alert.AlertType.INFORMATION);
-                App.setRoot("AdminPanel"); // Corregido minúscula 'adminPanel' a 'AdminPanel'
+                App.setRoot("AdminPanel"); 
             } else {
                 Alerta.mostrar("Error", "Nombre o contraseña incorrectos", Alert.AlertType.ERROR);
             }

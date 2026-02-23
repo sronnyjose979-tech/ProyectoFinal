@@ -31,7 +31,7 @@
                 <VBox alignment="CENTER_LEFT" spacing="10.0">
                     <children>
                         <Label styleClass="label-form" text="Usuario Administrador" />
-                        <TextField fx:id="txtnombreAdmin" promptText="Ingrese credencial admin" />
+                        <TextField fx:id="txtContrasenaAdmin" promptText="Ingrese credencial admin" />
                   
                         <Label styleClass="label-form" text="Contraseña">
                             <VBox.margin>
