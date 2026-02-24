@@ -11,9 +11,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 
-public class AdminLoginController implements Initializable {
+public class AccesoAdministradorVistaController implements Initializable {
+    
 
     Auditorio auditorioA;
 
@@ -52,6 +52,6 @@ public class AdminLoginController implements Initializable {
     }
 
     public void btnregresarInicio() throws IOException {
-        App.setRoot("LoginPanel");
+        App.setRoot("AccesoClienteVista");
     }
 }

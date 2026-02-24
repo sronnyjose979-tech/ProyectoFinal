@@ -2,13 +2,13 @@ package com.modelo;
 
 import java.util.ArrayList;
 
-public class ClienteModel {
+public class Cliente {
 
     private String nombreUsuario;
     private String contra;
     private ArrayList<Entrada> Entradas;
 
-    public ClienteModel(String nombreUsuario, String contra) {
+    public Cliente(String nombreUsuario, String contra) {
         this.nombreUsuario = nombreUsuario;
         this.contra = contra;
         Entradas = new ArrayList<>();

@@ -2,7 +2,7 @@ package com.controlador;
 
 import com.app.App;
 import com.modelo.Auditorio;
-import com.modelo.ClienteModel;
+import com.modelo.Cliente;
 import com.modelo.Entrada;
 import com.modelo.EntradaEstudiante;
 import com.modelo.EntradaGeneral;
@@ -64,7 +64,7 @@ public class VentasDeAsientosController {
         instanciaActiva = this;
         eventoActual = auditorio.getEventoActual();
 
-        ClienteModel cliente = auditorio.getClienteActual();
+        Cliente cliente = auditorio.getClienteActual();
         if (cliente != null) {
             mensajeNombreUsuario.setText(cliente.getNombreUsuario());
         }
@@ -154,7 +154,7 @@ public class VentasDeAsientosController {
 
     private void manejarClickMesa(int fila, int col) {
         if (eventoActual == null) {
-            Alerta.mostrar("error", "no hay evento en sala", Alert.AlertType.WARNING);
+            Alerta.mostrar("Error", "No hay evento en sala", Alert.AlertType.WARNING);
             return;
         }
 
@@ -204,7 +204,7 @@ public class VentasDeAsientosController {
     @FXML
     public void CerrarSesion() throws IOException {
         instanciaActiva = null;
-        App.setRoot("LoginPanel");
+        App.setRoot("AccesoClienteVista");
     }
 
     @FXML
@@ -265,7 +265,7 @@ public class VentasDeAsientosController {
             double precioCalculado = nuevaEntrada.calcularPrecio();
             nuevaEntrada.setPrecioFinalCalculado(precioCalculado);
 
-            ClienteModel cliente = auditorio.getClienteActual();
+            Cliente cliente = auditorio.getClienteActual();
             cliente.agregarEntrada(nuevaEntrada);
             eventoActual.agregarEntrada(nuevaEntrada);
 
@@ -314,7 +314,7 @@ public class VentasDeAsientosController {
         try {
             int idBuscado = Integer.parseInt(input);
             for (int i = 0; i < auditorio.getClientes().size(); i++) {
-                ClienteModel cliente = auditorio.getClientes().get(i);
+                Cliente cliente = auditorio.getClientes().get(i);
                 for (int j = 0; j < cliente.getEntradas().size(); j++) {
                     Entrada entrada = cliente.getEntradas().get(j);
                     if (entrada.getIdEntrada() == idBuscado) {
@@ -329,7 +329,7 @@ public class VentasDeAsientosController {
             boolean encontrado = false;
 
             for (int i = 0; i < auditorio.getClientes().size(); i++) {
-                ClienteModel cliente = auditorio.getClientes().get(i);
+                Cliente cliente = auditorio.getClientes().get(i);
                 if (cliente.getNombreUsuario().equalsIgnoreCase(input)) {
                     for (int j = 0; j < cliente.getEntradas().size(); j++) {
                         Entrada entrada = cliente.getEntradas().get(i);

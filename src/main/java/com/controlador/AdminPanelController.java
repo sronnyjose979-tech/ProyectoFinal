@@ -213,7 +213,7 @@ public class AdminPanelController implements Initializable {
     @FXML
     private void regresarLogin() {
         try {
-            App.setRoot("LoginPanel");
+            App.setRoot("AccesoClienteVista");
         } catch (Exception e) {
             System.out.println("Error al regresar al login: " + e.getMessage());
             e.printStackTrace();

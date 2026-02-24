@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class Auditorio {
 
-    private ArrayList<ClienteModel> listClientes;
-    private ClienteModel modeloCliente;
+    private ArrayList<Cliente> listClientes;
+    private Cliente modeloCliente;
     public ArrayList<Evento> listEvento;
     public ArrayList<Evento> listEventoEnCartelera;
     public Evento eventoActual;
@@ -27,23 +27,23 @@ public class Auditorio {
         this.eventoActual = evento;
     }
 
-    public void cargarCliente(ClienteModel cliente) {
+    public void cargarCliente(Cliente cliente) {
         this.modeloCliente = cliente;
     }
 
-    public void agregarCliente(ClienteModel cliente) {
+    public void agregarCliente(Cliente cliente) {
         listClientes.add(cliente);
     }
 
-    public void setClientes(ArrayList<ClienteModel> clientes) {
+    public void setClientes(ArrayList<Cliente> clientes) {
         this.listClientes = clientes;
     }
 
-    public ClienteModel getClienteActual() {
+    public Cliente getClienteActual() {
         return modeloCliente;
     }
 
-    public ArrayList<ClienteModel> getClientes() {
+    public ArrayList<Cliente> getClientes() {
         return listClientes;
     }
 
@@ -56,8 +56,8 @@ public class Auditorio {
 
     }
 
-    public ClienteModel autenticarCliente(String usuario, String contra) {
-        for (ClienteModel c : listClientes) {
+    public Cliente autenticarCliente(String usuario, String contra) {
+        for (Cliente c : listClientes) {
             if (c.getNombreUsuario().equalsIgnoreCase(usuario) && c.getContra().equals(contra)) {
                 return c;
             }
@@ -66,7 +66,7 @@ public class Auditorio {
     }
 
     public boolean usuarioExiste(String nombre) {
-        for (ClienteModel c : listClientes) {
+        for (Cliente c : listClientes) {
             if (c.getNombreUsuario().equalsIgnoreCase(nombre)) {
                 return true;
             }

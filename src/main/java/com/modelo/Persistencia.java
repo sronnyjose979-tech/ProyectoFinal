@@ -52,7 +52,7 @@ public class Persistencia {
         try (PrintWriter pw = new PrintWriter(new FileWriter(ARCHIVO_CLIENTES))) {
             if (auditorio.getClientes() != null) {
                 pw.println("USUARIO,CONTRASEÑA");
-                for (ClienteModel cliente : auditorio.getClientes()) {
+                for (Cliente cliente : auditorio.getClientes()) {
                     pw.println(cliente.getNombreUsuario() + "," + cliente.getContra());
                 }
             }
@@ -64,7 +64,7 @@ public class Persistencia {
         try (PrintWriter pw = new PrintWriter(new FileWriter(ARCHIVO_ENTRADAS))) {
             if (auditorio.getClientes() != null) {
                 pw.println("TIPO,ID,CLIENTE,EVENTO,PRECIO,CANTIDAD,ASIENTOS,FECHA_COMPRA");
-                for (ClienteModel cliente : auditorio.getClientes()) {
+                for (Cliente cliente : auditorio.getClientes()) {
                     if (cliente.getEntradas() != null) {
                         for (Entrada entrada : cliente.getEntradas()) {
                             pw.println(
@@ -101,7 +101,7 @@ public class Persistencia {
             while ((linea = br.readLine()) != null) {
                 String[] partes = linea.split(",");
                 if (partes.length == 2)
-                    auditorio.agregarCliente(new ClienteModel(partes[0], partes[1]));
+                    auditorio.agregarCliente(new Cliente(partes[0], partes[1]));
             }
         } catch (IOException e) {
             /**/}
@@ -187,7 +187,7 @@ public class Persistencia {
                     maxId = id;
 
                 ev.agregarEntrada(en);
-                for (ClienteModel c : auditorio.getClientes()) {
+                for (Cliente c : auditorio.getClientes()) {
                     if (c.getNombreUsuario().equals(cliente)) {
                         c.agregarEntrada(en);
                         break;

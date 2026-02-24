@@ -2,7 +2,7 @@ package com.controlador;
 
 import com.app.App;
 import com.modelo.Auditorio;
-import com.modelo.ClienteModel;
+import com.modelo.Cliente;
 import com.util.Alerta;
 import com.util.NoHayUsuarioException;
 import java.io.IOException;
@@ -16,7 +16,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TabPane;
 
-public class LoginPanelController implements Initializable {
+public class AccesoClienteVistaController implements Initializable {
+    
 
     Auditorio auditorio;
 
@@ -41,7 +42,7 @@ public class LoginPanelController implements Initializable {
     }
 
     @FXML
-    public void btnRegistrarUsuario() {
+    public void btnRegistrarUsuario(ActionEvent e) {
 
         if (txtRegistarUsuario.getText().trim().isEmpty() || txtRegistrarContrasena.getText().isEmpty()) {
             Alerta.mostrar("Error", "Por favor rellene todos los campos", Alert.AlertType.ERROR);
@@ -56,7 +57,7 @@ public class LoginPanelController implements Initializable {
                 throw new NoHayUsuarioException("El nombre de usuario '" + nombreARegistrar + "' ya está en uso.");
             }
 
-            ClienteModel cliente = new ClienteModel(nombreARegistrar, contraARegistrar);
+            Cliente cliente = new Cliente(nombreARegistrar, contraARegistrar);
             auditorio.agregarCliente(cliente);
             auditorio.cargarCliente(cliente);
             txtRegistarUsuario.setText("");
@@ -64,7 +65,6 @@ public class LoginPanelController implements Initializable {
 
             Alerta.mostrar("Éxito", "Usuario registrado correctamente. ¡Ya puedes iniciar sesión!",
                     Alert.AlertType.INFORMATION);
-            // Cambiar a la pestaña de login
             tabLogin.getSelectionModel().select(0);
 
         } catch (NoHayUsuarioException ex) {
@@ -80,7 +80,7 @@ public class LoginPanelController implements Initializable {
         }
         String nombreUsuario = txtUsuarioIniciarSesion.getText().trim();
         String contrasenaUsuario = txtContrasenaIniciarSesion.getText().trim();
-        ClienteModel cliente = auditorio.autenticarCliente(nombreUsuario, contrasenaUsuario);
+        Cliente cliente = auditorio.autenticarCliente(nombreUsuario, contrasenaUsuario);
         if (cliente != null) {
             auditorio.cargarCliente(cliente);
             Alerta.mostrar("Éxito", "Bienvenido " + cliente.getNombreUsuario(), Alert.AlertType.INFORMATION);
@@ -89,9 +89,10 @@ public class LoginPanelController implements Initializable {
             Alerta.mostrar("Error", "Usuario o Contraseña Incorrectos", Alert.AlertType.ERROR);
         }
     }
+    
 
     @FXML
     private void btnngresarAdmin() throws IOException {
-        App.setRoot("AdminLogin");
+        App.setRoot("AccesoAdministradorVista");
     }
 }
