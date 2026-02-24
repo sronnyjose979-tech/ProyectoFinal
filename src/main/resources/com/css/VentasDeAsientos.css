@@ -1,10 +1,8 @@
-/* --- FONDO GENERAL --- */
 .root-pane {
     -fx-background-color: #0A0C21;
     -fx-font-family: "Segoe UI", sans-serif;
 }
 
-/* --- PANEL LATERAL (Carta Flotante) --- */
 .side-panel {
     -fx-background-color: #11142B;
     -fx-background-radius: 15;
@@ -12,9 +10,8 @@
     -fx-padding: 20;
 }
 
-/* --- TEXTOS --- */
 .title-label {
-    -fx-text-fill: #D4AF37; /* Dorado */
+    -fx-text-fill: #D4AF37;
     -fx-font-size: 18px;
     -fx-font-weight: bold;
     -fx-effect: dropshadow(two-pass-box, rgba(212, 175, 55, 0.3), 10, 0, 0, 0);
@@ -26,9 +23,8 @@
     -fx-font-weight: bold;
 }
 
-/* --- TEXTOS corriente --- */
 .regular-label {
-    -fx-text-fill: #D4AF37; /* Dorado */
+    -fx-text-fill: #D4AF37;
     -fx-font-size: 15px;
     -fx-font-weight: bold;
     -fx-effect: dropshadow(two-pass-box, rgba(212, 175, 55, 0.3), 10, 0, 0, 0);
@@ -40,7 +36,6 @@
     -fx-font-weight: bold;
 }
 
-/* --- INPUTS Y COMBOBOX (Evitar fondo blanco) --- */
 .modern-input, .combo-box {
     -fx-background-color: #1A1E3F;
     -fx-text-fill: white;
@@ -55,17 +50,15 @@
     -fx-background-color: #1E234A;
 }
 
-/* Arreglar texto interno del ComboBox */
 .combo-box .cell, .combo-box .list-cell {
     -fx-text-fill: white;
     -fx-background-color: #1A1E3F;
 }
 
-/* --- TEXT AREA (El Ticket) --- */
 .text-area {
-    -fx-control-inner-background: #1A1E3F; /* ESTO QUITA EL FONDO BLANCO */
+    -fx-control-inner-background: #1A1E3F;
     -fx-background-color: #1A1E3F;
-    -fx-text-fill: #D4AF37; /* Texto dorado para el ticket */
+    -fx-text-fill: #D4AF37;
     -fx-font-family: "Consolas", monospace;
     -fx-highlight-fill: #D4AF37;
     -fx-highlight-text-fill: #000;
@@ -78,47 +71,41 @@
     -fx-background-color: #1A1E3F;
 }
 
-/* --- ESCENARIO --- */
 .stage-banner {
     -fx-background-color: linear-gradient(to bottom, #D4AF37, #B8860B);
     -fx-background-radius: 0 0 50 50;
     -fx-effect: dropshadow(three-pass-box, rgba(212, 175, 55, 0.4), 20, 0, 0, 10);
 }
 
-/* --- BOTONES DE ASIENTOS --- */
 .seat-button {
     -fx-background-radius: 6;
     -fx-cursor: hand;
     -fx-border-width: 1;
 }
 
-/* Estado LIBRE - Verde oscuro elegante */
 .seat-free {
-    -fx-background-color: #0D3D28; /* Verde esmeralda muy oscuro */
-    -fx-border-color: #1A5235;     /* Borde un poco más claro para dar relieve */
+    -fx-background-color: #0D3D28;
+    -fx-border-color: #1A5235;
 }
 
 .seat-free:hover {
-    -fx-background-color: #145A32; /* Verde un poco más vivo al pasar el mouse */
-    -fx-border-color: #D4AF37;     /* Borde dorado al hacer hover */
+    -fx-background-color: #145A32;
+    -fx-border-color: #D4AF37;
     -fx-effect: dropshadow(three-pass-box, rgba(20, 90, 50, 0.6), 10, 0, 0, 0);
 }
 
-/* Estado SELECCIONADO */
 .seat-selected {
     -fx-background-color: linear-gradient(to bottom right, #D4AF37, #FCECAE);
     -fx-border-color: #B8860B;
     -fx-effect: dropshadow(three-pass-box, rgba(212, 175, 55, 0.6), 15, 0, 0, 0);
 }
 
-/* Estado RESERVADO */
 .seat-reserved {
-    -fx-background-color: #500a0a; 
+    -fx-background-color: #500a0a;
     -fx-border-color: #2a0303;
     -fx-opacity: 0.7;
 }
 
-/* --- BOTONES DE ACCIÓN (Comprar/Reservar) --- */
 .btn-action {
     -fx-background-color: linear-gradient(to bottom right, #D4AF37, #B8860B);
     -fx-text-fill: #0A0C21;
@@ -132,7 +119,6 @@
     -fx-effect: dropshadow(three-pass-box, rgba(212, 175, 55, 0.4), 15, 0, 0, 0);
 }
 
-/* --- BOTÓN CERRAR SESIÓN --- */
 .btn-danger {
     -fx-background-color: transparent;
     -fx-border-color: #ff5555;

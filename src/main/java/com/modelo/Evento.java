@@ -21,9 +21,7 @@ public class Evento {
         this.matrizAsientos=new int[10][10];
     }
 
-    // ===========================
-    // GETTERS Y SETTERS
-    // ======================
+   
 
     public String getNombre() {
         return nombre;
@@ -49,10 +47,7 @@ public class Evento {
         this.precioBase = precioBase;
     }
 
-    // ======================
-    // REGISTRAR VENTA
-    // ======================
-
+ 
     public void agregarEntrada(Entrada entrada) {
         entradasVendidas.add(entrada);
     }
@@ -66,16 +61,11 @@ public class Evento {
     }
     
 
-    // ========================
-    // REPORTE
-    // ========================
-
     public double calcularRecaudacion() {
         double total = 0;
 
         for (Entrada e : entradasVendidas) {
-            total += e.calcularPrecio(); // ← usamos TU método real
-        }
+            total += e.calcularPrecio();         }
 
         return total;
     }

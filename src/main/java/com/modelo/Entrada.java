@@ -18,7 +18,6 @@ public abstract class Entrada implements IVendible {
         this.precioFinalCalculado = precioFinal;
         this.cantidadAsientos = cantidad;
         this.detalleAsientos = detalleAsientos;
-        // Obtener fecha y hora actual formateada
         java.time.LocalDateTime ahora = java.time.LocalDateTime.now();
         java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         this.fechaCompra = ahora.format(formatter);
