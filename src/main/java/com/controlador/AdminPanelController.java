@@ -74,32 +74,26 @@ public class AdminPanelController implements Initializable {
 
     private void configurarListenerSeleccion() {
 
-        tableEvento.getSelectionModel()
-                .selectedItemProperty()
-                .addListener(new ChangeListener<Evento>() {
+        tableEvento.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Evento>() {
 
-                    @Override
-                    public void changed(ObservableValue<? extends Evento> observable,
-                            Evento oldValue,
-                            Evento newValue) {
+            @Override
+            public void changed(ObservableValue<? extends Evento> observable,
+                    Evento oldValue, Evento newValue) {
 
-                        if (newValue != null) {
-                            eventoActual = newValue;
-                            txtNombreEvento.setText(newValue.getNombre());
-                            txtFechaEvento.setText(newValue.getFecha());
-                            txtPrecioBase.setText(
-                                    String.valueOf(newValue.getPrecioBase()));
-                        }
-                    }
-                });
+                if (newValue != null) {
+                    eventoActual = newValue;
+                    txtNombreEvento.setText(newValue.getNombre());
+                    txtFechaEvento.setText(newValue.getFecha());
+                    txtPrecioBase.setText(String.valueOf(newValue.getPrecioBase()));
+                }
+            }
+        });
     }
 
     private void actualizarEtiquetaEventoActivo() {
 
         if (auditorio.getEventoActual() != null) {
-            lblEventoActivo.setText(
-                    "Evento Activo: "
-                    + auditorio.getEventoActual().getNombre());
+            lblEventoActivo.setText("Evento Activo: " + auditorio.getEventoActual().getNombre());
         } else {
             lblEventoActivo.setText("Evento Activo: Ninguno");
         }
@@ -109,9 +103,7 @@ public class AdminPanelController implements Initializable {
     private void crearEvento() {
 
         if (camposVacios()) {
-            Alerta.mostrar("Error",
-                    "No pueden quedar espacios en blanco",
-                    Alert.AlertType.ERROR);
+            Alerta.mostrar("Error", "No pueden quedar espacios en blanco", Alert.AlertType.ERROR);
             return;
         }
 
@@ -119,39 +111,31 @@ public class AdminPanelController implements Initializable {
 
             String nombre = txtNombreEvento.getText().trim();
             String fecha = txtFechaEvento.getText().trim();
-            double precio = Double.parseDouble(
-                    txtPrecioBase.getText().trim());
+            double precio = Double.parseDouble(txtPrecioBase.getText().trim());
 
             Evento nuevoEvento = new Evento(nombre, fecha, precio);
 
             auditorio.agregarEvento(nuevoEvento);
             listaEventos.add(nuevoEvento);
 
-            Alerta.mostrar("Evento creado",
-                    "El evento se creó correctamente.",
-                    Alert.AlertType.INFORMATION);
+            Alerta.mostrar("Evento creado", "El evento se creó correctamente.", Alert.AlertType.INFORMATION);
 
             limpiarCampos();
 
         } catch (NumberFormatException e) {
 
-            Alerta.mostrar("Error",
-                    "El precio debe ser un número.",
-                    Alert.AlertType.ERROR);
+            Alerta.mostrar("Error", "El precio debe ser un número.", Alert.AlertType.ERROR);
         }
     }
 
     @FXML
     private void cargarEvento() {
 
-        Evento seleccionado
-                = tableEvento.getSelectionModel().getSelectedItem();
+        Evento seleccionado = tableEvento.getSelectionModel().getSelectedItem();
 
         if (seleccionado == null) {
 
-            Alerta.mostrar("Aviso",
-                    "Debe seleccionar un evento en la tabla.",
-                    Alert.AlertType.WARNING);
+            Alerta.mostrar("Aviso", "Debe seleccionar un evento en la tabla.", Alert.AlertType.WARNING);
             return;
         }
 
@@ -160,9 +144,7 @@ public class AdminPanelController implements Initializable {
 
         actualizarEtiquetaEventoActivo();
 
-        Alerta.mostrar("Éxito",
-                "Evento cargado en sala correctamente.",
-                Alert.AlertType.INFORMATION);
+        Alerta.mostrar("Éxito", "Evento cargado en sala correctamente.", Alert.AlertType.INFORMATION);
     }
 
     @FXML
@@ -170,59 +152,44 @@ public class AdminPanelController implements Initializable {
 
         if (eventoActual == null) {
 
-            Alerta.mostrar("Aviso",
-                    "Seleccione un evento para editar.",
-                    Alert.AlertType.WARNING);
+            Alerta.mostrar("Aviso", "Seleccione un evento para editar.", Alert.AlertType.WARNING);
             return;
         }
 
         if (camposVacios()) {
 
-            Alerta.mostrar("Aviso",
-                    "Complete todos los campos.",
-                    Alert.AlertType.WARNING);
+            Alerta.mostrar("Aviso", "Complete todos los campos.", Alert.AlertType.WARNING);
             return;
         }
 
         try {
 
-            eventoActual.setNombre(
-                    txtNombreEvento.getText().trim());
+            eventoActual.setNombre(txtNombreEvento.getText().trim());
 
-            eventoActual.setFecha(
-                    txtFechaEvento.getText().trim());
+            eventoActual.setFecha(txtFechaEvento.getText().trim());
 
-            eventoActual.setPrecioBase(
-                    Double.parseDouble(
-                            txtPrecioBase.getText().trim()));
+            eventoActual.setPrecioBase(Double.parseDouble(txtPrecioBase.getText().trim()));
 
             tableEvento.refresh();
 
-            Alerta.mostrar("Actualizado",
-                    "Evento modificado correctamente.",
-                    Alert.AlertType.INFORMATION);
+            Alerta.mostrar("Actualizado", "Evento modificado correctamente.", Alert.AlertType.INFORMATION);
 
             limpiarCampos();
 
         } catch (NumberFormatException e) {
 
-            Alerta.mostrar("Error",
-                    "El precio debe ser numérico.",
-                    Alert.AlertType.ERROR);
+            Alerta.mostrar("Error", "El precio debe ser numérico.", Alert.AlertType.ERROR);
         }
     }
 
     @FXML
     private void eliminarEvento() {
 
-        Evento seleccionado
-                = tableEvento.getSelectionModel().getSelectedItem();
+        Evento seleccionado = tableEvento.getSelectionModel().getSelectedItem();
 
         if (seleccionado == null) {
 
-            Alerta.mostrar("Aviso",
-                    "No hay evento seleccionado.",
-                    Alert.AlertType.WARNING);
+            Alerta.mostrar("Aviso", "No hay evento seleccionado.", Alert.AlertType.WARNING);
             return;
         }
 
@@ -237,9 +204,7 @@ public class AdminPanelController implements Initializable {
         actualizarEtiquetaEventoActivo();
         limpiarCampos();
 
-        Alerta.mostrar("Eliminado",
-                "Evento eliminado correctamente.",
-                Alert.AlertType.INFORMATION);
+        Alerta.mostrar("Eliminado", "Evento eliminado correctamente.", Alert.AlertType.INFORMATION);
     }
 
     @FXML
@@ -249,20 +214,13 @@ public class AdminPanelController implements Initializable {
 
         if (evento == null) {
 
-            Alerta.mostrar("Reporte",
-                    "No hay evento activo.",
-                    Alert.AlertType.INFORMATION);
+            Alerta.mostrar("Reporte", "No hay evento activo.", Alert.AlertType.INFORMATION);
             return;
         }
 
         double total = evento.calcularRecaudacion();
 
-        Alerta.mostrar("Reporte de Ventas",
-                "Total recaudado para el evento \""
-                + evento.getNombre()
-                + "\": ₡"
-                + String.format("%.2f", total),
-                Alert.AlertType.INFORMATION);
+        Alerta.mostrar("Reporte de Ventas", "Total recaudado para el evento \"" + evento.getNombre() + "\": ₡" + String.format("%.2f", total), Alert.AlertType.INFORMATION);
     }
 
     @FXML
@@ -270,23 +228,17 @@ public class AdminPanelController implements Initializable {
 
         double total = auditorio.getRecaudacionGlobal();
 
-        Alerta.mostrar("Reporte Global",
-                "Recaudación total del sistema: ₡"
-                + String.format("%.2f", total),
-                Alert.AlertType.INFORMATION);
+        Alerta.mostrar("Reporte Global", "Recaudación total del sistema: ₡" + String.format("%.2f", total), Alert.AlertType.INFORMATION);
     }
 
     @FXML
     private void reiniciarSala() {
 
-        Evento seleccionado
-                = tableEvento.getSelectionModel().getSelectedItem();
+        Evento seleccionado = tableEvento.getSelectionModel().getSelectedItem();
 
         if (seleccionado == null) {
 
-            Alerta.mostrar("Aviso",
-                    "Seleccione un evento para reiniciar.",
-                    Alert.AlertType.WARNING);
+            Alerta.mostrar("Aviso", "Seleccione un evento para reiniciar.", Alert.AlertType.WARNING);
             return;
         }
 
@@ -298,9 +250,7 @@ public class AdminPanelController implements Initializable {
             }
         }
 
-        Alerta.mostrar("Sala reiniciada",
-                "Todos los asientos fueron liberados.",
-                Alert.AlertType.INFORMATION);
+        Alerta.mostrar("Sala reiniciada", "Todos los asientos fueron liberados.", Alert.AlertType.INFORMATION);
     }
 
     @FXML
@@ -315,9 +265,7 @@ public class AdminPanelController implements Initializable {
 
     private boolean camposVacios() {
 
-        return txtNombreEvento.getText().trim().isEmpty()
-                || txtFechaEvento.getText().trim().isEmpty()
-                || txtPrecioBase.getText().trim().isEmpty();
+        return txtNombreEvento.getText().trim().isEmpty() || txtFechaEvento.getText().trim().isEmpty() || txtPrecioBase.getText().trim().isEmpty();
     }
 
     private void limpiarCampos() {

@@ -9,9 +9,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-/**
- * JavaFX App
- */
+
 public class App extends Application {
 
     public static Auditorio auditorio = new Auditorio();
@@ -27,10 +25,8 @@ public class App extends Application {
         stage.setScene(scene);
         stage.setTitle("Sistema de Gestión de Auditorio");
 
-        
         stage.show();
     }
-
 
     @Override
     public void stop() {
