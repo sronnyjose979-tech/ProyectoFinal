@@ -47,7 +47,7 @@ public abstract class Entrada implements IVendible {
         sb.append("  Asiento      : ").append(this.detalleAsientos.replace("\n", ", ")).append("\n");
         sb.append("  Precio Final : $").append(String.format("%.2f", precioFinalCalculado)).append("\n");
         if (!acceso().isEmpty()) {
-        sb.append("  Beneficios   : ").append(acceso()).append("\n");
+            sb.append("  Beneficios   : ").append(acceso()).append("\n");
         }
         sb.append("  Compra       : ").append(this.fechaCompra).append("\n");
         sb.append("============================================\n");
@@ -97,6 +97,6 @@ public abstract class Entrada implements IVendible {
     }
 
     public String acceso() {
-        return ""; 
+        return "";
     }
 }

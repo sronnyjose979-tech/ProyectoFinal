@@ -49,10 +49,6 @@ public class AdminPanelController implements Initializable {
     private Auditorio auditorio;
     private Evento eventoActual;
 
-    // =========================================================
-    // INITIALIZE
-    // =========================================================
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -82,20 +78,20 @@ public class AdminPanelController implements Initializable {
                 .selectedItemProperty()
                 .addListener(new ChangeListener<Evento>() {
 
-            @Override
-            public void changed(ObservableValue<? extends Evento> observable,
-                                Evento oldValue,
-                                Evento newValue) {
+                    @Override
+                    public void changed(ObservableValue<? extends Evento> observable,
+                            Evento oldValue,
+                            Evento newValue) {
 
-                if (newValue != null) {
-                    eventoActual = newValue;
-                    txtNombreEvento.setText(newValue.getNombre());
-                    txtFechaEvento.setText(newValue.getFecha());
-                    txtPrecioBase.setText(
-                            String.valueOf(newValue.getPrecioBase()));
-                }
-            }
-        });
+                        if (newValue != null) {
+                            eventoActual = newValue;
+                            txtNombreEvento.setText(newValue.getNombre());
+                            txtFechaEvento.setText(newValue.getFecha());
+                            txtPrecioBase.setText(
+                                    String.valueOf(newValue.getPrecioBase()));
+                        }
+                    }
+                });
     }
 
     private void actualizarEtiquetaEventoActivo() {
@@ -108,10 +104,6 @@ public class AdminPanelController implements Initializable {
             lblEventoActivo.setText("Evento Activo: Ninguno");
         }
     }
-
-    // =========================================================
-    // CRUD EVENTOS
-    // =========================================================
 
     @FXML
     private void crearEvento() {
@@ -152,8 +144,8 @@ public class AdminPanelController implements Initializable {
     @FXML
     private void cargarEvento() {
 
-        Evento seleccionado =
-                tableEvento.getSelectionModel().getSelectedItem();
+        Evento seleccionado
+                = tableEvento.getSelectionModel().getSelectedItem();
 
         if (seleccionado == null) {
 
@@ -223,8 +215,8 @@ public class AdminPanelController implements Initializable {
     @FXML
     private void eliminarEvento() {
 
-        Evento seleccionado =
-                tableEvento.getSelectionModel().getSelectedItem();
+        Evento seleccionado
+                = tableEvento.getSelectionModel().getSelectedItem();
 
         if (seleccionado == null) {
 
@@ -249,10 +241,6 @@ public class AdminPanelController implements Initializable {
                 "Evento eliminado correctamente.",
                 Alert.AlertType.INFORMATION);
     }
-
-    // =========================================================
-    // REPORTES
-    // =========================================================
 
     @FXML
     private void verReporte() {
@@ -291,8 +279,8 @@ public class AdminPanelController implements Initializable {
     @FXML
     private void reiniciarSala() {
 
-        Evento seleccionado =
-                tableEvento.getSelectionModel().getSelectedItem();
+        Evento seleccionado
+                = tableEvento.getSelectionModel().getSelectedItem();
 
         if (seleccionado == null) {
 
@@ -324,10 +312,6 @@ public class AdminPanelController implements Initializable {
             e.printStackTrace();
         }
     }
-
-    // =========================================================
-    // MÉTODOS AUXILIARES
-    // =========================================================
 
     private boolean camposVacios() {
 

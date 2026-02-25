@@ -11,17 +11,14 @@ public class Evento {
 
     private List<Entrada> entradasVendidas;
     private int[][] matrizAsientos;
-    
 
     public Evento(String nombre, String fecha, double precioBase) {
         this.nombre = nombre;
         this.fecha = fecha;
         this.precioBase = precioBase;
         this.entradasVendidas = new ArrayList<>();
-        this.matrizAsientos=new int[10][10];
+        this.matrizAsientos = new int[10][10];
     }
-
-   
 
     public String getNombre() {
         return nombre;
@@ -47,7 +44,6 @@ public class Evento {
         this.precioBase = precioBase;
     }
 
- 
     public void agregarEntrada(Entrada entrada) {
         entradasVendidas.add(entrada);
     }
@@ -59,13 +55,13 @@ public class Evento {
     public int[][] getMatrizAsientos() {
         return matrizAsientos;
     }
-    
 
     public double calcularRecaudacion() {
         double total = 0;
 
-        for (Entrada e : entradasVendidas) {
-            total += e.calcularPrecio();         }
+        for (Entrada entradas : entradasVendidas) {
+            total += entradas.calcularPrecio();
+        }
 
         return total;
     }

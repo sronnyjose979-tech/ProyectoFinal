@@ -10,8 +10,8 @@ public class EntradaVip extends Entrada {
     public String tipoEntrada() {
         return "VIP";
     }
-    
-    public String acceso(){
+
+    public String acceso() {
         return "El cliente tiene acceso a lounge";
     }
 
