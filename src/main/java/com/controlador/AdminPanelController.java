@@ -200,6 +200,15 @@ public class AdminPanelController implements Initializable {
             eventoActual = null;
             auditorio.setEventoActual(null);
         }
+        auditorio.getEventosEnCartelera().remove(seleccionado);
+
+        if (seleccionado.equals(eventoActual)) {
+            eventoActual = null;
+            auditorio.setEventoActual(null);
+        }
+
+        actualizarEtiquetaEventoActivo();
+        limpiarCampos();
 
         actualizarEtiquetaEventoActivo();
         limpiarCampos();
