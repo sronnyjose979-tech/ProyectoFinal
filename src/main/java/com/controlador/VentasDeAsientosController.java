@@ -332,7 +332,7 @@ public class VentasDeAsientosController {
                 Cliente cliente = auditorio.getClientes().get(i);
                 if (cliente.getNombreUsuario().equalsIgnoreCase(input)) {
                     for (int j = 0; j < cliente.getEntradas().size(); j++) {
-                        Entrada entrada = cliente.getEntradas().get(i);
+                        Entrada entrada = cliente.getEntradas().get(j);
                         resultados.append("ID: ").append(entrada.getIdEntrada())
                                 .append(" | Evento: ").append(entrada.getEvento().getNombre())
                                 .append("\n");

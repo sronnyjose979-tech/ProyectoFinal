@@ -49,7 +49,7 @@ public class Auditorio {
 
     public Administrador cargarAdmin() {
         if (admin == null) {
-            admin = new Administrador("a", "1");
+            admin = new Administrador("admin", "admin");
 
         }
         return admin;

@@ -114,7 +114,7 @@ public class Persistencia {
                 for (Cliente cliente : auditorio.getClientes()) {
                     if (cliente.getEntradas() != null) {
                         for (Entrada entrada : cliente.getEntradas()) {
-                            guardar.println(entrada.tipoEntrada() + "," + entrada.getIdEntrada() + "," + entrada.getNombreCliente() + "," + entrada.getEvento().getNombre() + +entrada.calcularPrecio() + "," + entrada.getCantidadAsientos() + "," + "\"" + entrada.getDetalleAsientos().replace("\n", "; ") + "\"," + entrada.getFechaCompra());
+                            guardar.println(entrada.tipoEntrada() + "," + entrada.getIdEntrada() + "," + entrada.getNombreCliente() + "," + entrada.getEvento().getNombre() +","+entrada.calcularPrecio() + "," + entrada.getCantidadAsientos() + "," + "\"" + entrada.getDetalleAsientos().replace("\n", "; ") + "\"," + entrada.getFechaCompra());
                         }
                     }
                 }
