@@ -31,7 +31,7 @@ public class App extends Application {
     @Override
     public void stop() {
         Persistencia.guardarDatos(auditorio);
-        System.out.println("[App] Aplicación finalizada. Datos guardados.");
+        System.out.println("Aplicación finalizada. Datos guardados.");
     }
 
     public static void setRoot(String fxml) throws IOException {

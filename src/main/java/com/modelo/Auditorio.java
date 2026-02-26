@@ -57,17 +57,17 @@ public class Auditorio {
     }
 
     public Cliente autenticarCliente(String usuario, String contra) {
-        for (Cliente c : listClientes) {
-            if (c.getNombreUsuario().equalsIgnoreCase(usuario) && c.getContra().equals(contra)) {
-                return c;
+        for (Cliente cliente : listClientes) {
+            if (cliente.getNombreUsuario().equalsIgnoreCase(usuario) && cliente.getContra().equals(contra)) {
+                return cliente;
             }
         }
         return null;
     }
 
     public boolean usuarioExiste(String nombre) {
-        for (Cliente c : listClientes) {
-            if (c.getNombreUsuario().equalsIgnoreCase(nombre)) {
+        for (Cliente cliente : listClientes) {
+            if (cliente.getNombreUsuario().equalsIgnoreCase(nombre)) {
                 return true;
             }
         }

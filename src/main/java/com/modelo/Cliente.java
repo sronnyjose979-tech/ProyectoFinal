@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 public class Cliente {
 
-    private String nombreUsuario;
-    private String contra;
+    private String nombreCliente;
+    private String contraseñaCliente;
     private ArrayList<Entrada> Entradas;
 
-    public Cliente(String nombreUsuario, String contra) {
-        this.nombreUsuario = nombreUsuario;
-        this.contra = contra;
+    public Cliente(String nombreCliente, String contraseñaCliente) {
+        this.nombreCliente = nombreCliente;
+        this.contraseñaCliente = contraseñaCliente;
         Entradas = new ArrayList<>();
     }
 
@@ -23,19 +23,19 @@ public class Cliente {
     }
 
     public String getNombreUsuario() {
-        return nombreUsuario;
+        return nombreCliente;
     }
 
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
+    public void setNombreUsuario(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
     }
 
     public String getContra() {
-        return contra;
+        return contraseñaCliente;
     }
 
-    public void setContra(String contra) {
-        this.contra = contra;
+    public void setContra(String contraseñaCliente) {
+        this.contraseñaCliente = contraseñaCliente;
     }
 
 }

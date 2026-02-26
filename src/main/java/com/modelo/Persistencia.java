@@ -14,7 +14,7 @@ public class Persistencia {
         try {
             Files.createDirectories(Paths.get(CARPETA_DATOS));
         } catch (IOException e) {
-            System.err.println("[Persistencia] No se pudo crear la carpeta de datos: " + e.getMessage());
+            System.err.println("No se pudo crear la carpeta de datos: " + e.getMessage());
         }
     }
 
@@ -114,15 +114,7 @@ public class Persistencia {
                 for (Cliente cliente : auditorio.getClientes()) {
                     if (cliente.getEntradas() != null) {
                         for (Entrada entrada : cliente.getEntradas()) {
-                            guardar.println(
-                                    entrada.tipoEntrada() + ","
-                                    + entrada.getIdEntrada() + ","
-                                    + entrada.getNombreCliente() + ","
-                                    + entrada.getEvento().getNombre() + ","
-                                    + entrada.calcularPrecio() + ","
-                                    + entrada.getCantidadAsientos() + ","
-                                    + "\"" + entrada.getDetalleAsientos().replace("\n", "; ") + "\","
-                                    + entrada.getFechaCompra());
+                            guardar.println(entrada.tipoEntrada() + "," + entrada.getIdEntrada() + "," + entrada.getNombreCliente() + "," + entrada.getEvento().getNombre() + +entrada.calcularPrecio() + "," + entrada.getCantidadAsientos() + "," + "\"" + entrada.getDetalleAsientos().replace("\n", "; ") + "\"," + entrada.getFechaCompra());
                         }
                     }
                 }
@@ -157,14 +149,14 @@ public class Persistencia {
                 String detalle = partes[6].replace("\"", "");
                 String fecha = partes[7];
 
-                Evento ev = null;
-                for (Evento e : auditorio.getArregloEventos()) {
-                    if (e.getNombre().equals(nombreEv)) {
-                        ev = e;
+                Evento evento = null;
+                for (Evento event : auditorio.getArregloEventos()) {
+                    if (event.getNombre().equals(nombreEv)) {
+                        evento = event;
                         break;
                     }
                 }
-                if (ev == null) {
+                if (evento == null) {
                     continue;
                 }
 
@@ -176,7 +168,7 @@ public class Persistencia {
                             int f = Integer.parseInt(coords[0]) - 1;
                             int c = Integer.parseInt(coords[1]) - 1;
                             if (f >= 0 && f < 10 && c >= 0 && c < 10) {
-                                ev.getMatrizAsientos()[f][c] = 2;
+                                evento.getMatrizAsientos()[f][c] = 2;
                             }
                         }
                     } catch (Exception ex) {
@@ -186,11 +178,11 @@ public class Persistencia {
 
                 Entrada entrada;
                 if (tipo.equals("VIP")) {
-                    entrada = new EntradaVip(cliente, ev, precio, cant, detalle.replace("; ", "\n"));
+                    entrada = new EntradaVip(cliente, evento, precio, cant, detalle.replace("; ", "\n"));
                 } else if (tipo.equals("ESTUDIANTIL")) {
-                    entrada = new EntradaEstudiante(cliente, ev, precio, cant, detalle.replace("; ", "\n"));
+                    entrada = new EntradaEstudiante(cliente, evento, precio, cant, detalle.replace("; ", "\n"));
                 } else {
-                    entrada = new EntradaGeneral(cliente, ev, precio, cant, detalle.replace("; ", "\n"));
+                    entrada = new EntradaGeneral(cliente, evento, precio, cant, detalle.replace("; ", "\n"));
                 }
 
                 entrada.setIdEntrada(id);
@@ -200,7 +192,7 @@ public class Persistencia {
                     maxId = id;
                 }
 
-                ev.agregarEntrada(entrada);
+                evento.agregarEntrada(entrada);
                 for (Cliente c : auditorio.getClientes()) {
                     if (c.getNombreUsuario().equals(cliente)) {
                         c.agregarEntrada(entrada);
@@ -210,7 +202,7 @@ public class Persistencia {
             }
             Entrada.setContadorId(maxId + 1);
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
     }
 

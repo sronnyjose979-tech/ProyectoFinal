@@ -11,6 +11,7 @@ public class EntradaVip extends Entrada {
         return "VIP";
     }
 
+    @Override
     public String acceso() {
         return "El cliente tiene acceso a lounge";
     }
