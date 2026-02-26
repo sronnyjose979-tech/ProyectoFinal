@@ -165,10 +165,10 @@ public class Persistencia {
                     try {
                         String[] coords = silla.replaceAll("[^0-9 ]", "").trim().split(" +");
                         if (coords.length >= 2) {
-                            int f = Integer.parseInt(coords[0]) - 1;
-                            int c = Integer.parseInt(coords[1]) - 1;
-                            if (f >= 0 && f < 10 && c >= 0 && c < 10) {
-                                evento.getMatrizAsientos()[f][c] = 2;
+                            int filas = Integer.parseInt(coords[0]) - 1;
+                            int columnas = Integer.parseInt(coords[1]) - 1;
+                            if (filas >= 0 && filas < 10 && columnas >= 0 && columnas< 10) {
+                                evento.getMatrizAsientos()[filas][columnas] = 2;
                             }
                         }
                     } catch (Exception ex) {
@@ -193,9 +193,9 @@ public class Persistencia {
                 }
 
                 evento.agregarEntrada(entrada);
-                for (Cliente c : auditorio.getClientes()) {
-                    if (c.getNombreUsuario().equals(cliente)) {
-                        c.agregarEntrada(entrada);
+                for (Cliente clientes : auditorio.getClientes()) {
+                    if (clientes.getNombreUsuario().equals(cliente)) {
+                        clientes.agregarEntrada(entrada);
                         break;
                     }
                 }

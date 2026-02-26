@@ -63,7 +63,7 @@ public class AccesoClienteVistaController implements Initializable {
             txtRegistarUsuario.setText("");
             txtRegistrarContrasena.setText("");
 
-            Alerta.mostrar("Éxito", "Usuario registrado correctamente. ¡Ya puedes iniciar sesión!",
+            Alerta.mostrar("Éxito", "Usuario registrado correctamente.",
                     Alert.AlertType.INFORMATION);
             tabLogin.getSelectionModel().select(0);
 
