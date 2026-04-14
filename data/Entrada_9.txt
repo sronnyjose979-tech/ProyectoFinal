@@ -1,0 +1,12 @@
+============================================
+        AUDITORIO - TICKET DE ENTRADA       
+============================================
+  ID Entrada   : 9
+  Cliente      : Josue
+  Evento       : Concierto de Jazz
+  Fecha Evento : 12/12/2026
+  Tipo Entrada : GENERAL
+  Asiento      : Asientos seleccionados:, Fila: 6 Col: 3, Fila: 6 Col: 4, 
+  Precio Final : $10000,00
+  Compra       : 25/02/2026 12:29
+============================================

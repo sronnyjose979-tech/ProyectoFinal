@@ -1,0 +1,13 @@
+============================================
+        AUDITORIO - TICKET DE ENTRADA       
+============================================
+  ID Entrada   : 7
+  Cliente      : Russell03
+  Evento       : Concierto de Jazz
+  Fecha Evento : 12/12/2026
+  Tipo Entrada : VIP
+  Asiento      : Asientos seleccionados:, Fila: 8 Col: 7, Fila: 8 Col: 8, 
+  Precio Final : $15000,00
+  Beneficios   : El cliente tiene acceso a lounge
+  Compra       : 23/02/2026 16:37
+============================================

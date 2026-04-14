@@ -1,0 +1,12 @@
+============================================
+        AUDITORIO - TICKET DE ENTRADA       
+============================================
+  ID Entrada   : 8
+  Cliente      : Russell03
+  Evento       : Concierto de Jazz
+  Fecha Evento : 12/12/2026
+  Tipo Entrada : ESTUDIANTIL
+  Asiento      : Asientos seleccionados:, Fila: 8 Col: 5, Fila: 8 Col: 6, 
+  Precio Final : $8000,00
+  Compra       : 24/02/2026 15:11
+============================================

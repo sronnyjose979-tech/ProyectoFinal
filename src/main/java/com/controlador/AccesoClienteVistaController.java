@@ -17,86 +17,48 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TabPane;
 
-public class AccesoClienteVistaController implements Initializable {
+public class AccesoClienteVistaController {
 
-    Auditorio auditorio;
-
+    @FXML
+    private TextField txtRegistrarUsuario;
     @FXML
     private PasswordField txtRegistrarContrasena;
 
-    @FXML
-    private TextField txtRegistarUsuario;
+    private Auditorio auditorio; // Asumo que se inyecta o se carga antes
+    private ClienteVPN red;     // ¡Aquí está la variable que te faltaba!
 
     @FXML
-    private PasswordField txtContrasenaIniciarSesion;
+    public void initialize() {
+        // 1. Inicializar auditorio (puedes cargarlo de la persistencia aquí)
+        this.auditorio = new Auditorio();
 
-    @FXML
-    private TextField txtUsuarioIniciarSesion;
-
-    @FXML
-    private TabPane tabLogin;
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        this.auditorio = App.auditorio;
-        // Dentro del método de un botón "Conectar"
-        ClienteVPN red = new ClienteVPN();
-// USA AQUÍ LA IP QUE SALÍA EN TU CAPTURA DE TAILSCALE
-        red.conectar("100.100.84.120", 5000);
-        red.enviarMensaje("Hola desde el cliente de " + System.getProperty("user.name"));
+        // 2. Configurar la red
+        red = new ClienteVPN();
+        // Cambia la IP por la de la máquina que corre el ServidorVPN
+        red.conectar("100.112.172.27", 5000, auditorio);
     }
 
     @FXML
     public void btnRegistrarUsuario(ActionEvent e) {
+        // Validaciones de campos vacíos...
+        String nombre = txtRegistrarUsuario.getText().trim();
+        String contra = txtRegistrarContrasena.getText().trim();
 
-        if (txtRegistarUsuario.getText().trim().isEmpty() || txtRegistrarContrasena.getText().isEmpty()) {
-            Alerta.mostrar("Error", "Por favor rellene todos los campos", Alert.AlertType.ERROR);
+        if (auditorio.usuarioExiste(nombre)) {
+            // Mostrar alerta de usuario existente...
             return;
         }
 
-        String nombreARegistrar = txtRegistarUsuario.getText().trim();
-        String contraARegistrar = txtRegistrarContrasena.getText().trim();
+        // 1. Guardar localmente
+        Cliente nuevo = new Cliente(nombre, contra);
+        auditorio.agregarCliente(nuevo);
 
-        try {
-            if (auditorio.usuarioExiste(nombreARegistrar)) {
-                throw new NoHayUsuarioException("El nombre de usuario '" + nombreARegistrar + "' ya está en uso.");
-            }
+        // 2. ENVIAR POR RED (Esto hará que tu compañero lo reciba)
+        red.enviarMensaje("NUEVO_CLIENTE:" + nombre + "," + contra);
 
-            Cliente cliente = new Cliente(nombreARegistrar, contraARegistrar);
-            auditorio.agregarCliente(cliente);
-            auditorio.cargarCliente(cliente);
-            txtRegistarUsuario.setText("");
-            txtRegistrarContrasena.setText("");
-
-            Alerta.mostrar("Éxito", "Usuario registrado correctamente.",
-                    Alert.AlertType.INFORMATION);
-            tabLogin.getSelectionModel().select(0);
-
-        } catch (NoHayUsuarioException ex) {
-            Alerta.mostrar("Error", "El nombre de usuario ya está en uso. Intente con otro.", Alert.AlertType.ERROR);
-        }
-    }
-
-    @FXML
-    private void btnIniciarSesion(ActionEvent e) throws IOException {
-        if (txtUsuarioIniciarSesion.getText().trim().isEmpty() || txtContrasenaIniciarSesion.getText().trim().isEmpty()) {
-            Alerta.mostrar("Error", "No pueden quedar espacios en blanco", Alert.AlertType.ERROR);
-            return;
-        }
-        String nombreUsuario = txtUsuarioIniciarSesion.getText().trim();
-        String contrasenaUsuario = txtContrasenaIniciarSesion.getText().trim();
-        Cliente cliente = auditorio.autenticarCliente(nombreUsuario, contrasenaUsuario);
-        if (cliente != null) {
-            auditorio.cargarCliente(cliente);
-            Alerta.mostrar("Éxito", "Bienvenido " + cliente.getNombreUsuario(), Alert.AlertType.INFORMATION);
-            App.setRoot("VistaVentaAsientos");
-        } else {
-            Alerta.mostrar("Error", "Usuario o Contraseña Incorrectos", Alert.AlertType.ERROR);
-        }
-    }
-
-    @FXML
-    private void btnngresarAdmin() throws IOException {
-        App.setRoot("AccesoAdministradorVista");
+        // 3. Limpiar y avisar
+        txtRegistrarUsuario.clear();
+        txtRegistrarContrasena.clear();
+        System.out.println("Usuario registrado y enviado a la red.");
     }
 }

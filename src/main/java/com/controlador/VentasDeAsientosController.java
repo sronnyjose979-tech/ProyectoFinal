@@ -9,6 +9,7 @@ import com.modelo.EntradaGeneral;
 import com.modelo.EntradaVip;
 import com.modelo.Evento;
 import com.modelo.Persistencia;
+import com.red.ClienteVPN;
 import com.util.Alerta;
 import java.io.IOException;
 import javafx.event.ActionEvent;
@@ -284,7 +285,9 @@ public class VentasDeAsientosController {
 
             Alerta.mostrar("Compra Exitosa", "Entrada generada correctamente y guardada en TXT.",
                     Alert.AlertType.INFORMATION);
-
+            ClienteVPN red = new ClienteVPN();
+// Lo ideal es que 'red' sea una instancia única compartida
+            red.enviarMensaje("UPDATE_SEATS");
         } catch (Exception e) {
             Alerta.mostrar("Error", "Ocurrió un error al procesar la compra.", Alert.AlertType.ERROR);
         }
