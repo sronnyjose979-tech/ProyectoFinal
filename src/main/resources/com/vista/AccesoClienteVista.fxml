@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane styleClass="root-pane" stylesheets="@/com/css/loginEstilos.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controlador.AccesoClienteVistaController">
+<StackPane styleClass="root-pane" stylesheets="@/com/css/loginEstilos.css" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controlador.AccesoClienteVistaController">
     <children>
-        <Button fx:id="btnAdmin" mnemonicParsing="false" onAction="#btnngresarAdmin" text="Administrador" StackPane.alignment="TOP_RIGHT">
+        <Button fx:id="btnAdmin" mnemonicParsing="false" onAction="#btnIngresarAdmin" text="Administrador" StackPane.alignment="TOP_RIGHT">
             <StackPane.margin>
                 <Insets right="20.0" top="20.0" />
             </StackPane.margin>

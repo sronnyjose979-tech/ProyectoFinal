@@ -19,50 +19,12 @@ public class Auditorio {
         modeloCliente = null;
     }
 
-    public Evento getEvento() {
-        return eventoActual;
-    }
-
-    public void setEvento(Evento evento) {
-        this.eventoActual = evento;
-    }
-
-    public void cargarCliente(Cliente cliente) {
-        this.modeloCliente = cliente;
-    }
+    // --- MÉTODOS DE CLIENTES ---
 
     public void agregarCliente(Cliente cliente) {
-        listClientes.add(cliente);
-    }
-
-    public void setClientes(ArrayList<Cliente> clientes) {
-        this.listClientes = clientes;
-    }
-
-    public Cliente getClienteActual() {
-        return modeloCliente;
-    }
-
-    public ArrayList<Cliente> getClientes() {
-        return listClientes;
-    }
-
-    public Administrador cargarAdmin() {
-        if (admin == null) {
-            admin = new Administrador("admin", "admin");
-
+        if (cliente != null) {
+            listClientes.add(cliente);
         }
-        return admin;
-
-    }
-
-    public Cliente autenticarCliente(String usuario, String contra) {
-        for (Cliente cliente : listClientes) {
-            if (cliente.getNombreUsuario().equalsIgnoreCase(usuario) && cliente.getContra().equals(contra)) {
-                return cliente;
-            }
-        }
-        return null;
     }
 
     public boolean usuarioExiste(String nombre) {
@@ -74,24 +36,65 @@ public class Auditorio {
         return false;
     }
 
+    /**
+     * Valida si las credenciales coinciden con algún cliente registrado.
+     * @return true si es válido, false de lo contrario.
+     */
+    public boolean validarLogin(String usuario, String contrasena) {
+        for (Cliente c : listClientes) {
+            if (c.getNombreUsuario().equalsIgnoreCase(usuario) && c.getContra().equals(contrasena)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Cliente autenticarCliente(String usuario, String contra) {
+        for (Cliente cliente : listClientes) {
+            if (cliente.getNombreUsuario().equalsIgnoreCase(usuario) && cliente.getContra().equals(contra)) {
+                return cliente;
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<Cliente> getClientes() {
+        return listClientes;
+    }
+
+    public void setClientes(ArrayList<Cliente> clientes) {
+        this.listClientes = clientes;
+    }
+
+    public void cargarCliente(Cliente cliente) {
+        this.modeloCliente = cliente;
+    }
+
+    public Cliente getClienteActual() {
+        return modeloCliente;
+    }
+
+    // --- MÉTODOS DE ADMINISTRACIÓN ---
+
+    public Administrador cargarAdmin() {
+        if (admin == null) {
+            admin = new Administrador("admin", "admin");
+        }
+        return admin;
+    }
+
+    // --- MÉTODOS DE EVENTOS ---
+
     public void agregarEvento(Evento evento) {
         listEvento.add(evento);
     }
 
-    public void cargarEvento(Evento evento) {
-        this.eventoActual = evento;
-    }
-
-    public ArrayList<Evento> getArregloEventos() {
-        return listEvento;
-    }
-
-    public void setArregloEventos(ArrayList<Evento> arregloEventos) {
-        this.listEvento = arregloEventos;
-    }
-
     public void eliminarEvento(Evento evento) {
         listEvento.remove(evento);
+    }
+
+    public void cargarEvento(Evento evento) {
+        this.eventoActual = evento;
     }
 
     public void cargarEventoEnSala(Evento evento) {
@@ -109,9 +112,19 @@ public class Auditorio {
         }
     }
 
+    public ArrayList<Evento> getArregloEventos() {
+        return listEvento;
+    }
+
+    public void setArregloEventos(ArrayList<Evento> arregloEventos) {
+        this.listEvento = arregloEventos;
+    }
+
     public ArrayList<Evento> getEventosEnCartelera() {
         return listEventoEnCartelera;
     }
+
+    // --- MÉTODOS DE UTILIDAD ---
 
     public void reiniciarAsientos() {
         if (eventoActual != null) {
@@ -132,4 +145,11 @@ public class Auditorio {
         return total;
     }
 
+    public Evento getEvento() {
+        return eventoActual;
+    }
+
+    public void setEvento(Evento evento) {
+        this.eventoActual = evento;
+    }
 }
