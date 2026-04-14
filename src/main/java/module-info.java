@@ -15,4 +15,5 @@ module com.proyectou {
     exports com.modelo;
     exports com.controlador;
     exports com.util;
+    exports com.red;
 }

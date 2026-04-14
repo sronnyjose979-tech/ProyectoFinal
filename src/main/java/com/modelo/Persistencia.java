@@ -114,7 +114,7 @@ public class Persistencia {
                 for (Cliente cliente : auditorio.getClientes()) {
                     if (cliente.getEntradas() != null) {
                         for (Entrada entrada : cliente.getEntradas()) {
-                            guardar.println(entrada.tipoEntrada() + "," + entrada.getIdEntrada() + "," + entrada.getNombreCliente() + "," + entrada.getEvento().getNombre() +","+entrada.calcularPrecio() + "," + entrada.getCantidadAsientos() + "," + "\"" + entrada.getDetalleAsientos().replace("\n", "; ") + "\"," + entrada.getFechaCompra());
+                            guardar.println(entrada.tipoEntrada() + "," + entrada.getIdEntrada() + "," + entrada.getNombreCliente() + "," + entrada.getEvento().getNombre() + "," + entrada.calcularPrecio() + "," + entrada.getCantidadAsientos() + "," + "\"" + entrada.getDetalleAsientos().replace("\n", "; ") + "\"," + entrada.getFechaCompra());
                         }
                     }
                 }
@@ -132,72 +132,90 @@ public class Persistencia {
 
         int maxId = 0;
         try (BufferedReader cargar = new BufferedReader(new FileReader(archivo))) {
-            cargar.readLine();
+            cargar.readLine(); // Saltar el encabezado
             String linea;
+
             while ((linea = cargar.readLine()) != null) {
+                // 1. Ignorar líneas completamente en blanco
+                if (linea.trim().isEmpty()) {
+                    continue;
+                }
+
                 String[] partes = linea.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+
+                // 2. Revisar si hay suficientes columnas
                 if (partes.length < 8) {
+                    System.err.println("Ignorando línea mal formateada (Faltan columnas o se guardó con Excel): " + linea);
                     continue;
                 }
 
-                String tipo = partes[0];
-                int id = Integer.parseInt(partes[1]);
-                String cliente = partes[2];
-                String nombreEv = partes[3];
-                double precio = Double.parseDouble(partes[4]);
-                int cant = Integer.parseInt(partes[5]);
-                String detalle = partes[6].replace("\"", "");
-                String fecha = partes[7];
+                // 3. Try-Catch INTERNO: Si esta línea falla, no detiene a las demás
+                try {
+                    String tipo = partes[0].trim();
+                    int id = Integer.parseInt(partes[1].trim());
+                    String cliente = partes[2].trim();
+                    String nombreEv = partes[3].trim();
+                    double precio = Double.parseDouble(partes[4].trim());
+                    int cant = Integer.parseInt(partes[5].trim());
+                    String detalle = partes[6].replace("\"", "").trim();
+                    String fecha = partes[7].trim();
 
-                Evento evento = null;
-                for (Evento event : auditorio.getArregloEventos()) {
-                    if (event.getNombre().equals(nombreEv)) {
-                        evento = event;
-                        break;
-                    }
-                }
-                if (evento == null) {
-                    continue;
-                }
-
-                String[] ocupados = detalle.split("; ");
-                for (String silla : ocupados) {
-                    try {
-                        String[] coords = silla.replaceAll("[^0-9 ]", "").trim().split(" +");
-                        if (coords.length >= 2) {
-                            int filas = Integer.parseInt(coords[0]) - 1;
-                            int columnas = Integer.parseInt(coords[1]) - 1;
-                            if (filas >= 0 && filas < 10 && columnas >= 0 && columnas< 10) {
-                                evento.getMatrizAsientos()[filas][columnas] = 2;
-                            }
+                    Evento evento = null;
+                    for (Evento event : auditorio.getArregloEventos()) {
+                        if (event.getNombre().equals(nombreEv)) {
+                            evento = event;
+                            break;
                         }
-                    } catch (Exception ex) {
-
                     }
-                }
-
-                Entrada entrada;
-                if (tipo.equals("VIP")) {
-                    entrada = new EntradaVip(cliente, evento, precio, cant, detalle.replace("; ", "\n"));
-                } else if (tipo.equals("ESTUDIANTIL")) {
-                    entrada = new EntradaEstudiante(cliente, evento, precio, cant, detalle.replace("; ", "\n"));
-                } else {
-                    entrada = new EntradaGeneral(cliente, evento, precio, cant, detalle.replace("; ", "\n"));
-                }
-
-                entrada.setIdEntrada(id);
-                entrada.setPrecioFinalCalculado(precio);
-                entrada.setFechaCompra(fecha);
-                if (id > maxId) {
-                    maxId = id;
-                }
-
-                evento.agregarEntrada(entrada);
-                for (Cliente clientes : auditorio.getClientes()) {
-                    if (clientes.getNombreUsuario().equals(cliente)) {
-                        clientes.agregarEntrada(entrada);
-                        break;
+                    if (evento == null) {
+                        continue; // Si el evento no existe, ignorar la entrada
                     }
+
+                    String[] ocupados = detalle.split("; ");
+                    for (String silla : ocupados) {
+                        try {
+                            String[] coords = silla.replaceAll("[^0-9 ]", "").trim().split(" +");
+                            if (coords.length >= 2) {
+                                int filas = Integer.parseInt(coords[0]) - 1;
+                                int columnas = Integer.parseInt(coords[1]) - 1;
+
+                                // Cambio dinámico: usar la longitud real de la matriz
+                                if (filas >= 0 && filas < evento.getMatrizAsientos().length
+                                        && columnas >= 0 && columnas < evento.getMatrizAsientos()[0].length) {
+                                    evento.getMatrizAsientos()[filas][columnas] = 2;
+                                }
+                            }
+                        } catch (Exception ex) {
+                            // Error al procesar un solo asiento, se ignora
+                        }
+                    }
+
+                    Entrada entrada;
+                    if (tipo.equals("VIP")) {
+                        entrada = new EntradaVip(cliente, evento, precio, cant, detalle.replace("; ", "\n"));
+                    } else if (tipo.equals("ESTUDIANTIL")) {
+                        entrada = new EntradaEstudiante(cliente, evento, precio, cant, detalle.replace("; ", "\n"));
+                    } else {
+                        entrada = new EntradaGeneral(cliente, evento, precio, cant, detalle.replace("; ", "\n"));
+                    }
+
+                    entrada.setIdEntrada(id);
+                    entrada.setPrecioFinalCalculado(precio);
+                    entrada.setFechaCompra(fecha);
+
+                    if (id > maxId) {
+                        maxId = id;
+                    }
+
+                    evento.agregarEntrada(entrada);
+                    for (Cliente clientes : auditorio.getClientes()) {
+                        if (clientes.getNombreUsuario().equals(cliente)) {
+                            clientes.agregarEntrada(entrada);
+                            break;
+                        }
+                    }
+                } catch (Exception ex) {
+                    System.err.println("Dato corrupto ignorado en la línea: " + linea);
                 }
             }
             Entrada.setContadorId(maxId + 1);

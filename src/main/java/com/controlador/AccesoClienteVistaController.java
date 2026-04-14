@@ -3,6 +3,7 @@ package com.controlador;
 import com.app.App;
 import com.modelo.Auditorio;
 import com.modelo.Cliente;
+import com.red.ClienteVPN;
 import com.util.Alerta;
 import com.util.NoHayUsuarioException;
 import java.io.IOException;
@@ -17,7 +18,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TabPane;
 
 public class AccesoClienteVistaController implements Initializable {
-    
 
     Auditorio auditorio;
 
@@ -39,6 +39,11 @@ public class AccesoClienteVistaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.auditorio = App.auditorio;
+        // Dentro del método de un botón "Conectar"
+        ClienteVPN red = new ClienteVPN();
+// USA AQUÍ LA IP QUE SALÍA EN TU CAPTURA DE TAILSCALE
+        red.conectar("100.100.84.120", 5000);
+        red.enviarMensaje("Hola desde el cliente de " + System.getProperty("user.name"));
     }
 
     @FXML
@@ -89,7 +94,6 @@ public class AccesoClienteVistaController implements Initializable {
             Alerta.mostrar("Error", "Usuario o Contraseña Incorrectos", Alert.AlertType.ERROR);
         }
     }
-    
 
     @FXML
     private void btnngresarAdmin() throws IOException {

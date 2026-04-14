@@ -1,0 +1,12 @@
+============================================
+        AUDITORIO - TICKET DE ENTRADA       
+============================================
+  ID Entrada   : 2
+  Cliente      : Rei
+  Evento       : Concierto
+  Fecha Evento : 22
+  Tipo Entrada : GENERAL
+  Asiento      : Asientos seleccionados:, Fila: 2 Col: 9, 
+  Precio Final : $1000,00
+  Compra       : 26/02/2026 17:47
+============================================
