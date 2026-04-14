@@ -9,7 +9,6 @@ import com.modelo.EntradaGeneral;
 import com.modelo.EntradaVip;
 import com.modelo.Evento;
 import com.modelo.Persistencia;
-import com.red.ClienteVPN;
 import com.util.Alerta;
 import java.io.IOException;
 import javafx.event.ActionEvent;
@@ -27,81 +26,67 @@ public class VentasDeAsientosController {
 
     Auditorio auditorio;
 
-    @FXML
-    private GridPane gridButacas;
-    @FXML
-    private ComboBox<String> comboTipo;
-    @FXML
-    private ComboBox<String> comboEvento;
-    @FXML
-    private Label mensaje;
-    @FXML
-    private Label mensajeNombreUsuario;
-    @FXML
-    public TextArea txtAreaTicket;
-    @FXML
-    public TextField TxfbuscarEntrada;
-    @FXML
-    public Button btnComprar;
-    @FXML
-    public Button buscarTicket;
+    @FXML private GridPane gridButacas;
+    @FXML private ComboBox<String> comboTipo;
+    @FXML private ComboBox<String> comboEvento;
+    @FXML private Label mensajeNombreUsuario;
+    @FXML public TextArea txtAreaTicket;
+    @FXML public TextField TxfbuscarEntrada;
+    @FXML public Button btnComprar;
+    @FXML public Button buscarTicket;
 
-    private static final int FILAS = 10;
+    private static final int FILAS    = 10;
     private static final int COLUMNAS = 10;
-    private Button[][] botones = new Button[FILAS][COLUMNAS];
+    private final Button[][] botones  = new Button[FILAS][COLUMNAS];
+
+    // Instancia activa para que ClienteVPN pueda refrescar la UI
     private static VentasDeAsientosController instanciaActiva;
 
-    private static final int LIBRE = 0;
+    private static final int LIBRE      = 0;
     private static final int SELECCIONADA = 1;
-    private static final int RESERVADA = 2;
+    private static final int RESERVADA  = 2;
 
     public double precioTotal;
-    public int cantidadAsientos;
+    public int    cantidadAsientos;
     private Evento eventoActual;
 
     @FXML
     public void initialize() throws IOException {
         this.auditorio = App.auditorio;
-        
         instanciaActiva = this;
+
+        // Evento activo al iniciar
         eventoActual = auditorio.getEventoActual();
 
+        // Mostrar nombre del cliente
         Cliente cliente = auditorio.getClienteActual();
         if (cliente != null) {
             mensajeNombreUsuario.setText(cliente.getNombreUsuario());
         }
 
+        // Crear la cuadrícula de butacas
         gridButacas.setDisable(false);
         crearButacas();
 
+        // Tipos de entrada
         comboTipo.getItems().setAll("GENERAL", "VIP", "ESTUDIANTIL");
 
-        if (auditorio.getEventosEnCartelera() != null && !auditorio.getEventosEnCartelera().isEmpty()) {
+        // ── FIX: poblar comboEvento desde TODOS los eventos (no solo cartelera) ──
+        // La lista "cartelera" nunca se persiste, así que usamos getArregloEventos()
+        actualizarListaEventos();
 
-            for (int i = 0; i < auditorio.getEventosEnCartelera().size(); i++) {
-                Evento evento = auditorio.getEventosEnCartelera().get(i);
-                comboEvento.getItems().add(evento.getNombre());
-            }
-            if (eventoActual != null) {
-                comboEvento.getSelectionModel().select(eventoActual.getNombre());
-            } else {
-                comboEvento.getSelectionModel().selectFirst();
-            }
-        } else {
-            comboEvento.setPromptText("No hay eventos!");
-        }
-
+        // Listener del combo de eventos
         comboEvento.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
                 String nombreSelec = comboEvento.getValue();
+                if (nombreSelec == null) return;
 
-                for (int i = 0; i < auditorio.getEventosEnCartelera().size(); i++) {
-                    Evento evento = auditorio.getEventosEnCartelera().get(i);
+                for (Evento evento : auditorio.getArregloEventos()) {
                     if (evento.getNombre().equals(nombreSelec)) {
                         eventoActual = evento;
                         auditorio.setEventoActual(evento);
-
+                        // Refrescar colores de butacas
                         for (int f = 0; f < FILAS; f++) {
                             for (int c = 0; c < COLUMNAS; c++) {
                                 actualizarColor(f, c);
@@ -110,19 +95,15 @@ public class VentasDeAsientosController {
                         break;
                     }
                 }
-
             }
         });
-
-        for (int fila = 0; fila < FILAS; fila++) {
-            for (int col = 0; col < COLUMNAS; col++) {
-                actualizarColor(fila, col);
-            }
-        }
     }
+
+    // ==================== BUTACAS ====================
 
     @FXML
     public void crearButacas() {
+        gridButacas.getChildren().clear();
         for (int i = 0; i < FILAS; i++) {
             for (int j = 0; j < COLUMNAS; j++) {
                 Button btn = new Button();
@@ -131,49 +112,68 @@ public class VentasDeAsientosController {
                 botones[i][j] = btn;
 
                 final int fila = i;
-                final int col = j;
-                btn.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        manejarClickMesa(fila, col);
-                    }
-                });
+                final int col  = j;
+                btn.setOnAction(ev -> manejarClickMesa(fila, col));
                 gridButacas.add(btn, j, i);
                 actualizarColor(i, j);
             }
         }
     }
 
+    /**
+     * Llamado por ClienteVPN (desde Platform.runLater) cuando llega
+     * una actualización de red.
+     */
     public static void refrescarBotones() {
         if (instanciaActiva != null) {
-            for (int i = 0; i < FILAS; i++) {
-                for (int j = 0; j < COLUMNAS; j++) {
-                    instanciaActiva.actualizarColor(i, j);
-                }
-            }
+            // Sincronizar eventoActual con el que tiene el auditorio
+            instanciaActiva.eventoActual = instanciaActiva.auditorio.getEventoActual();
+            // Actualizar lista de eventos en combo
             instanciaActiva.actualizarListaEventos();
         }
     }
 
+    /**
+     * Actualiza el comboEvento con todos los eventos del auditorio.
+     * Selecciona el evento activo automáticamente.
+     */
     private void actualizarListaEventos() {
-        String seleccionado = comboEvento.getValue();
+        // Preserved selection (event in room takes priority)
+        String seleccionado = eventoActual != null
+                ? eventoActual.getNombre()
+                : comboEvento.getValue();
+
         comboEvento.getItems().clear();
-        for (Evento ev : auditorio.getEventosEnCartelera()) {
+        for (Evento ev : auditorio.getArregloEventos()) {
             comboEvento.getItems().add(ev.getNombre());
         }
+
         if (seleccionado != null && comboEvento.getItems().contains(seleccionado)) {
             comboEvento.getSelectionModel().select(seleccionado);
         } else if (!comboEvento.getItems().isEmpty()) {
             comboEvento.getSelectionModel().selectFirst();
+            String nombre = comboEvento.getSelectionModel().getSelectedItem();
+            for (Evento ev : auditorio.getArregloEventos()) {
+                if (ev.getNombre().equals(nombre)) {
+                    eventoActual = ev;
+                    break;
+                }
+            }
+        }
+
+        // Refrescar colores con el nuevo eventoActual
+        for (int i = 0; i < FILAS; i++) {
+            for (int j = 0; j < COLUMNAS; j++) {
+                actualizarColor(i, j);
+            }
         }
     }
 
     private void manejarClickMesa(int fila, int col) {
         if (eventoActual == null) {
-            Alerta.mostrar("Error", "No hay evento en sala", Alert.AlertType.WARNING);
+            Alerta.mostrar("Sin evento", "No hay evento seleccionado", Alert.AlertType.WARNING);
             return;
         }
-
         int estado = eventoActual.getMatrizAsientos()[fila][col];
         switch (estado) {
             case LIBRE:
@@ -183,8 +183,8 @@ public class VentasDeAsientosController {
                 eventoActual.getMatrizAsientos()[fila][col] = LIBRE;
                 break;
             case RESERVADA:
-                Alerta.mostrar("Asiento no disponible", "Este asiento ya fue vendido y no puede modificarse.",
-                        Alert.AlertType.WARNING);
+                Alerta.mostrar("Asiento ocupado",
+                        "Este asiento ya fue vendido.", Alert.AlertType.WARNING);
                 return;
         }
         actualizarColor(fila, col);
@@ -192,6 +192,7 @@ public class VentasDeAsientosController {
 
     private void actualizarColor(int fila, int col) {
         Button btn = botones[fila][col];
+        if (btn == null) return;
         btn.getStyleClass().removeAll("seat-free", "seat-selected", "seat-reserved");
         btn.setStyle(null);
 
@@ -199,7 +200,6 @@ public class VentasDeAsientosController {
             btn.getStyleClass().add("seat-free");
             return;
         }
-
         switch (eventoActual.getMatrizAsientos()[fila][col]) {
             case LIBRE:
                 btn.getStyleClass().add("seat-free");
@@ -217,24 +217,7 @@ public class VentasDeAsientosController {
         }
     }
 
-    @FXML
-    public void CerrarSesion() throws IOException {
-        instanciaActiva = null;
-        App.setRoot("AccesoClienteVista");
-    }
-
-    @FXML
-    public String identificadorDeButacas() {
-        StringBuilder asientosTexto = new StringBuilder("Asientos seleccionados:\n");
-        for (int i = 0; i < FILAS; i++) {
-            for (int j = 0; j < COLUMNAS; j++) {
-                if (eventoActual.getMatrizAsientos()[i][j] == SELECCIONADA) {
-                    asientosTexto.append("Fila: ").append(i + 1).append(" Col: ").append(j + 1).append("\n");
-                }
-            }
-        }
-        return asientosTexto.toString();
-    }
+    // ==================== COMPRA ====================
 
     @FXML
     public void coordinadorDeBoton() throws IOException {
@@ -244,21 +227,22 @@ public class VentasDeAsientosController {
     @FXML
     public void creacionDeEntradasConElComboBox() {
         if (eventoActual == null) {
-            Alerta.mostrar("No hay función activa", "Seleccione un evento antes de comprar", Alert.AlertType.ERROR);
+            Alerta.mostrar("Sin evento", "Seleccione un evento antes de comprar",
+                    Alert.AlertType.ERROR);
             return;
         }
 
         String tipoSeleccionado = comboTipo.getValue();
-        String nombre = mensajeNombreUsuario.getText();
-
         if (tipoSeleccionado == null) {
-            Alerta.mostrar("Aviso", "Debe seleccionar un tipo de entrada!", Alert.AlertType.WARNING);
+            Alerta.mostrar("Aviso", "Seleccione un tipo de entrada", Alert.AlertType.WARNING);
             return;
         }
 
+        String nombre = mensajeNombreUsuario.getText();
         cantidadAsientos = contarAsientosSeleccionados();
         if (cantidadAsientos == 0) {
-            Alerta.mostrar("Aviso", "No ha seleccionado ningún asiento", Alert.AlertType.WARNING);
+            Alerta.mostrar("Aviso", "Seleccione al menos un asiento",
+                    Alert.AlertType.WARNING);
             return;
         }
 
@@ -268,49 +252,76 @@ public class VentasDeAsientosController {
         try {
             switch (tipoSeleccionado) {
                 case "VIP":
-                    nuevaEntrada = new EntradaVip(nombre, eventoActual, 0, cantidadAsientos, numeroAsiento);
+                    nuevaEntrada = new EntradaVip(nombre, eventoActual, 0,
+                            cantidadAsientos, numeroAsiento);
                     break;
                 case "ESTUDIANTIL":
-                    nuevaEntrada = new EntradaEstudiante(nombre, eventoActual, 0, cantidadAsientos, numeroAsiento);
+                    nuevaEntrada = new EntradaEstudiante(nombre, eventoActual, 0,
+                            cantidadAsientos, numeroAsiento);
                     break;
                 default:
-                    nuevaEntrada = new EntradaGeneral(nombre, eventoActual, 0, cantidadAsientos, numeroAsiento);
+                    nuevaEntrada = new EntradaGeneral(nombre, eventoActual, 0,
+                            cantidadAsientos, numeroAsiento);
                     break;
             }
 
             double precioCalculado = nuevaEntrada.calcularPrecio();
             nuevaEntrada.setPrecioFinalCalculado(precioCalculado);
 
+            // Asociar entrada al cliente y al evento
             Cliente cliente = auditorio.getClienteActual();
             cliente.agregarEntrada(nuevaEntrada);
             eventoActual.agregarEntrada(nuevaEntrada);
 
+            // Marcar asientos como RESERVADOS y notificar por red
             for (int i = 0; i < FILAS; i++) {
                 for (int j = 0; j < COLUMNAS; j++) {
                     if (eventoActual.getMatrizAsientos()[i][j] == SELECCIONADA) {
                         eventoActual.getMatrizAsientos()[i][j] = RESERVADA;
                         actualizarColor(i, j);
-                        // ENVIAR POR RED LA RESERVA
-                        App.red.enviarMensaje("RESERVAR_ASIENTO:" + eventoActual.getNombre() + "," + i + "," + j);
+                        App.red.enviarMensaje("RESERVAR_ASIENTO:"
+                                + eventoActual.getNombre() + "," + i + "," + j);
                     }
                 }
             }
 
+            // Mostrar ticket en pantalla
             txtAreaTicket.setText(nuevaEntrada.generarTicket());
 
+            // Exportar a TXT
             Persistencia.exportarTicketATxt(nuevaEntrada);
 
-            Alerta.mostrar("Compra Exitosa", "Entrada generada correctamente y guardada en TXT.",
+            Alerta.mostrar("¡Compra exitosa!",
+                    "Entrada generada y guardada correctamente.\n"
+                    + "Precio pagado: ₡" + String.format("%.2f", precioCalculado),
                     Alert.AlertType.INFORMATION);
-            
+
             App.red.enviarMensaje("ACTUALIZAR_TODO");
+
         } catch (Exception e) {
-            Alerta.mostrar("Error", "Ocurrió un error al procesar la compra.", Alert.AlertType.ERROR);
+            Alerta.mostrar("Error", "Ocurrió un error al procesar la compra: "
+                    + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
     @FXML
+    public String identificadorDeButacas() {
+        if (eventoActual == null) return "";
+        StringBuilder sb = new StringBuilder("Asientos seleccionados:\n");
+        for (int i = 0; i < FILAS; i++) {
+            for (int j = 0; j < COLUMNAS; j++) {
+                if (eventoActual.getMatrizAsientos()[i][j] == SELECCIONADA) {
+                    sb.append("Fila: ").append(i + 1)
+                      .append(" Col: ").append(j + 1).append("\n");
+                }
+            }
+        }
+        return sb.toString();
+    }
+
+    @FXML
     private int contarAsientosSeleccionados() {
+        if (eventoActual == null) return 0;
         int contador = 0;
         for (int i = 0; i < FILAS; i++) {
             for (int j = 0; j < COLUMNAS; j++) {
@@ -322,50 +333,58 @@ public class VentasDeAsientosController {
         return contador;
     }
 
+    // ==================== BÚSQUEDA ====================
+
     @FXML
     public void buscarEntrada() {
         String input = TxfbuscarEntrada.getText().trim();
         if (input.isEmpty()) {
-            Alerta.mostrar("Error", "Ingrese ID o nombre de cliente", Alert.AlertType.WARNING);
+            Alerta.mostrar("Error", "Ingrese ID o nombre de cliente",
+                    Alert.AlertType.WARNING);
             return;
         }
 
         try {
+            // Búsqueda por ID numérico
             int idBuscado = Integer.parseInt(input);
-            for (int i = 0; i < auditorio.getClientes().size(); i++) {
-                Cliente cliente = auditorio.getClientes().get(i);
-                for (int j = 0; j < cliente.getEntradas().size(); j++) {
-                    Entrada entrada = cliente.getEntradas().get(j);
+            for (Cliente cliente : auditorio.getClientes()) {
+                for (Entrada entrada : cliente.getEntradas()) {
                     if (entrada.getIdEntrada() == idBuscado) {
                         txtAreaTicket.setText(entrada.generarTicket());
                         return;
                     }
                 }
             }
-
         } catch (NumberFormatException e) {
-            StringBuilder resultados = new StringBuilder("Tickets de " + input + ":\n\n");
+            // Búsqueda por nombre de cliente
+            StringBuilder resultados = new StringBuilder(
+                    "Tickets de " + input + ":\n\n");
             boolean encontrado = false;
 
-            for (int i = 0; i < auditorio.getClientes().size(); i++) {
-                Cliente cliente = auditorio.getClientes().get(i);
+            for (Cliente cliente : auditorio.getClientes()) {
                 if (cliente.getNombreUsuario().equalsIgnoreCase(input)) {
-                    for (int j = 0; j < cliente.getEntradas().size(); j++) {
-                        Entrada entrada = cliente.getEntradas().get(j);
-                        resultados.append("ID: ").append(entrada.getIdEntrada())
-                                .append(" | Evento: ").append(entrada.getEvento().getNombre())
-                                .append("\n");
+                    for (Entrada entrada : cliente.getEntradas()) {
+                        resultados.append(entrada.generarTicket())
+                                  .append("\n---\n");
                         encontrado = true;
                     }
                 }
             }
-
             if (encontrado) {
                 txtAreaTicket.setText(resultados.toString());
                 return;
             }
         }
 
-        Alerta.mostrar("No encontrado", "No existe entrada con ese ID o Cliente", Alert.AlertType.INFORMATION);
+        Alerta.mostrar("No encontrado",
+                "No existe entrada con ese ID o nombre de cliente",
+                Alert.AlertType.INFORMATION);
+    }
+
+    @FXML
+    public void CerrarSesion() throws IOException {
+        auditorio.cargarCliente(null); // Limpiar sesión
+        instanciaActiva = null;
+        App.setRoot("AccesoClienteVista");
     }
 }

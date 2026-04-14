@@ -96,6 +96,10 @@
             this.precioFinalCalculado = precioFinalCalculado;
         }
 
+        public double getPrecioFinalCalculado() {
+            return precioFinalCalculado;
+        }
+
         public String acceso() {
             return "";
         }
