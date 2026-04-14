@@ -89,6 +89,15 @@ public class Auditorio {
         listEvento.add(evento);
     }
 
+    public boolean eventoExiste(String nombre) {
+        for (Evento e : listEvento) {
+            if (e.getNombre().equalsIgnoreCase(nombre)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void eliminarEvento(Evento evento) {
         listEvento.remove(evento);
     }

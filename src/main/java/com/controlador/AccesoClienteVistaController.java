@@ -28,10 +28,8 @@ public class AccesoClienteVistaController {
 
     @FXML
     public void initialize() {
-        this.auditorio = new Auditorio();
-        // Inicializar la red
-        red = new ClienteVPN();
-        red.conectar("100.112.172.27", 5000, auditorio);
+        this.auditorio = App.auditorio;
+        this.red = App.red;
     }
 
     // ESTE ES EL MÉTODO QUE FALTABA Y DABA EL ERROR

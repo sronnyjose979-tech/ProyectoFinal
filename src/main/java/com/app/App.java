@@ -2,6 +2,7 @@ package com.app;
 
 import com.modelo.Auditorio;
 import com.modelo.Persistencia;
+import com.red.ClienteVPN;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,12 +14,16 @@ import java.io.IOException;
 public class App extends Application {
 
     public static Auditorio auditorio = new Auditorio();
+    public static ClienteVPN red = new ClienteVPN();
 
     private static Scene scene;
 
     @Override
     public void start(Stage stage) throws IOException {
         Persistencia.cargarDatos(auditorio);
+        
+        // Conectar a la red al iniciar
+        red.conectar("100.112.172.27", 5000, auditorio);
 
         scene = new Scene(loadFXML("AccesoClienteVista"), 950, 700);
 

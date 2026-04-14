@@ -1,7 +1,6 @@
 
 package com.modelo;
 
-
 public class Administrador {
 
     private String nombreAdministrador;

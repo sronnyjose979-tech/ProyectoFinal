@@ -62,6 +62,7 @@ public class VentasDeAsientosController {
     @FXML
     public void initialize() throws IOException {
         this.auditorio = App.auditorio;
+        
         instanciaActiva = this;
         eventoActual = auditorio.getEventoActual();
 
@@ -150,6 +151,20 @@ public class VentasDeAsientosController {
                     instanciaActiva.actualizarColor(i, j);
                 }
             }
+            instanciaActiva.actualizarListaEventos();
+        }
+    }
+
+    private void actualizarListaEventos() {
+        String seleccionado = comboEvento.getValue();
+        comboEvento.getItems().clear();
+        for (Evento ev : auditorio.getEventosEnCartelera()) {
+            comboEvento.getItems().add(ev.getNombre());
+        }
+        if (seleccionado != null && comboEvento.getItems().contains(seleccionado)) {
+            comboEvento.getSelectionModel().select(seleccionado);
+        } else if (!comboEvento.getItems().isEmpty()) {
+            comboEvento.getSelectionModel().selectFirst();
         }
     }
 
@@ -275,6 +290,8 @@ public class VentasDeAsientosController {
                     if (eventoActual.getMatrizAsientos()[i][j] == SELECCIONADA) {
                         eventoActual.getMatrizAsientos()[i][j] = RESERVADA;
                         actualizarColor(i, j);
+                        // ENVIAR POR RED LA RESERVA
+                        App.red.enviarMensaje("RESERVAR_ASIENTO:" + eventoActual.getNombre() + "," + i + "," + j);
                     }
                 }
             }
@@ -285,9 +302,8 @@ public class VentasDeAsientosController {
 
             Alerta.mostrar("Compra Exitosa", "Entrada generada correctamente y guardada en TXT.",
                     Alert.AlertType.INFORMATION);
-            ClienteVPN red = new ClienteVPN();
-// Lo ideal es que 'red' sea una instancia única compartida
-            red.enviarMensaje("UPDATE_SEATS");
+            
+            App.red.enviarMensaje("ACTUALIZAR_TODO");
         } catch (Exception e) {
             Alerta.mostrar("Error", "Ocurrió un error al procesar la compra.", Alert.AlertType.ERROR);
         }

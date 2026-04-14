@@ -117,6 +117,9 @@ public class AdminPanelController implements Initializable {
 
             auditorio.agregarEvento(nuevoEvento);
             listaEventos.add(nuevoEvento);
+            
+            // ENVIAR POR RED
+            App.red.enviarMensaje("NUEVO_EVENTO:" + nombre + "," + fecha + "," + precio);
 
             Alerta.mostrar("Evento creado", "El evento se creó correctamente.", Alert.AlertType.INFORMATION);
 
@@ -143,6 +146,7 @@ public class AdminPanelController implements Initializable {
         auditorio.setEventoActual(seleccionado);
 
         actualizarEtiquetaEventoActivo();
+        App.red.enviarMensaje("ACTUALIZAR_TODO");
 
         Alerta.mostrar("Éxito", "Evento cargado en sala correctamente.", Alert.AlertType.INFORMATION);
     }
@@ -260,6 +264,7 @@ public class AdminPanelController implements Initializable {
         }
 
         Alerta.mostrar("Sala reiniciada", "Todos los asientos fueron liberados.", Alert.AlertType.INFORMATION);
+        App.red.enviarMensaje("ACTUALIZAR_TODO");
     }
 
     @FXML
