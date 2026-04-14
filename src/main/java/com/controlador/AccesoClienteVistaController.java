@@ -39,7 +39,7 @@ public class AccesoClienteVistaController {
     void btnIngresarAdmin(ActionEvent event) {
         try {
             System.out.println("Cambiando a vista de administrador...");
-            App.setRoot("AccesoAdminVista"); // Asegúrate que el nombre del FXML sea correcto
+            App.setRoot("AccesoAdministradorVista"); // Asegúrate que el nombre del FXML sea correcto
         } catch (IOException e) {
             Alerta.mostrar("Error", "No se pudo cargar la vista de admin", Alert.AlertType.ERROR);
             e.printStackTrace();
