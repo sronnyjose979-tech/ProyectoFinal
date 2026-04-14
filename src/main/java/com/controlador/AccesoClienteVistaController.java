@@ -53,7 +53,7 @@ public class AccesoClienteVistaController {
         
         if (auditorio.validarLogin(user, pass)) {
             try {
-                App.setRoot("VentasDeAsientosVista");
+                App.setRoot("VistaVentaAsientos");
             } catch (IOException e) {
                 e.printStackTrace();
             }
